@@ -1,0 +1,24 @@
+{
+  "devDependencies": {
+    "nodemon": "^2.0.20",
+    "npm-run-all": "^4.1.5"
+  },
+  "name": "pole-app",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "client": "cd frontend && npm start",
+    "server": "cd backend && nodemon --inspect server.js",
+    "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\""
+
+  },
+  "author": "JenkaCool",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "concurrently": "^7.6.0",
+    "express": "^4.18.2",
+    "sequelize": "^6.25.8",
+    "sequelize-cli": "^6.5.2"
+  }
+}
