@@ -10,7 +10,6 @@
     "client": "cd frontend && npm start",
     "server": "cd backend && nodemon --inspect server.js",
     "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\""
-
   },
   "author": "JenkaCool",
   "license": "ISC",
