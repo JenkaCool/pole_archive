@@ -1,37 +1,44 @@
-import React, {useState, useEffect} from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { useState, useEffect } from 'react';
+import { a, Routes, Route, } from "react-router-dom";
 
+import './App.css';
+//import { Topbar } from './Components/Topbar';
+//import { TableExile } from './Components/TableExile';
 function App() {
-  const [data, setData] = useState(null)
-  useEffect(() => {
-    fetch("/api").then(
-    response => response.json()
-    ).then(
-      response => {setData(response.message)
-      }
-    )
-  }, [])
 
   return (
     <div className="App">
-        <header className="App-header">
+       <header className="App-header">
             <div id="user-bar" className="in-one-role">
-                <button><a class="button">Вход</a></button>
-                <button><a class="button">Регистрация</a></button>
-                <button><a class="button">Профиль</a></button>
+                <button class="button">RU(русский)</button>
+                <a className="page-a"> О проекте </a>
+                <a className="page-a"> Контактная информация </a>
+                <a className="page-a"> Форум </a>
+                <a className="page-a"> Поиск </a>
             </div>
             <br/>
-            <h3>Список записей о польских ссыльных в Олонецкой губернии</h3>
-            <div id='navigation'>
-                <button><a class="button">Список записей</a></button>
-                <button><a class="button">Список документов</a></button>
+            <div id="user-bar" className="in-one-role">
+                <h4>Электронный архив</h4>
+                <div id='navigation'>
+                    <a className="page-a"> Главная </a>
+                    <a className="page-a"> Архив </a>
+                    <a className="page-a"> Документы </a>
+                </div>
+                <div id='authorization'>
+                    <a className="page-a"> Вход </a>
+                    <a className="page-a"> Регистрация </a>
+                    <a className="page-a"> Профиль </a>
+                    <button className="button"> Выход </button>
+                </div>
             </div>
         </header>
+      <div className="Content">
         <div id='tools'>
-            <button><a class="button-add">Добавить новую запись</a></button>
+            <button><a className="button-add">Добавить новую запись</a></button>
         </div>
-        <div class="big-table">;
+        <h3>Список записей о польских ссыльных в Олонецкой губернии</h3>
+        <div className="big-table">
             <table>
                 <thead>
                     <tr></tr>
@@ -39,6 +46,7 @@ function App() {
                 <tbody><tr></tr></tbody>
             </table>
         </div>
+      </div>
     </div>
   );
 }

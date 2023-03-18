@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  min-width: 790px;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -39,4 +40,9 @@
   direction: row;
   align-items: center;
   justify-content: center;
+}
+
+h4 {
+  margin: 0px;
+  padding: 0px;
 }
