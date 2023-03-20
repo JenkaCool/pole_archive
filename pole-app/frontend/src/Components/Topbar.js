@@ -10,23 +10,23 @@ const Topbar = () => {
               <li></li>
               <li></li>
             </ul>
-            <div className="link-area"><a className="topbar-link un"> О проекте </a></div>
-            <div className="link-area"><a className="topbar-link un"> Контактная информация </a></div>
-            <div className="link-area"><a className="topbar-link un"> Форум </a></div>
-            <div className="link-area"><a className="topbar-link un"> Поиск </a></div>
+            <Link to="/" className="topbar-link"><div className="link-area"><span className="un"> О проекте </span></div></Link>
+            <Link to="/" className="topbar-link"><div className="link-area"><span className="un"> Контактная информация </span></div></Link>
+            <Link to="/" className="topbar-link"><div className="link-area"><span className="un"> Форум </span></div></Link>
+            <Link to="/" className="topbar-link"><div className="link-area"><span className="un"> Поиск </span></div></Link>
         </div>
         <div id="links" className="in-one-role">
             <h4 className="topbar-title">Электронный архив</h4>
             <div id='navigation'>
                 <Link to="/"> Главная </Link>
-                <Link to="/"> Архив </Link>
+                <Link to="/exile-table"> Архив </Link>
                 <Link to="/document-table"> Документы </Link>
             </div>
             <div id='authorization'>
                 <Link to="/profile"> Профиль </Link>
-                <a className="page-a"><button className="auth-button"> Вход </button></a>
-                <a className="page-a"><button className="auth-button"> Регистрация </button></a>
-                <a className="page-a"><button className="auth-button"> Выход </button></a>
+                <Link to="/"><button className="auth-button"> Вход </button></Link>
+                <Link to="/"><button className="auth-button"> Регистрация </button></Link>
+                <Link to="/"><button className="auth-button"> Выход </button></Link>
             </div>
         </div>
     </header>
