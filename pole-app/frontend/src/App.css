@@ -179,7 +179,7 @@ footer {
   border-radius: 5px;
 }
 
-#authorization > *,  #navigation > *{
+#authorization > *,  #navigation > * {
   margin-left: 10px;
   margin-right: 10px;
 }

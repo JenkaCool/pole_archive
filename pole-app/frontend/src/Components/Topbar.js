@@ -18,12 +18,12 @@ const Topbar = () => {
         <div id="links" className="in-one-role">
             <h4 className="topbar-title">Электронный архив</h4>
             <div id='navigation'>
-                <a className="page-a"> Главная </a>
-                <a className="page-a"> Архив </a>
-                <a className="page-a"> Документы </a>
+                <Link to="/"> Главная </Link>
+                <Link to="/"> Архив </Link>
+                <Link to="/document-table"> Документы </Link>
             </div>
             <div id='authorization'>
-                <a className="page-a"> Профиль </a>
+                <Link to="/profile"> Профиль </Link>
                 <a className="page-a"><button className="auth-button"> Вход </button></a>
                 <a className="page-a"><button className="auth-button"> Регистрация </button></a>
                 <a className="page-a"><button className="auth-button"> Выход </button></a>
@@ -33,4 +33,4 @@ const Topbar = () => {
   );
 }
 
-export { Topbar }
+export default Topbar;

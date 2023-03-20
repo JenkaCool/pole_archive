@@ -20,4 +20,4 @@ const TableExile = () => {
   );
 }
 
-export { TableExile }
+export default TableExile;
