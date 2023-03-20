@@ -6,7 +6,7 @@ const TableExile = () => {
     <>
       <h3>Список записей о польских ссыльных в Олонецкой губернии</h3>
       <div id='tools'>
-        <a className="button-add"><button>Добавить новую запись</button></a>
+        <a><button className="manage-button">Добавить новую запись</button></a>
       </div>
       <div className="big-table">
         <table>
