@@ -6,10 +6,12 @@ import './App.css';
 import Topbar from './Components/Topbar';
 import Footer from './Components/Footer';
 import MainPage from './Components/MainPage';
-import ExileTable from './Components/Tables/ExileTable';
-import DocumentTable from './Components/Tables/DocumentTable';
 import ExilePage from './Components/Exile/ExilePage';
 import DocumentPage from './Components/Document/DocumentPage';
+import ExileAdd from './Components/Exile/ExileAdd';
+import DocumentAdd from './Components/Document/DocumentAdd';
+import ExileTable from './Components/Tables/ExileTable';
+import DocumentTable from './Components/Tables/DocumentTable';
 import Profile  from './Components/User/Profile';
 
 function App() {
@@ -22,9 +24,11 @@ function App() {
           <Routes>
             <Route index element={<div>No page is selected.</div> } />
               <Route path="/" element={<MainPage/> } />
+              <Route path="profile" element={<Profile/>} />
               <Route path="exile" element={<ExilePage/>} />
               <Route path="document" element={<DocumentPage/>} />
-              <Route path="profile" element={<Profile/>} />
+              <Route path="exile-add" element={<ExileAdd/>} />
+              <Route path="document-add" element={<DocumentAdd/>} />
               <Route path="document-table" element={<DocumentTable/>} />
               <Route path="exile-table" element={<ExileTable/>} />
           </Routes>
