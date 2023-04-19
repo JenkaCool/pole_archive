@@ -1,20 +1,11 @@
-{
-  "name": "backend",
-  "version": "1.0.0",
-  "description": "",
-  "main": "server.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "nodemon --inspect server.js"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "concurrently": "^7.6.0",
-    "express": "^4.18.2"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.20"
-  }
-}
+"name": "flask_react",
+"version": "0.1.0",
+"private": true,
+"proxy": "http://localhost:5000",
+"scripts": {
+"start": "react-scripts start",
+"start-backend": "cd backend && env/bin/flask run --no-debugger", //new line
+"build": "react-scripts build",
+"test": "react-scripts test",
+"eject": "react-scripts eject"
+},
