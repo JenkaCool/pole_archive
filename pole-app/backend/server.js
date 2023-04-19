@@ -1,18 +1,24 @@
-const express = require("express");
-const bodyParser = require("body-parser");
+var express = require('express');
+var bodyParser = require('body-parser');
 
-const app = express();
+var app = express();
 
-app.use(bodyParser.json());
+app.use(bodyParser.json())
 
-app.use(bodyParser.urlencoded({ extended: true }));
+const db = require('./config/db.config.js');
 
-app.get("/", (req, res) => {
-  res.json({ message: "Это стартовая страница нашего приложения" });
+// force: true will drop the table if it already exists
+db.sequelize.sync({force: true}).then(() => {
+  console.log('Drop and Resync with { force: true }');
 });
 
-app.listen(3001, () => {
-  console.log("Сервер запущен на 3001 порту");
-});
+require('./routes/document.route.js')(app);
 
-require("./routes/documents.routes.js")(app);
+// Create a Server
+var server = app.listen(3001, function () {
+
+  var host = server.address().address
+  var port = server.address().port
+
+  console.log("App listening at http://%s:%s", host, port)
+})
