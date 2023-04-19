@@ -1,11 +1,33 @@
 .App {
   text-align: center;
-  min-width: 790px;
+  min-width: 1000px;
+}
+* {
+  margin: 0;
+  padding: 0;
 }
 
+html,
 body {
   height: 100%;
-  margin-bottom: 100px;
+}
+
+.Wrapper {
+  position: relative;
+  min-height: 100%;
+}
+
+.Content {
+  padding-bottom: 90px;
+  min-height: 100vh;
+}
+
+.Footer {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 80px;
 }
 
 .App > * {
@@ -130,6 +152,13 @@ a {
   background-color: #F19460;
 }
 
+.manage-button {
+  border: solid 2px #AAAAAA;
+  border-radius: 5px;
+  padding: 2px 5px;
+  margin: 10px;
+}
+
 .App-link {
   color: #61dafb;
 }
@@ -183,12 +212,28 @@ footer {
   font-size: 12px;
 }
 
-.manage-button {
-  border: solid 2px #AAAAAA;
-  border-radius: 5px;
-}
-
 #authorization > *,  #navigation > * {
   margin-left: 10px;
   margin-right: 10px;
+}
+
+/* Modal */
+.modal {
+    height: 100vh;
+    width: 100wh;
+    background-color: rgba(0, 0, 0, 0.4);
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+  padding: 15px;
+  border-radius: 6px;
+  background-color: black;
+  min-height: 200px;
+  min-weight: 400px;
 }

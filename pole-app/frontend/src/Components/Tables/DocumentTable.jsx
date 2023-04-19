@@ -7,7 +7,7 @@ const DocumentTable = () => {
     <>
       <h3>Список документов</h3>
       <div id='tools'>
-        <Link to="/document-add"><button className="manage-button">Добавить новую запись</button></Link>
+        <Link to="/document-add"><button className="manage-button">Добавить новый документ</button></Link>
         <Link to="/document"><button className="manage-button">Посмотреть запись</button></Link>
       </div>
       <div className="big-table">
