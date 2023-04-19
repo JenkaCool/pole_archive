@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
 
-const ExileEdit = () => {
+const ExileAdd = () => {
   return (
     <>
       <h3>Добавить ссыльного</h3>
@@ -9,7 +9,7 @@ const ExileEdit = () => {
 	    <form onsubmit="alert('Поля удовлетворяют требованиям.');return false" class='form'>
           <fieldset class="commonForm">
 		    <p>
-		        <label for="creatorName">Имя создателя записи:<em style={{color: 'red'}}>*</em></label>
+		        <label for="creatorName"><em style={{color: 'red'}}>*</em>Имя создателя записи:</label>
 			    <br/>
 			    <input type="text" id="creatorName" autofocus required />
             </p>
@@ -17,7 +17,7 @@ const ExileEdit = () => {
 
 		  <fieldset class="commonForm">
 		    <p>
-			    <label>Год документа:<em style={{color: 'red'}}>*</em></label>
+			    <label><em style={{color: 'red'}}>*</em>Год документа:</label>
 				<select id="docVars">
 				  <option>1873</option>
 				  <option>1874</option>
@@ -33,7 +33,7 @@ const ExileEdit = () => {
 				  <input type="text" id="inventory"/>
 				  <p> Единица хранения: </p>
 				  <input type="text" id="storageUnit"/>
-				  <p>Общее количество листов:<em style={{color: 'red'}}>*</em></p>
+				  <p><em style={{color: 'red'}}>*</em>Общее количество листов: </p>
 				  <input type="text" id="totalListsNum" autofocus required />
 				  <p> Год: </p>
 				  <input type="text" id="orderYear"/>
@@ -45,7 +45,7 @@ const ExileEdit = () => {
 
 		  <fieldset class="commonForm">
 		    <p>
-			    <p>Номер листа в документе:<em style={{color: 'red'}}>*</em></p>
+			    <p><em style={{color: 'red'}}>*</em>Номер листа в документе: </p>
 				<input type="text" id="listNum" autofocus required />
 			</p>
 		  </fieldset>
@@ -53,7 +53,7 @@ const ExileEdit = () => {
 
 		  <fieldset class="commonForm">
 			<legend><b>Основная информация о ссыльном</b></legend>
-			<p>Фамилия, имя, отчество:<em style={{color: 'red'}}>*</em></p>
+			<p><em style={{color: 'red'}}>*</em>Фамилия, имя, отчество: </p>
 			<input type="text" id="fullName" autofocus required />
 			<p> Чин: </p>
 			<input type="text" id="rank"/>
@@ -72,9 +72,9 @@ const ExileEdit = () => {
 			<input type="text" id="orderInfo"/>
 			<p> Распорядитель: </p>
 			<input type="text" id="steward"/>
-			<p>Причина:<em style={{color: 'red'}}>*</em></p>
+			<p><em style={{color: 'red'}}>*</em>Причина: </p>
 			<input type="text" id="orderReason" autofocus required />
-			<p>С какого времени под надзором:<em style={{color: 'red'}}>*</em></p>
+			<p><em style={{color: 'red'}}>*</em>С какого времени под надзором: </p>
 			<input type="text" id="supervisionStartDate" autofocus required />
 			<p> Место, где учреждён надзор: </p>
 			<input type="text" id="supervisionPlace"/>
@@ -86,7 +86,7 @@ const ExileEdit = () => {
 			<legend><b>Информация о получении содержания</b></legend>
 			<p> Количество денежных средств: </p>
 			<input type="text" id="amount"/>
-			<p>На что получает средства:<em style={{color: 'red'}}>*</em></p>
+			<p><em style={{color: 'red'}}>*</em>На что получает средства: </p>
 			<input type="text" id="getsReason" autofocus required />
 			<p> Периодичность начисления: </p>
 			<input type="text" id="period"/>
@@ -95,7 +95,7 @@ const ExileEdit = () => {
 		  <fieldset class="commonForm">
 			<legend><b>Дополнительная информация о ссыльном</b></legend>
 			<p>
-			    <label>Семейное положение:<em  style={{color: 'red'}}>*</em></label> <br/>
+			    <label><em  style={{color: 'red'}}>*</em>Семейное положение:</label> <br/>
 				<input class="marStatus" type="radio" name="marStatusState" value="1" checked /> Неизвестно <br/>
 				<input class="marStatus" type="radio" name="marStatusState" value="2" /> Женат / замужем <br/>
 				<input class="marStatus" type="radio" name="marStatusState" value="3" /> Не женат / не замужем  <br/>
@@ -110,11 +110,18 @@ const ExileEdit = () => {
 			<p> Дополнительная информация о ссыльном: </p>
 			<input type="text" id="addInfo"/>
 		  </fieldset>
-		  <button name="submit" type="submit" class="manage-button">Добавить запись</button>
+
+		  <p><input type="submit" value="Добавить запись" onclick="inputProcessing()"/></p>
 		</form>
+	    <form>
+		  <fieldset id = "formsEx"  style={{display: 'none'}}>
+	        <legend><b>Сообщение</b></legend>
+			<p id = "ex"></p>
+		  </fieldset>
+	    </form>
 	  </section>
     </>
   );
 }
 
-export default ExileEdit;
+export default ExileAdd;

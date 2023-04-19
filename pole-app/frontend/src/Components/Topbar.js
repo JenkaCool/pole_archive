@@ -24,8 +24,8 @@ const Topbar = () => {
             </div>
             <div id='authorization'>
                 <Link to="/profile"> Профиль </Link>
-                <Link to="/log-in"><button className="auth-button"> Вход </button></Link>
-                <Link to="/sign-up"><button className="auth-button"> Регистрация </button></Link>
+                <Link to="/"><button className="auth-button"> Вход </button></Link>
+                <Link to="/"><button className="auth-button"> Регистрация </button></Link>
                 <Link to="/"><button className="auth-button"> Выход </button></Link>
             </div>
         </div>
