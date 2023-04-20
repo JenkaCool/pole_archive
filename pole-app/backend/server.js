@@ -1,24 +1,40 @@
-var express = require('express');
-var bodyParser = require('body-parser');
+const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require("cors")
 
-var app = express();
+const app = express();
 
-app.use(bodyParser.json())
+var corsOptions = {
+  origin: "http://localhost:3001"
+}
 
-const db = require('./config/db.config.js');
+app.use(cors(corsOptions));
 
+app.use(bodyParser.json());
+
+app.use(bodyParser.urlencoded({ extend: true}));
+
+const db = require('./models');
+
+db.sequelize.sync();
+/*
 // force: true will drop the table if it already exists
 db.sequelize.sync({force: true}).then(() => {
   console.log('Drop and Resync with { force: true }');
 });
+*/
+app.get("/", (req, res) => {
+  res.json({ message:"Welcome!"});
+});
 
+
+//
+//
+//
 require('./routes/document.route.js')(app);
 
-// Create a Server
-var server = app.listen(3001, function () {
+const PORT = process.env.PORT || 3001;
 
-  var host = server.address().address
-  var port = server.address().port
-
-  console.log("App listening at http://%s:%s", host, port)
-})
+app.listen(PORT, () => {
+  console.log(`Server is running on port $(PORT)`);
+});
