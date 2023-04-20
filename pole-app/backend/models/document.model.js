@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-    const Document = sequelize.define('document', {
+    const Document = sequelize.define('tbldocument', {
         id: {
             type: Sequelize.INTEGER,
             autoIncrement: true,
