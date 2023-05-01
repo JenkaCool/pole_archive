@@ -9,33 +9,36 @@ import passwordImg from '../../imgs/lock-closed-outline.svg';
 
 const LogIn = () => {
   return (
-    <>
-      <div>
-        <div>
+    <section>
+      <div className="form-box">
+        <div className="form-value">
           <form className="login-box" action="" method="post">
             <h2>Вход</h2>
               <div className="input-box">
-                <input type="text" name="aut_login" required/>
+                <img className="user-icon" src={userImg} />
+                <input type="text" name="aut_login" required></input>
                 <label for="">Логин</label>
               </div>
               <div className="input-box">
-                <img src={userImg} />
-                <input type="password" name="aut_password" required/>
+                <img className="user-icon" src={passwordImg} />
+                <input type="password" name="aut_password" required></input>
                 <label for="">Пароль</label>
               </div>
               <div className="forget">
-                <img src={passwordImg} />
-                <label for=""><input type="checkbox">Запомнить меня</input></label>
-                <Link>Забыл пароль</Link>
+                <Link>Забыли пароль?</Link>
               </div>
-              <input type="submit" value="Submit"></input>
+              <button type="submit">Войти</button>
+              <div className="remember">
+                <label for=""><input type="checkbox"></input></label>
+                <label for="">Запомнить меня</label>
+              </div>
               <div className="register">
                 <p>Нет аккаунта? <Link>Зарегистрироваться</Link></p>
               </div>
           </form>
         </div>
       </div>
-    </>
+    </section>
   );
 }
 
