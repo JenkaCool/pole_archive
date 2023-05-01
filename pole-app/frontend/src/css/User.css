@@ -28,6 +28,13 @@ section {
   align-items: center;
 }
 
+.reg {
+  width: 400px;
+  height: 550px;
+
+}
+
+
 h2 {
   font-size: 2em;
   color: #ffffff;
