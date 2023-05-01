@@ -1,38 +1,39 @@
-from flask import Flask, request
-from flask_restful import Resource,  Api
-from flask_jwt_extended import JWTManager
-from flask_jwt_extended import create_access_token, jwt_required
+from flask import Flask, request, abort, jsonify
+from flask_mysqldb import MySQL
 from flask_cors import CORS
 
 app = Flask(__name__)
-
-app.config['JWT_SECRET_KEY'] = 'my_cool_secret'
-jwt = JWTManager(app)
 CORS(app)
-api = Api(app)
+mysql = MySQL()
+
+app.config['MYSQL_HOST'] = 'localhost'
+app.config['MYSQL_USER'] = 'root'
+app.config['MYSQL_PASSWORD'] = ''
+app.config['MYSQL_DB'] = 'PolE_archive'
+
+mysql.init_app(app)
+
+@app.route('/')
+def home():
+    return "Hello"
+
+@app.route('/documents', methods = ['GET'])
+def documents():
+    if request.method == 'GET':
+        cursor = mysql.connection.cursor()
+        cursor.execute(''' SELECT * FROM tbldocument ''')
+        data = cursor.fetchall()
+        cursor.close()
+        return jsonify(data)
 
 
-class UserLogin(Resource):
-    def post(self):
-        username = request.get_json()['username']
-        password = request.get_json()['password']
-        if username == 'admin' and password == 'habr':
-            access_token = create_access_token(identity={
-                'role': 'admin',
-            }, expires_delta=False)
-            result = {'token': access_token}
-            return result
-        return {'error': 'Invalid username and password'}
-
-
-class ProtectArea(Resource):
-    @jwt_required
-    def get(self):
-        return {'answer': 42}
-
-
-api.add_resource(UserLogin, '/api/login/')
-api.add_resource(ProtectArea, '/api/protect-area/')
+@app.route('/exiles', methods = ['GET'])
+def exiles():
+    cursor = mysql.connection.cursor()
+    cursor.execute(''' SELECT * FROM tblexile ''')
+    data = cursor.fetchall()
+    cursor.close()
+    return jsonify(data)
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0')
+    app.run(host="127.0.0.1", port="5000", debug=True)
