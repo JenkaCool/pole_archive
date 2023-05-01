@@ -19,13 +19,13 @@ const Topbar = () => {
             <h4 className="topbar-title">Электронный архив</h4>
             <div id='navigation'>
                 <Link to="/"> Главная </Link>
-                <Link to="/exile-table"> Архив </Link>
-                <Link to="/document-table"> Документы </Link>
+                <Link to="/exiles"> Архив </Link>
+                <Link to="/documents"> Документы </Link>
             </div>
             <div id='authorization'>
                 <Link to="/profile"> Профиль </Link>
-                <Link to="/log-in"><button className="auth-button"> Вход </button></Link>
-                <Link to="/sign-up"><button className="auth-button"> Регистрация </button></Link>
+                <Link to="/login"><button className="auth-button"> Вход </button></Link>
+                <Link to="/signup"><button className="auth-button"> Регистрация </button></Link>
                 <Link to="/"><button className="auth-button"> Выход </button></Link>
             </div>
         </div>

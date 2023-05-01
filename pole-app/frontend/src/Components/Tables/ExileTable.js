@@ -9,7 +9,7 @@ const TableExile = () => {
     <>
       <h3>Список записей о польских ссыльных в Олонецкой губернии</h3>
       <div id='tools'>
-        <Link to="/exile"><button className="manage-button">Посмотреть запись</button></Link>
+        <Link to="/exiles/view"><button className="manage-button">Посмотреть запись</button></Link>
       </div>
 
       <div className="big-table">

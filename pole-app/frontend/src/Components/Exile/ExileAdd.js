@@ -8,7 +8,7 @@ const ExileAdd = ({active, setActive}) => {
     <>
       <h3>Добавить ссыльного</h3>
       <section>
-	    <form onsubmit="alert('Поля удовлетворяют требованиям.');return false" class='form'>
+	    <form onsubmit="alert('Поля удовлетворяют требованиям.');return false" className='form'>
           <fieldset class="commonForm">
 		    <p>
 		        <label for="creatorName">Имя создателя записи:<em style={{color: 'red'}}>*</em></label>
@@ -17,7 +17,7 @@ const ExileAdd = ({active, setActive}) => {
             </p>
 		  </fieldset>
 
-		  <fieldset class="commonForm">
+		  <fieldset className="commonForm">
 		    <p>
 			    <label>Год документа:<em style={{color: 'red'}}>*</em></label>
 				<select id="docVars">
@@ -45,7 +45,7 @@ const ExileAdd = ({active, setActive}) => {
 		    </p>
 		  </fieldset>
 
-		  <fieldset class="commonForm">
+		  <fieldset className="commonForm">
 		    <p>
 			    <p>Номер листа в документе:<em style={{color: 'red'}}>*</em></p>
 				<input type="text" id="listNum" autofocus required />
@@ -53,7 +53,7 @@ const ExileAdd = ({active, setActive}) => {
 		  </fieldset>
 
 
-		  <fieldset class="commonForm">
+		  <fieldset className="commonForm">
 			<legend><b>Основная информация о ссыльном</b></legend>
 			<p>Фамилия, имя, отчество:<em style={{color: 'red'}}>*</em></p>
 			<input type="text" id="fullName" autofocus required />
@@ -65,7 +65,7 @@ const ExileAdd = ({active, setActive}) => {
 			<input type="text" id="province"/>
 		  </fieldset>
 
-		  <fieldset class="commonForm">
+		  <fieldset className="commonForm">
 		    <legend><b>Информация о распоряжении</b></legend>
 			<p> Номер распоряжения: </p>
 			<input type="text" id="orderNum"/>
@@ -84,7 +84,7 @@ const ExileAdd = ({active, setActive}) => {
 			<input type="text" id="departurePlace"/>
 		  </fieldset>
 
-		  <fieldset class="commonForm">
+		  <fieldset className="commonForm">
 			<legend><b>Информация о получении содержания</b></legend>
 			<p> Количество денежных средств: </p>
 			<input type="text" id="amount"/>
@@ -94,15 +94,15 @@ const ExileAdd = ({active, setActive}) => {
 			<input type="text" id="period"/>
 		  </fieldset>
 
-		  <fieldset class="commonForm">
+		  <fieldset className="commonForm">
 			<legend><b>Дополнительная информация о ссыльном</b></legend>
 			<p>
 			    <label>Семейное положение:<em  style={{color: 'red'}}>*</em></label> <br/>
-				<input class="marStatus" type="radio" name="marStatusState" value="1" checked /> Неизвестно <br/>
-				<input class="marStatus" type="radio" name="marStatusState" value="2" /> Женат / замужем <br/>
-				<input class="marStatus" type="radio" name="marStatusState" value="3" /> Не женат / не замужем  <br/>
-				<input class="marStatus" type="radio" name="marStatusState" value="4" /> Разведён / разведена  <br/>
-				<input class="marStatus" type="radio" name="marStatusState" value="5" /> Состоит гражданском браке  <br/>
+				<input className="marStatus" type="radio" name="marStatusState" value="1" checked /> Неизвестно <br/>
+				<input className="marStatus" type="radio" name="marStatusState" value="2" /> Женат / замужем <br/>
+				<input className="marStatus" type="radio" name="marStatusState" value="3" /> Не женат / не замужем  <br/>
+				<input className="marStatus" type="radio" name="marStatusState" value="4" /> Разведён / разведена  <br/>
+				<input className="marStatus" type="radio" name="marStatusState" value="5" /> Состоит гражданском браке  <br/>
 			</p>
 
 			<p> Информация о семье: </p>
@@ -112,7 +112,7 @@ const ExileAdd = ({active, setActive}) => {
 			<p> Дополнительная информация о ссыльном: </p>
 			<input type="text" id="addInfo"/>
 		  </fieldset>
-		  <button name="submit" type="submit" class="manage-button">Добавить запись</button>
+		  <button name="submit" type="submit" className="manage-button">Добавить запись</button>
 		</form>
 	  </section>
     </>

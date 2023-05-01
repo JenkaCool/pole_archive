@@ -1,6 +1,0 @@
-npm i --force
-npm i react react-scripts
-
-
-To dev start:
-npm run dev

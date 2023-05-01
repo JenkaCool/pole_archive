@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const LogIn = () => {
     return (
         <>
-            <form class="login-box" action="login.php" method="post">
+            <form className="login-box" action="login.php" method="post">
                 <h2>Вход</h2>
                 <input type="text" name="aut_login" required placeholder="Логин"/>
                 <input type="password" name="aut_password" required placeholder="Пароль"/>

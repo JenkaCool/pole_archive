@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const SignUp = () => {
     return (
         <>
-            <form class="login-box" action="registration.php" method="post">
+            <form className="login-box" action="registration.php" method="post">
                 <h2>Регистрация</h2>
                 <input type="text" name="login" required placeholder="Логин"/>
                 <input type="email" name="email" required placeholder="Email"/>
