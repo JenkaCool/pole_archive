@@ -13,7 +13,7 @@ const SignUp = () => {
       <div className="form-box reg">
         <div className="form-value">
           <form className="login-box" action="" method="post">
-            <h2>Вход</h2>
+            <h2>Регистрация</h2>
               <div className="input-box">
                 <img className="user-icon" src={userImg} />
                 <input type="text" name="reg_login" required></input>

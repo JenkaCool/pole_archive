@@ -80,5 +80,15 @@ def exiles():
         documents = Document.query.all()
         return jsonify(data)
 
+@app.route('/api/documents/view/<id>', methods=['GET','POST'])
+def one_document(id):
+    if request.method == 'GET':
+      json_data=[]
+      document_schema = DocumentSchema()
+      doc = Document.query.filter_by(doc_id = id).one()
+      json_data = document_schema.dump(doc)
+
+    return json.dumps(json_data)
+
 if __name__ == '__main__':
     app.run(host="127.0.0.1", port="5000", debug=True)

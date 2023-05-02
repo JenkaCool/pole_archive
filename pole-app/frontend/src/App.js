@@ -33,8 +33,8 @@ function App() {
                 <Route path="exiles" element={<ExileTable/>} />
                 <Route path="documents/add" element={<DocumentForm/>} />
                 <Route path="exiles/add" element={<ExileForm info={false}/>} />
-                <Route path="documents/view" element={<DocumentView/>} />
-                <Route path="exiles/view" element={<ExileView/>} />
+                <Route path="documents/view/:id" element={<DocumentView/>} />
+                <Route path="exiles/view/?user=:id" element={<ExileView/>} />
                 <Route path="documents/edit" element={<DocumentForm info={true}/>} />
                 <Route path="exiles/edit" element={<ExileForm info={true}/>} />
             </Routes>
