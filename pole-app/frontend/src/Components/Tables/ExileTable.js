@@ -19,6 +19,7 @@ const TableExile = () => {
     makeAPICall();
   }, [])
 
+
   return (
     <>
       <h3>Список записей о польских ссыльных в Олонецкой губернии</h3>
@@ -31,7 +32,7 @@ const TableExile = () => {
       <div className="big-table">
         <table>
           <thead>
-            <tr></tr>
+
           </thead>
           <tbody>
             {exileData.map((item) => (<ExileStroke row={item}/>))}

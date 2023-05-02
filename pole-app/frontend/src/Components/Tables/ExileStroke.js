@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 
-const DocumentStroke = ({row}) => {
+const ExileStroke = ({row}) => {
   const [documentData, setDocumentData] = useState([]);
   useEffect(() => {
     setDocumentData(row);
@@ -20,4 +20,4 @@ const DocumentStroke = ({row}) => {
   );
 }
 
-export default DocumentStroke;
+export default ExileStroke;

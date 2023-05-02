@@ -2,6 +2,10 @@ import { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 
+
+
+import DocumentStroke from './DocumentStroke';
+
 const DocumentTable = () => {
   const [documentData, setDocumentData] = useState([]);
   const makeAPICall = async () => {
@@ -26,29 +30,24 @@ const DocumentTable = () => {
         <Link to="/exiles/add"><button className="manage-button">Добавить запись</button></Link>
       </div>
 
-        {documentData.map(doc => (
-          <div key={doc.doc_id}>
-            <p>{doc.doc_fund}</p>
-            <p>{doc.doc_storage_unit}</p>
-            <p>{doc.doc_total_lists_num}</p>
-            <p>{doc.doc_url}</p>
-            <p>{doc.doc_additional_info}</p>
-            <p>{doc.doc_year}</p>
-            <p>{doc.doc_id}</p>
-            <p>{doc.doc_inventory}</p>
-            <p>{doc.doc_creator_id}</p>
-            <p>{doc.doc_creating_date}</p>
-            <p>{doc.doc_visible_mode}</p>
-            <p>{doc.doc_is_removed}</p>
-          </div>
-        ))}
-
-      <div className="big-table">
+      <div className="big-table table">
         <table>
           <thead>
-            <tr></tr>
+            <th>Фонд</th>
+            <th>Опись</th>
+            <th>Единица хранения</th>
+            <th>Общее количество листов</th>
+            <th>Год документа</th>
+            <th>Дополнительная информация</th>
+            <th>Ссылка на электронный ресурс</th>
+            <th>ID создателя</th>
+            <th>Дата создания</th>
+            <th>Флаг удаления</th>
+            <th>Режим доступа</th>
           </thead>
-          <tbody><tr></tr></tbody>
+          <tbody>
+            {documentData.map(doc => ( <DocumentStroke doc={doc} />))}
+          </tbody>
         </table>
       </div>
     </>
