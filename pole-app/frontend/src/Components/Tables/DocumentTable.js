@@ -26,7 +26,22 @@ const DocumentTable = () => {
         <Link to="/exiles/add"><button className="manage-button">Добавить запись</button></Link>
       </div>
 
-      {documentData && <p>{documentData}</p>}
+        {documentData.map(doc => (
+          <div key={doc.doc_id}>
+            <p>{doc.doc_fund}</p>
+            <p>{doc.doc_storage_unit}</p>
+            <p>{doc.doc_total_lists_num}</p>
+            <p>{doc.doc_url}</p>
+            <p>{doc.doc_additional_info}</p>
+            <p>{doc.doc_year}</p>
+            <p>{doc.doc_id}</p>
+            <p>{doc.doc_inventory}</p>
+            <p>{doc.doc_creator_id}</p>
+            <p>{doc.doc_creating_date}</p>
+            <p>{doc.doc_visible_mode}</p>
+            <p>{doc.doc_is_removed}</p>
+          </div>
+        ))}
 
       <div className="big-table">
         <table>
