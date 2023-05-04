@@ -26,7 +26,6 @@ const DocumentTable = () => {
       <h3>Список документов</h3>
       <div id='tools'>
         <Link to="/documents/add"><button className="manage-button">Добавить новый документ</button></Link>
-        <Link to="/exiles/add"><button className="manage-button">Добавить запись</button></Link>
       </div>
 
       <div className="big-table table">
@@ -46,7 +45,7 @@ const DocumentTable = () => {
             <th>Режим доступа</th>
           </thead>
           <tbody>
-            {documentData.map(doc => ( <DocumentStroke doc={doc} />))}
+            {documentData.map(doc => ( <DocumentStroke row={doc} />))}
           </tbody>
         </table>
       </div>

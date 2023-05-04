@@ -29,13 +29,34 @@ const TableExile = () => {
 
       {exileData &&
 
-      <div className="big-table">
+      <div className="big-table table">
         <table>
           <thead>
-
+            <th>№</th>
+            <th>Ф.И.О.</th>
+            <th>Пол</th>
+            <th>Должность</th>
+            <th>Губерния</th>
+            <th>Номер распоряжения</th>
+            <th>Дата распоряжения</th>
+            <th>Описание распоряжения</th>
+            <th>Распорядитель</th>
+            <th>Причина ссылки</th>
+            <th>Время начала надзора</th>
+            <th>Место учреждения надзора</th>
+            <th>Место отправки в ссылку</th>
+            <th>Пособие</th>
+            <th>Семейное положение</th>
+            <th>Информация о семье</th>
+            <th>Текущее состояние ссыльного</th>
+            <th>Дополнительная информация о ссыльном</th>
+            <th>ID создателя</th>
+            <th>Дата создания</th>
+            <th>Флаг удаления</th>
+            <th>Режим доступа</th>
           </thead>
           <tbody>
-            {exileData.map((item) => (<ExileStroke row={item}/>))}
+            {exileData.map(exl => ( <ExileStroke row={exl} />))}
           </tbody>
         </table>
       </div>

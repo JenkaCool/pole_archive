@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 const DocumentView = () => {
   const {id} = useParams();
   const [documentData, setDocumentData] = useState([]);
+  const [exileData, setExileData] = useState([]);
 
   const makeAPICall = async () => {
     try {
@@ -42,6 +43,10 @@ const DocumentView = () => {
         </div>
       </div>
       <Link to="/documents/edit"><button className="manage-button">Изменить документ</button></Link>
+      <div>
+        <h4> Список записей </h4>
+        <Link to="/exiles/add"><button className="manage-button">Добавить запись</button></Link>
+      </div>
     </>
   );
 }

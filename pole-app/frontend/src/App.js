@@ -9,6 +9,7 @@ import MainPage from './Components/MainPage';
 import ExileForm from './Components/Exile/ExileForm';
 import DocumentForm from './Components/Document/DocumentForm';
 import ExileView from './Components/Exile/ExileView';
+import ExileAdd from './Components/Exile/ExileAdd';
 import DocumentView from './Components/Document/DocumentView';
 import ExileTable from './Components/Tables/ExileTable';
 import DocumentTable from './Components/Tables/DocumentTable';
@@ -32,7 +33,7 @@ function App() {
                 <Route path="documents" element={<DocumentTable/>} />
                 <Route path="exiles" element={<ExileTable/>} />
                 <Route path="documents/add" element={<DocumentForm/>} />
-                <Route path="exiles/add" element={<ExileForm info={false}/>} />
+                <Route path="exiles/add" element={<ExileAdd info={false}/>} />
                 <Route path="documents/view/:id" element={<DocumentView/>} />
                 <Route path="exiles/view/?user=:id" element={<ExileView/>} />
                 <Route path="documents/edit" element={<DocumentForm info={true}/>} />

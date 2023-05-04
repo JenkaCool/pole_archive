@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
 
-const DocumentForm = ({info}) => {
+const DocumentEdit = ({info}) => {
   return (
     <>
-      <h3> {info ? "Изменение информации о документе" : "Добавление документа" }</h3>
+      <h3>Изменение информации о документе</h3>
       <section>
 	    <form onsubmit="alert('Поля удовлетворяют требованиям.');return false" className='form'>
 		  <fieldset className="docParams">
@@ -25,10 +25,10 @@ const DocumentForm = ({info}) => {
 		  </fieldset>
 		  <button name="submit" type="submit" className="manage-button">Добавить запись</button>
 		</form>
-		<button className="manage-button">{info ? "Восстановить исходные данные" : "Очистить" }</button>
+		<button className="manage-button">Восстановить исходные данные</button>
 	  </section>
     </>
   );
 }
 
-export default DocumentForm;
+export default DocumentEdit;

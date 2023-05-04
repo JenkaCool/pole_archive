@@ -18,6 +18,7 @@ body {
 }
 
 .Content {
+  padding-top: 30px;
   padding-bottom: 90px;
   min-height: 100vh;
 }

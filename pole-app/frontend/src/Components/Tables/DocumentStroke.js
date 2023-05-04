@@ -4,26 +4,26 @@ import { useNavigate } from "react-router-dom";
 
 import '../../css/Table.css';
 
-const DocumentStroke = ({doc}) => {
+const DocumentStroke = ({row}) => {
   const route = useNavigate();
 
   const hClick = (link) => {
     route(link);
   };
   return (
-    <tr key={doc.doc_id} onClick={() => route(`/documents/view/${doc.doc_id}`)}>
-      <td>{doc.doc_id}</td>
-      <td>{doc.doc_fund}</td>
-      <td>{doc.doc_inventory}</td>
-      <td>{doc.doc_storage_unit}</td>
-      <td>{doc.doc_total_lists_num}</td>
-      <td>{doc.doc_year}</td>
-      <td>{doc.doc_additional_info}</td>
-      <td>{doc.doc_url}</td>
-      <td>{doc.doc_creator_id}</td>
-      <td>{doc.doc_creating_date}</td>
-      <td>{doc.doc_is_removed}</td>
-      <td>{doc.doc_visible_mode}</td>
+    <tr key={row.doc_id} onClick={() => route(`/documents/view/${row.doc_id}`)}>
+      <td>{row.doc_id}</td>
+      <td>{row.doc_fund}</td>
+      <td>{row.doc_inventory}</td>
+      <td>{row.doc_storage_unit}</td>
+      <td>{row.doc_total_lists_num}</td>
+      <td>{row.doc_year}</td>
+      <td>{row.doc_additional_info}</td>
+      <td>{row.doc_url}</td>
+      <td>{row.doc_creator_id}</td>
+      <td>{row.doc_creating_date}</td>
+      <td>{row.doc_is_removed}</td>
+      <td>{row.doc_visible_mode}</td>
     </tr>
   );
 }
