@@ -7,9 +7,6 @@ import '../../css/Table.css';
 const DocumentStroke = ({row}) => {
   const route = useNavigate();
 
-  const hClick = (link) => {
-    route(link);
-  };
   return (
     <tr key={row.doc_id} onClick={() => route(`/documents/view/${row.doc_id}`)}>
       <td>{row.doc_id}</td>

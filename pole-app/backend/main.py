@@ -5,6 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 import json
 from flask_marshmallow import Marshmallow
+from decimal import Decimal
 
 app = Flask(__name__)
 
@@ -31,9 +32,6 @@ class Document(db.Model):
 
   def __repr__(self):
       return '<Document %r>' % self.doc_id
-
-db.Column(db.Integer, nullable=True)
-db.Column(db.Text, nullable=True)
 
 
 class Exile(db.Model):
@@ -64,23 +62,48 @@ class Exile(db.Model):
   def __repr__(self):
       return '<Exile %r>' % self.exl_id
 
+  def get_id(self):
+      return self.exl_id
 
 
-class SetEncoder(json.JSONEncoder):
-    def default(self, obj):
-        if isinstance(obj, set):
-            return list(obj)
-        return json.JSONEncoder.default(self, obj)
+class Income(db.Model):
+  __tablename__ = 'tblincome'
+  inc_id = db.Column(db.Integer, primary_key=True)
+  exl_id = db.Column(db.Integer, nullable=False)
+  inc_amount = db.Column(db.Float(20,2), nullable=True)
+  inc_currency = db.Column(db.String(50), nullable=True)
+  inc_source = db.Column(db.String(500), nullable=True)
+  inc_reason = db.Column(db.Text, nullable=False)
+  inc_period = db.Column(db.String(100), nullable=True)
+
+  def __repr__(self):
+      return '<Income %r>' % self.exl_id
+
 
 class DocumentSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = Document
         load_instance = True
 
+
 class ExileSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = Exile
         load_instance = True
+
+
+class IncomeSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = Income
+        load_instance = True
+
+
+def morph_dec(obj):
+    print(obj)
+    if isinstance(obj, Decimal):
+        return str(obj)
+    raise TypeError("Object of type '%s' is not JSON serializable" % type(obj).__name__)
+
 
 @app.route('/api/')
 def home():
@@ -103,12 +126,32 @@ def documents():
 def exiles():
     if request.method == 'GET':
       json_data=[]
-      exile_schema = ExileSchema()
-      exiles = Exile.query.all()
-      for exile in exiles:
-        json_data.append(exile_schema.dump(exile))
 
-    return json.dumps(json_data)
+      exile_schema = ExileSchema()
+      income_schema = IncomeSchema()
+
+      exiles = Exile.query.all()
+
+      for exile in exiles:
+        temp = {}
+        exile_temp=[]
+        income_temp = []
+        incomes = []
+        incomes = Income.query.filter(Income.exl_id == exile.get_id()).all()
+        if (incomes is None):
+          incomes = ''
+        else:
+          for income in incomes:
+            income_temp.append(income_schema.dump(income))
+            #income_temp.append(income_schema.dumps(income))
+
+        exile_temp = exile_schema.dump(exile)
+        temp['exile'] = exile_temp
+        temp['incomes'] = income_temp
+        json_data.append(temp)
+
+    print(json_data)
+    return json.dumps(json_data, default=morph_dec)
 
 
 @app.route('/api/documents/view/<id>', methods=['GET','POST'])

@@ -9,7 +9,8 @@ const TableExile = () => {
     try {
       const response = await fetch('http://localhost:8888/api/exiles/');
       const data = await response.json();
-      setExileData(data)
+      const objectData = data;
+      setExileData(objectData)
     }
     catch (e) {
       console.log(e)
