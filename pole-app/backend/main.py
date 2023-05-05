@@ -99,7 +99,6 @@ class IncomeSchema(ma.SQLAlchemyAutoSchema):
 
 
 def morph_dec(obj):
-    print(obj)
     if isinstance(obj, Decimal):
         return str(obj)
     raise TypeError("Object of type '%s' is not JSON serializable" % type(obj).__name__)
@@ -163,6 +162,35 @@ def one_document(id):
       json_data = document_schema.dump(doc)
 
     return json.dumps(json_data)
+
+
+@app.route('/api/exiles/view/<id>', methods=['GET','POST'])
+def one_exile(id):
+    if request.method == 'GET':
+      json_data=[]
+
+      exile_schema = ExileSchema()
+      income_schema = IncomeSchema()
+
+      temp = {}
+      income_temp = []
+      incomes = []
+
+      exile = Exile.query.filter_by(exl_id = id).one()
+
+      incomes = Income.query.filter(Income.exl_id == exile.get_id()).all()
+      if (incomes is None):
+        incomes = ''
+      else:
+        for income in incomes:
+          income_temp.append(income_schema.dump(income))
+
+      exile_temp = exile_schema.dump(exile)
+      temp['exile'] = exile_temp
+      temp['incomes'] = income_temp
+      json_data = temp
+
+    return json.dumps(json_data, default=morph_dec)
 
 
 @app.route('/api/documents/add/', methods=['POST'])

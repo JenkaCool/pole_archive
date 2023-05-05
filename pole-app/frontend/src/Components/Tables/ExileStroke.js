@@ -30,19 +30,21 @@ const ExileStroke = ({row}) => {
       <td>{exileData.exl_supervision_start_date}</td>
       <td>{exileData.exl_supervision_place}</td>
       <td>{exileData.exl_departure_place}</td>
-      <td><ul>
+      <td>{exileData.exl_income_flag == 0 ? <p>-</p>:
+        <ul>
+
         {incomesData.map(inc => (
-          <li>
-              <p>{exileData.exl_income_flag}</p>
-              <p>{inc.inc_id}</p>
-              <p>{inc.inc_amount}</p>
-              <p>{inc.inc_currency}</p>
-              <p>{inc.inc_source}</p>
-              <p>{inc.inc_reason}</p>
+            <li>
+              <p>{}</p>
+              {Number(inc.inc_amount) > 0 ?  <p>{Number(inc.inc_amount)} {inc.inc_currency}</p> : <></>}
+
               <p>{inc.inc_period}</p>
-          </li>
-        ))}
-      </ul></td>
+              <p>{inc.inc_reason}</p>
+              <p>{inc.inc_source}</p>
+            </li>
+          ))}
+        </ul>}
+      </td>
       <td>{exileData.exl_mar_status}</td>
       <td>{exileData.exl_family_info}</td>
       <td>{exileData.exl_cur_state}</td>
