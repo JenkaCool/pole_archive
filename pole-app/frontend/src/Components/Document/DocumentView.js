@@ -28,18 +28,39 @@ const DocumentView = () => {
   return (
     <>
       <h3>Информация о документе</h3>
-      <div>
-        <div>
+      <div className="info-form">
+        <div className="info-block">
           <h4> Документ </h4>
-          <p> Год документа: {documentData.doc_year}</p>
-          <p> Фонд: {documentData.doc_fund}</p>
-          <p> Опись: {documentData.doc_inventory}</p>
-          <p> Единица хранения: {documentData.doc_storage_unit}</p>
-          <p>Общее количество листов: {documentData.doc_total_lists_num}</p>
-          <p> Дополнительная информация: {documentData.doc_additional_info}</p>
-          <p> Ссылка на электронный ресурс: {documentData.doc_url}</p>
+          <div>
+            <p> Год документа: </p>
+            <p>{documentData.doc_year}</p>
+          </div>
+          <div>
+            <p> Фонд: </p>
+            <p>{documentData.doc_fund}</p>
+          </div>
+          <div>
+            <p> Опись: </p>
+            <p>{documentData.doc_inventory}</p>
+          </div>
+          <div>
+            <p> Единица хранения: </p>
+            <p>{documentData.doc_storage_unit}</p>
+          </div>
+          <div>
+            <p>Общее количество листов: </p>
+            <p>{documentData.doc_total_lists_num}</p>
+          </div>
+          <div>
+            <p> Дополнительная информация: </p>
+            <p>{documentData.doc_additional_info}</p>
+          </div>
+          <div>
+            <p> Ссылка на электронный ресурс: </p>
+            <p>{documentData.doc_url}</p>
+          </div>
         </div>
-        <div>
+        <div className="info-block">
           <p>Создатель: {documentData.doc_creator_id}</p>
           <p>Дата: {documentData.doc_creating_date}</p>
           <p>Тип удаления:{documentData.doc_is_removed}</p>
@@ -79,10 +100,6 @@ const DocumentView = () => {
             </div>:
             <p>Записей нет</p>
           }
-
-
-
-
       </div>
     </>
   );
