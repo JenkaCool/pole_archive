@@ -33,7 +33,7 @@ class Document(db.Model):
   def __repr__(self):
       return '<Document %r>' % self.doc_id
 
-  def get_doc_id(self):
+  def get_document_id(self):
       return self.doc_id
 
 
@@ -94,6 +94,13 @@ class Record(db.Model):
 
   def __repr__(self):
       return '<Record %r>' % self.rec_id
+
+  def get_exile_id(self):
+      return self.exl_id
+
+  def get_document_id(self):
+      return self.exl_id
+
 
 class Attachment(db.Model):
   __tablename__ = 'tblattachment'
@@ -233,14 +240,27 @@ def exiles():
 @app.route('/api/documents/view/<id>', methods=['GET','POST'])
 def one_document(id):
     if request.method == 'GET':
+      temp = {}
       json_data=[]
+      records_temp = []
       document_schema = DocumentSchema()
-      doc = Document.query.filter_by(doc_id = id).one()
+      record_schema = RecordSchema()
 
-      exile = Exile.query.filter_by(doc_id = Documentid).one()
+      document = Document.query.filter(Document.doc_id == id).one()
 
-      json_data = document_schema.dump(doc)
 
+      records = Record.query.filter(Record.doc_id == id).all()
+
+      for record in records:
+        temp = {}
+        record_temp = []
+        record_temp = record_schema.dump(record)
+        records_temp.append(record_temp)
+
+      temp['records'] = records_temp
+      json_data = temp
+
+      temp['document'] = document_schema.dump(document)
     return json.dumps(json_data)
 
 

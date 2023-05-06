@@ -7,6 +7,15 @@ import '../../css/Table.css';
 const DocumentStroke = ({row}) => {
   const route = useNavigate();
 
+  const [documentData, setDocumentData] = useState([]);
+  const [recordsData, setRecordsData] = useState([]);
+
+  useEffect(() => {
+    setDocumentData(row.document);
+    setRecordsData(row.records);
+  }, [row])
+
+
   return (
     <tr key={row.doc_id} onClick={() => route(`/documents/view/${row.doc_id}`)}>
       <td>{row.doc_id}</td>
