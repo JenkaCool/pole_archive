@@ -13,13 +13,6 @@ import passwordImg from '../../imgs/lock-closed-outline.svg';
 import emailImg from '../../imgs/mail-outline.svg';
 
 const SignUp = () => {
-  const salt = genSaltSync(12);
-
-  function hashPassword(password: string, salt): string {
-    const hashedPassword = hashSync(password, salt);
-    return hashedPassword;
-  }
-  
   const [register, setRegister] = useState(() => {
       return {
           username: "",
@@ -69,8 +62,7 @@ const SignUp = () => {
                 username: register.username,
                 role: register.role,
                 email: register.email,
-                salt: salt,
-                password: hashPassword(register.password, salt),
+                password: register.password,
                 date: getCurrentDate(),
               }
           }).then(res => {

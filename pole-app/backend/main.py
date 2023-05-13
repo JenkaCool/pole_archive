@@ -146,17 +146,18 @@ def one_exile(id):
 @app.route('/api/documents/add/', methods=['POST'])
 def document_add():
     if request.method == 'POST':
+      year = request.json["year"]
       fund = request.json["fund"]
       inventory = request.json["inventory"]
       storage_unit = request.json["storage_unit"]
       total_lists_num = request.json["total_lists_num"]
-      year = request.json["year"]
       additional_info = request.json["additional_info"]
       url = request.json["url"]
       creator_id = request.json["creator_id"]
+      date = request.json["date"]
       visible_mode = request.json["visible_mode"]
 
-      document = Document(doc_id = id, doc_fund = fund, doc_inventory = inventory, doc_storage_unit = storage_unit, doc_total_lists_num = total_lists_num, doc_year = year, doc_additional_info = additional_info, doc_url = url, doc_creator_id = creator_id, doc_creating_date = creating_date, doc_is_removed = is_removed, doc_visible_mode = visible_mode)
+      document = Document(doc_fund = fund, doc_inventory = inventory, doc_storage_unit = storage_unit, doc_total_lists_num = total_lists_num, doc_year = year, doc_additional_info = additional_info, doc_url = url, doc_creator_id = creator_id, doc_creating_date = date, doc_visible_mode = visible_mode)
       try:
         db.session.add(document)
         db.session.commit()
@@ -183,6 +184,7 @@ def user_add():
       except:
         db.session.rollback()
         return "An error occurred while adding"
+
 
 
 if __name__ == '__main__':

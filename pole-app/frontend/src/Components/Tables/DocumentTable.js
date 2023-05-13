@@ -21,6 +21,8 @@ const DocumentTable = () => {
   useEffect(() => {
     makeAPICall();
   }, [])
+
+
   return (
     <>
       <h3>Список документов</h3>
