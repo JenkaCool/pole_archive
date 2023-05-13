@@ -6,11 +6,20 @@ from datetime import datetime
 import json
 from flask_marshmallow import Marshmallow
 from decimal import Decimal
+import os
+from flask_session import Session
+import hashlib
+from hashlib import md5
+import bcrypt
 
 app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:''@localhost/PolE_archive'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+SESSION_TYPE = 'filesystem'
+app.config.from_object(__name__)
+Session(app)
 
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
@@ -188,6 +197,17 @@ def morph_dec(obj):
     raise TypeError("Object of type '%s' is not JSON serializable" % type(obj).__name__)
 
 
+def getSalt():
+  return bcrypt.gensalt()
+  # will be 29 chars
+
+def hashPassword(password, salt):
+  m = md5(salt)
+  m.update(password.encode('utf8'))
+  pwd = m.hexdigest()
+  return pwd
+
+
 @app.route('/api/')
 def home():
     return "Hello"
@@ -310,9 +330,32 @@ def document_add():
       try:
         db.session.add(document)
         db.session.commit()
+        return "Document was added"
       except:
         db.session.rollback()
         return "An error occurred while adding"
+
+
+@app.route('/api/signup/', methods=['POST'])
+def user_add():
+    if request.method == 'POST':
+      username = request.json["username"]
+      role = request.json["role"]
+      email = request.json["email"]
+      salt = getSalt()
+      hashed_password = hashPassword(request.json["password"], salt)
+      cur_date = request.json["date"]
+
+      user = User(usr_username=username, usr_email=email, usr_hashed_password=hashed_password, usr_salt=salt, usr_registration_date=cur_date)
+      try:
+        db.session.add(user)
+        db.session.commit()
+        return "User was added"
+      except:
+        db.session.rollback()
+        return "An error occurred while adding"
+
+
 
 if __name__ == '__main__':
     app.run(host="127.0.0.1", port="5000", debug=True)

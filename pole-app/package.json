@@ -23,6 +23,7 @@
     "bootstrap": "^5.2.3",
     "concurrently": "^7.6.0",
     "cors": "^2.8.5",
+    "hashlib": "^1.0.1",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.4",
     "react-router-dom": "^6.9.0",
