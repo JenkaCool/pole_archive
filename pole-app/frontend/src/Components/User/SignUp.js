@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+import md5 from 'md5';
 import axios from 'axios';
 import validator from 'validator';
 import { genSaltSync, hashSync, compareSync } from 'bcryptjs';
 import { DOMEN_SERVER, DOMEN_SITE } from '../../config/const';
-import md5 from 'md5';
+
 
 import '../../css/User.css';
 import userImg from '../../imgs/person-circle-outline.svg';
@@ -33,16 +34,6 @@ const SignUp = () => {
       })
   }
 
-    const changePasswordRegister = event => {
-        event.persist()
-        setRegister(prev => {
-            return {
-                ...prev,
-                [event.target.name]: md5(event.target.value),
-            }
-        })
-    }
-
   const submitChackin = event => {
       event.preventDefault();
       if(!validator.isEmail(register.email)) {
@@ -62,7 +53,7 @@ const SignUp = () => {
                 username: register.username,
                 role: register.role,
                 email: register.email,
-                password: register.password,
+                password: md5(register.password),
                 date: getCurrentDate(),
               }
           }).then(res => {

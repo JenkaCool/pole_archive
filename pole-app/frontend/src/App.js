@@ -16,6 +16,7 @@ import DocumentTable from './Components/Tables/DocumentTable';
 import Profile  from './Components/User/Profile';
 import LogIn from './Components/User/LogIn';
 import SignUp from './Components/User/SignUp';
+import PageNotFound from './Components/PageNotFound';
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
                 <Route path="exiles/view/:id" element={<ExileView/>} />
                 <Route path="documents/edit" element={<DocumentForm info={true}/>} />
                 <Route path="exiles/edit" element={<ExileForm info={true}/>} />
+                <Route path="404" element={<PageNotFound/>} />
             </Routes>
           </div>
           <Footer/>

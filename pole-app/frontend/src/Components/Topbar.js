@@ -1,8 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+import axios from 'axios';
 
 const Topbar = () => {
+  const handleClick = event => {
+      event.preventDefault();
+      axios.get("http://localhost:8888/api/logout/");
+  }
   return (
     <header className="App-header">
         <div id="contacts" className="in-one-role">
@@ -26,7 +31,7 @@ const Topbar = () => {
                 <Link to="/profile"> Профиль </Link>
                 <Link to="/login"><button className="auth-button"> Вход </button></Link>
                 <Link to="/signup"><button className="auth-button"> Регистрация </button></Link>
-                <Link to="/"><button className="auth-button"> Выход </button></Link>
+                <button className="auth-button" onClick={handleClick}> Выход </button>
             </div>
         </div>
     </header>

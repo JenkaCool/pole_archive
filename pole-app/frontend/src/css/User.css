@@ -53,7 +53,7 @@ h2 {
   transform: translateY(-50%);
   color: #6c6c6c;
   font-size: 1em;
-  point-event: none;
+  pointer-events: none;
   transition: .5s;
 }
 

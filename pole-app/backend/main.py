@@ -1,4 +1,4 @@
-from flask import Flask, request, abort, jsonify
+from flask import Flask, request, abort, jsonify, session
 #from flask_mysqldb import MySQL
 from datetime import datetime
 import json
@@ -7,17 +7,17 @@ from flask_session import Session
 import hashlib
 from hashlib import md5
 import bcrypt
-
 from models import *
 from view import *
 from models import db
 from view import ma
-
+#from config import ApplicationConfig
 
 app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:''@localhost/PolE_archive'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SECRET_KEY'] = r"jashdRAS123dshsh234jfg3sa4sddarrrr!31"
 
 SESSION_TYPE = 'filesystem'
 app.config.from_object(__name__)
@@ -25,6 +25,9 @@ Session(app)
 
 db.init_app(app)
 ma.init_app(app)
+
+#with app.app_context():
+#  db.create_all()
 
 def morph_dec(obj):
     if isinstance(obj, Decimal):
@@ -41,6 +44,12 @@ def hashPassword(password, salt):
   pwd = m.hexdigest()
   return pwd
 
+def checkPassword(password, salt):
+  m = md5(salt.encode('utf8'))
+  m.update(password.encode('utf8'))
+  pwd = m.hexdigest()
+  return pwd
+
 
 @app.route('/api/')
 def home():
@@ -48,6 +57,8 @@ def home():
 
 @app.route('/api/documents/', methods=['GET'])
 def documents():
+    if not session.get('user_id'):
+      abort(404)
     if request.method == 'GET':
       json_data=[]
       document_schema = DocumentSchema()
@@ -91,6 +102,8 @@ def exiles():
 
 @app.route('/api/documents/view/<id>', methods=['GET','POST'])
 def one_document(id):
+    if not session.get('user_id'):
+      abort(404)
     if request.method == 'GET':
       temp = {}
       json_data=[]
@@ -145,6 +158,9 @@ def one_exile(id):
 
 @app.route('/api/documents/add/', methods=['POST'])
 def document_add():
+    if not session.get('user_id'):
+      abort(404)
+
     if request.method == 'POST':
       year = request.json["year"]
       fund = request.json["fund"]
@@ -175,16 +191,83 @@ def user_add():
       salt = getSalt()
       hashed_password = hashPassword(request.json["password"], salt)
       cur_date = request.json["date"]
+      username_exists = User.query.filter_by(usr_username = username).first() is not None
+      email_exists = User.query.filter_by(usr_email = email).first() is not None
+
+      if username_exists:
+          return jsonify({"error" : "Username already used"}), 409
+
+      if email_exists:
+          return jsonify({"error" : "Email already used"}), 409
 
       user = User(usr_username=username, usr_email=email, usr_hashed_password=hashed_password, usr_salt=salt, usr_registration_date=cur_date)
       try:
         db.session.add(user)
         db.session.commit()
-        return "User was added"
+        return jsonify({
+           "id": user.usr_id,
+           "username": user.usr_username,
+           "role": user.usr_role,
+           "email": user.usr_email,
+        })
       except:
         db.session.rollback()
         return "An error occurred while adding"
 
+@app.route('/api/login/', methods=['POST'])
+def user_login():
+    if request.method == 'POST':
+      username = request.json["username"]
+      password = request.json["password"]
+
+      user = User.query.filter(User.usr_username == username).first()
+
+      if user is None:
+          return jsonify({"error" : "User or password incorrect"}), 401
+
+      print(user)
+      print(password)
+      print(user.usr_hashed_password)
+      print(checkPassword(password, user.usr_salt))
+      if not (user.usr_hashed_password == checkPassword(password, user.usr_salt)):
+          return jsonify({"error" : "User or password incorrect"}), 401
+
+      session['user_id'] = user.usr_id
+      session['username'] = user.usr_username
+      session['role'] = user.usr_role
+      session['email'] = user.usr_email
+      session['reg_date'] = user.usr_registration_date
+
+      return jsonify({
+         "id": user.usr_id,
+         "username": user.usr_username,
+         "role": user.usr_role,
+         "email": user.usr_email,
+      })
+
+@app.route('/api/profile/', methods=['GET'])
+def user_profile():
+    user_id = session.get("user_id")
+    if not user_id:
+      return jsonify({"error" : "Unauthorized"}), 401
+
+    username = session.get("username")
+    role = session.get("role")
+    email = session.get("email")
+    date = session.get("reg_date")
+
+    return jsonify({
+       "id": user_id,
+       "username": username,
+       "role": role,
+       "email": email,
+       "date": date,
+    })
+
+@app.route('/api/logout/', methods=['GET'])
+def user_logout():
+    session.pop('username', None)
+    return jsonify({"User logout"})
 
 
 if __name__ == '__main__':

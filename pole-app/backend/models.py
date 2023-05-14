@@ -28,7 +28,7 @@ class Document(db.Model):
   doc_inventory = db.Column(db.String(100), nullable=True)
   doc_storage_unit = db.Column(db.String(100), nullable=True)
   doc_total_lists_num = db.Column(db.Integer, nullable=True)
-  doc_year = db.Column(db.Integer, nullable=False)
+  doc_year = db.Column(db.Integer, nullable=False, unique=True)
   doc_additional_info = db.Column(db.Text, nullable=True)
   doc_url = db.Column(db.Text, nullable=True)
   doc_creator_id = db.Column(db.Integer, nullable=False, default=0)

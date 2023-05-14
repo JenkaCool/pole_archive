@@ -1,0 +1,24 @@
+.not-found {
+  padding: calc((100vh / 25) * 1.563) calc((100vw / 25) * 1.563);
+}
+
+.not-found ul {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.not-found ul li {
+  margin: 0 10px;
+  list-style-type:none;
+}
+
+.not-found ul p {
+  text-align: center;
+}
+
+.not-found ul a {
+  cursor: pointer;
+}
