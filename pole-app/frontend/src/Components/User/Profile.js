@@ -9,7 +9,7 @@ const Profile = () => {
     try {
       const response = await fetch('http://localhost:8888/api/profile/');
       const data = await response.json();
-      setProfileData(data)
+      setProfileData(data.token)
     }
     catch (e) {
       console.log(e)
@@ -22,13 +22,19 @@ const Profile = () => {
 
   return (
     <>
-      <h3>Профиль</h3>
-      <div>
-        <div><p>Логин:</p><p>{profileData.username}</p></div>
-        <div><p>Роль:</p><p>{profileData.role}</p></div>
-        <div><p>Email:</p><p>{profileData.email}</p></div>
-        <div><p>Дата регистрации:</p><p>{profileData.date}</p></div>
-      </div>
+      {profileData ?
+        <div>
+          <h3>Профиль</h3>
+          <div key={profileData.user_id}>
+            <div><p>Логин:</p><p>{profileData.username}</p></div>
+            <div><p>Роль:</p><p>{profileData.role}</p></div>
+            <div><p>Email:</p><p>{profileData.email}</p></div>
+            <div><p>Дата регистрации:</p><p></p></div>
+          </div>
+        </div>
+        :
+        <p>First login</p>
+      }
     </>
   );
 }

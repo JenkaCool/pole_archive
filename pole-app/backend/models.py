@@ -1,46 +1,23 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.dialects.mysql import TINYINT
 from datetime import datetime
+from sqlalchemy.orm import relationship
 
 db = SQLAlchemy()
 
-class Attachment(db.Model):
-  __tablename__ = 'tblattachment'
-  atc_id = db.Column(db.Integer, primary_key=True)
-  elx_id = db.Column(db.Integer, nullable=False)
-  atc_type = db.Column(db.String(255), nullable=False)
-  atc_url = db.Column(db.Text, nullable=False)
-  atc_serial_num = db.Column(db.Integer, nullable=True)
-  atc_add_info = db.Column(db.Text, nullable=True)
-  atc_creator_id = db.Column(db.Integer, nullable=False, default=0)
-  atc_creating_date = db.Column(db.DateTime, default=datetime.utcnow)
-  atc_is_removed = db.Column(TINYINT(1, unsigned=True), nullable=False, default=0)
-  atc_visible_mode = db.Column(db.Integer, nullable=False, default=0)
+class User(db.Model):
+  __tablename__ = 'tbluser'
+  usr_id = db.Column(db.Integer, primary_key=True)
+  usr_role = db.Column(db.String(100), nullable=False, default="user")
+  usr_username = db.Column(db.String(255), nullable=False)
+  usr_hashed_password = db.Column(db.String(255), nullable=False)
+  usr_salt = db.Column(db.String(1024), nullable=False)
+  usr_email = db.Column(db.String(255), nullable=True)
+  usr_registration_date = db.Column(db.DateTime, default=datetime.utcnow)
+  usr_is_removed = db.Column(TINYINT(1, unsigned=True), nullable=False, default=0)
 
   def __repr__(self):
-      return '<Attachment %r>' % self.atc_id
-
-
-class Document(db.Model):
-  __tablename__ = 'tbldocument'
-  doc_id = db.Column(db.Integer, primary_key = True)
-  doc_fund = db.Column(db.String(100), nullable=True)
-  doc_inventory = db.Column(db.String(100), nullable=True)
-  doc_storage_unit = db.Column(db.String(100), nullable=True)
-  doc_total_lists_num = db.Column(db.Integer, nullable=True)
-  doc_year = db.Column(db.Integer, nullable=False, unique=True)
-  doc_additional_info = db.Column(db.Text, nullable=True)
-  doc_url = db.Column(db.Text, nullable=True)
-  doc_creator_id = db.Column(db.Integer, nullable=False, default=0)
-  doc_creating_date = db.Column(db.DateTime, default=datetime.utcnow)
-  doc_is_removed = db.Column(TINYINT(1, unsigned=True), nullable=False, default=0)
-  doc_visible_mode = db.Column(db.Integer, nullable=False, default=0)
-
-  def __repr__(self):
-      return '<Document %r>' % self.doc_id
-
-  def get_document_id(self):
-      return self.doc_id
+      return '<User %r>' % self.usr_id
 
 
 class Exile(db.Model):
@@ -63,7 +40,8 @@ class Exile(db.Model):
   exl_family_info = db.Column(db.Text, nullable=True)
   exl_cur_state = db.Column(db.Text, nullable=True)
   exl_add_info = db.Column(db.Text, nullable=True)
-  exl_creator_id = db.Column(db.Integer, nullable=False, default=0)
+  exl_creator_id = db.Column(db.Integer, db.ForeignKey("tbluser.usr_id"), nullable=False, default=0)
+  creator = relationship(User)
   exl_creating_date = db.Column(db.DateTime, default=datetime.utcnow)
   exl_is_removed = db.Column(TINYINT(1, unsigned=True), nullable=False, default=0)
   exl_visible_mode = db.Column(db.Integer, nullable=False, default=0)
@@ -75,9 +53,57 @@ class Exile(db.Model):
       return self.exl_id
 
 
+class Attachment(db.Model):
+  __tablename__ = 'tblattachment'
+  atc_id = db.Column(db.Integer, primary_key=True)
+  #elx_id = db.Column(db.Integer, db.ForeignKey("tblexile.exl_id"), nullable=False)
+  #exile = relationship(Exile)
+  elx_id = db.Column(db.Integer, nullable=False)
+  atc_type = db.Column(db.String(255), nullable=False)
+  atc_url = db.Column(db.Text, nullable=False)
+  atc_serial_num = db.Column(db.Integer, nullable=True)
+  atc_add_info = db.Column(db.Text, nullable=True)
+  #atc_creator_id = db.Column(db.Integer, db.ForeignKey("tbluser.usr_id"), nullable=False, default=0)
+  #creator = relationship(User)
+  atc_creator_id = db.Column(db.Integer, nullable=False, default=0)
+  atc_creating_date = db.Column(db.DateTime, default=datetime.utcnow)
+  atc_is_removed = db.Column(TINYINT(1, unsigned=True), nullable=False, default=0)
+  atc_visible_mode = db.Column(db.Integer, nullable=False, default=0)
+
+  def __repr__(self):
+      return '<Attachment %r>' % self.atc_id
+
+
+class Document(db.Model):
+  __tablename__ = 'tbldocument'
+  doc_id = db.Column(db.Integer, primary_key = True)
+  doc_fund = db.Column(db.String(100), nullable=True)
+  doc_inventory = db.Column(db.String(100), nullable=True)
+  doc_storage_unit = db.Column(db.String(100), nullable=True)
+  doc_total_lists_num = db.Column(db.Integer, nullable=True)
+  doc_year = db.Column(db.Integer, nullable=False, unique=True)
+  doc_additional_info = db.Column(db.Text, nullable=True)
+  doc_url = db.Column(db.Text, nullable=True)
+  #doc_creator_id = db.Column(db.Integer, db.ForeignKey("tbluser.usr_id"), nullable=False, default=0)
+  #creator = relationship(User)
+  doc_creator_id = db.Column(db.Integer, nullable=False, default=0)
+  doc_creating_date = db.Column(db.DateTime, default=datetime.utcnow)
+  doc_is_removed = db.Column(TINYINT(1, unsigned=True), nullable=False, default=0)
+  doc_visible_mode = db.Column(db.Integer, nullable=False, default=0)
+
+  def __repr__(self):
+      return '<Document %r>' % self.doc_id
+
+  def get_document_id(self):
+      return self.doc_id
+
+
+
 class History(db.Model):
   __tablename__ = 'tblhistory'
   log_id = db.Column(db.Integer, primary_key=True)
+  #log_editor_id = db.Column(db.Integer, db.ForeignKey("tbluser.usr_id"), nullable=False)
+  #editor = relationship(User)
   log_editor_id = db.Column(db.Integer, nullable=False)
   log_changed_table = db.Column(db.Text, nullable=True)
   log_changed_field_name = db.Column(db.Text, nullable=True)
@@ -93,6 +119,8 @@ class History(db.Model):
 class Income(db.Model):
   __tablename__ = 'tblincome'
   inc_id = db.Column(db.Integer, primary_key=True)
+  #exl_id = db.Column(db.Integer, db.ForeignKey("tblexile.exl_id"), nullable=False)
+  #exile = relationship(Exile)
   exl_id = db.Column(db.Integer, nullable=False)
   inc_amount = db.Column(db.Float(20,2), nullable=True)
   inc_currency = db.Column(db.String(50), nullable=True)
@@ -107,9 +135,15 @@ class Income(db.Model):
 class Record(db.Model):
   __tablename__ = 'tblrecord'
   rec_id = db.Column(db.Integer, primary_key=True)
+  #doc_id = db.Column(db.Integer, db.ForeignKey("tbldocument.doc_id"), nullable=False)
+  #document = relationship(Document)
   doc_id = db.Column(db.Integer, nullable=False)
+  #exl_id = db.Column(db.Integer, db.ForeignKey("tblexile.exl_id"), nullable=False)
+  #exile = relationship(Exile)
   exl_id = db.Column(db.Integer, nullable=False)
   rec_list_num = db.Column(db.Integer, nullable=True)
+  #rec_creator_id = db.Column(db.Integer, db.ForeignKey("tbluser.usr_id"), nullable=False, default=0)
+  #creator = relationship(User)
   rec_creator_id = db.Column(db.Integer, nullable=False, default=0)
   rec_creating_date = db.Column(db.DateTime, default=datetime.utcnow)
   rec_is_removed = db.Column(TINYINT(1, unsigned=True), nullable=False, default=0)
@@ -125,16 +159,3 @@ class Record(db.Model):
       return self.exl_id
 
 
-class User(db.Model):
-  __tablename__ = 'tbluser'
-  usr_id = db.Column(db.Integer, primary_key=True)
-  usr_role = db.Column(db.String(100), nullable=False, default="user")
-  usr_username = db.Column(db.String(255), nullable=False)
-  usr_hashed_password = db.Column(db.String(255), nullable=False)
-  usr_salt = db.Column(db.String(1024), nullable=False)
-  usr_email = db.Column(db.String(255), nullable=True)
-  usr_registration_date = db.Column(db.DateTime, default=datetime.utcnow)
-  usr_is_removed = db.Column(TINYINT(1, unsigned=True), nullable=False, default=0)
-
-  def __repr__(self):
-      return '<User %r>' % self.usr_id

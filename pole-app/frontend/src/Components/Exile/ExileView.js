@@ -85,7 +85,7 @@ const ExileView = () => {
             <div className="info-block">
               <h4>Информация о получении содержания</h4>
                 {incomesData.map(inc => (
-                  <div className="list-item">
+                  <div className="list-item" key={inc.inc_id}>
                     {Number(inc.inc_amount) > 0 ?
                       <div>
                         <p> Количество денежных средств: </p>

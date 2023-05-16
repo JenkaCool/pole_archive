@@ -47,7 +47,7 @@ const DocumentTable = () => {
             <th>Режим доступа</th>
           </thead>
           <tbody>
-            {documentData.map(doc => ( <DocumentStroke row={doc} />))}
+            {documentData.map(doc => ( <DocumentStroke row={doc} key={doc.doc_id} />))}
           </tbody>
         </table>
       </div>

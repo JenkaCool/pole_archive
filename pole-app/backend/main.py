@@ -1,4 +1,4 @@
-from flask import Flask, request, abort, jsonify, session
+from flask import Flask, request, abort, jsonify, session,make_response
 #from flask_mysqldb import MySQL
 from datetime import datetime
 import json
@@ -12,12 +12,17 @@ from view import *
 from models import db
 from view import ma
 #from config import ApplicationConfig
+import jwt
+import os
+from datetime import datetime, timedelta
+from functools import wraps
+
 
 app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:''@localhost/PolE_archive'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SECRET_KEY'] = r"jashdRAS123dshsh234jfg3sa4sddarrrr!31"
+app.config['SECRET_KEY'] = os.urandom(24)
 
 SESSION_TYPE = 'filesystem'
 app.config.from_object(__name__)
@@ -50,6 +55,62 @@ def checkPassword(password, salt):
   pwd = m.hexdigest()
   return pwd
 
+def encode_token(user_id):
+    try:
+        payload = {
+            'exp': datetime.utcnow() + timedelta(days=0, seconds=3600 ),
+            'iat': datetime.utcnow(),
+            'sub': user_id
+        }
+        return jwt.encode(
+            payload,
+            app.config.get('SECRET_KEY'),
+            algorithm='HS256'
+        )
+    except Exception as e:
+        return e
+
+
+@staticmethod
+def decode_auth_token(auth_token):
+    try:
+        payload = jwt.decode(auth_token, app.config.get('SECRET_KEY'))
+        return payload['sub']
+    except jwt.ExpiredSignatureError:
+        return 'Signature expired. Please log in again.'
+    except jwt.InvalidTokenError:
+        return 'Invalid token. Please log in again.'
+
+
+def token_required(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        token = None
+        if "Authorization" in request.headers:
+            token = request.headers["Authorization"].split(" ")[1]
+            print(token)
+        if not token:
+            return {
+                "message": "Authentication Token is missing",
+                "error": "Unauthorized"
+            }, 401
+        try:
+            data=jwt.decode(token, app.config["SECRET_KEY"], algorithms=["HS256"])
+            current_user=User().get_by_id(data["user_id"])
+            if current_user is None:
+                return {
+                "message": "Invalid Authentication token",
+                "error": "Unauthorized"
+            }, 401
+        except Exception as e:
+            return {
+                "message": "An error Occured",
+                "error": str(e)
+            }, 500
+
+        return f(current_user, *args, **kwargs)
+
+    return decorated
 
 @app.route('/api/')
 def home():
@@ -194,28 +255,64 @@ def user_add():
       username_exists = User.query.filter_by(usr_username = username).first() is not None
       email_exists = User.query.filter_by(usr_email = email).first() is not None
 
-      if username_exists:
-          return jsonify({"error" : "Username already used"}), 409
-
-      if email_exists:
-          return jsonify({"error" : "Email already used"}), 409
-
       user = User(usr_username=username, usr_email=email, usr_hashed_password=hashed_password, usr_salt=salt, usr_registration_date=cur_date)
-      try:
-        db.session.add(user)
-        db.session.commit()
-        return jsonify({
-           "id": user.usr_id,
-           "username": user.usr_username,
-           "role": user.usr_role,
-           "email": user.usr_email,
-        })
-      except:
-        db.session.rollback()
-        return "An error occurred while adding"
+      if not username_exists or email_exists:
+        try:
+          db.session.add(user)
+          db.session.commit()
+          resp = {
+            "status":"success",
+            "message":"User successfully registered",
+          }
+          return make_response(jsonify(resp)),201
+
+        except Exception as e:
+          db.session.rollback()
+          print(e)
+          resp = {
+              "status" :"Error",
+             "message" :" Error occured, user registration failed"
+          }
+          return make_response(jsonify(resp)),401
+      else:
+          resp = {
+              "status":"Error",
+              "message":"User already exists"
+          }
+          return make_response(jsonify(resp)),202
 
 @app.route('/api/login/', methods=['POST'])
 def user_login():
+    username = request.json["username"]
+    password = request.json["password"]
+    #try:
+    #    user = User.query.filter(User.usr_username == username).first()
+
+    #    if user and checkPassword(password, user.usr_salt)==user.usr_hashed_password:
+    #        auth_token = encode_token(user.usr_id)
+    #        print(auth_token)
+    #        resp = {
+    #            "status":"Succes",
+    #            "message" :"Successfully logged in",
+    #            'auth_token':auth_token
+    #        }
+    #        return make_response(jsonify(resp)),200
+    #    else:
+    #        resp ={
+    #            "status":"Error",
+    #            "message":"User does not exist"
+    #        }
+    #        return make_response(jsonify(resp)), 404
+
+    #except Exception as e:
+    #    print(e)
+    #    resp = {
+    #        "Status":"Error",
+    #        "Message":"User login failed"
+    #    }
+    #    return make_response(jsonify(resp)), 404
+
+
     if request.method == 'POST':
       username = request.json["username"]
       password = request.json["password"]
@@ -223,27 +320,31 @@ def user_login():
       user = User.query.filter(User.usr_username == username).first()
 
       if user is None:
-          return jsonify({"error" : "User or password incorrect"}), 401
+          return jsonify({"Error" : "User or password incorrect"}), 401
 
-      print(user)
-      print(password)
-      print(user.usr_hashed_password)
-      print(checkPassword(password, user.usr_salt))
       if not (user.usr_hashed_password == checkPassword(password, user.usr_salt)):
-          return jsonify({"error" : "User or password incorrect"}), 401
+          return jsonify({"Error" : "User or password incorrect"}), 401
 
-      session['user_id'] = user.usr_id
-      session['username'] = user.usr_username
-      session['role'] = user.usr_role
-      session['email'] = user.usr_email
-      session['reg_date'] = user.usr_registration_date
+      token = {}
 
-      return jsonify({
-         "id": user.usr_id,
-         "username": user.usr_username,
-         "role": user.usr_role,
-         "email": user.usr_email,
-      })
+      token['user_id'] = user.usr_id
+      token['username'] = user.usr_username
+      token['role'] = user.usr_role
+      token['email'] = user.usr_email
+      token['reg_date'] = user.usr_registration_date
+
+      session['token'] = token
+
+      return jsonify({"token" : token})
+
+
+@app.route('/protected', methods=['GET'])
+@token_required
+def protected():
+
+   resp = {"message":"This is a protected view"}
+   return make_response(jsonify(resp)), 404
+
 
 @app.route('/api/profile/', methods=['GET'])
 def user_profile():
@@ -251,22 +352,13 @@ def user_profile():
     if not user_id:
       return jsonify({"error" : "Unauthorized"}), 401
 
-    username = session.get("username")
-    role = session.get("role")
-    email = session.get("email")
-    date = session.get("reg_date")
+    token = session.get("token")
 
-    return jsonify({
-       "id": user_id,
-       "username": username,
-       "role": role,
-       "email": email,
-       "date": date,
-    })
+    return jsonify({"token":token})
 
 @app.route('/api/logout/', methods=['GET'])
 def user_logout():
-    session.pop('username', None)
+    session.pop('token', None)
     return jsonify({"User logout"})
 
 

@@ -3,13 +3,13 @@ import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import md5 from 'md5';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 
 import '../../css/User.css';
 import userImg from '../../imgs/person-circle-outline.svg';
 import passwordImg from '../../imgs/lock-closed-outline.svg';
 
-
-const LogIn = () => {
+export default function Login({ setToken }) {
   const [inputs, setInputs] = useState(() => {
       return {
           username: "",
@@ -56,7 +56,7 @@ const LogIn = () => {
               }
           }).then(res => {
               if (res.data === true) {
-                  window.location.href = "http://localhost:8888/"
+                  window.location.href = "http://localhost:8888/documents/"
                   alert('User founded!');
               } else {
                   console.log("Ok")
@@ -74,7 +74,7 @@ const LogIn = () => {
           })
       }
   }
-  return (
+  return(
     <section>
       <div className="form-box">
         <div className="form-value">
@@ -105,7 +105,9 @@ const LogIn = () => {
         </div>
       </div>
     </section>
-  );
+  )
 }
 
-export default LogIn;
+Login.propTypes = {
+  setToken: PropTypes.func.isRequired
+};

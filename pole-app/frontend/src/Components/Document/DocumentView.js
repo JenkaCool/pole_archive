@@ -86,7 +86,7 @@ const DocumentView = () => {
                 </thead>
                 <tbody>
                   {recordsData.map(rec => (
-                    <tr onClick={() => route(`/exiles/view/${rec.exl_id}`)}>
+                    <tr key={rec.rec_id} onClick={() => route(`/exiles/view/${rec.exl_id}`)}>
                       <td>{rec.exl_id}</td>
                       <td>{rec.rec_list_num}</td>
                       <td>{rec.rec_creator_id}</td>

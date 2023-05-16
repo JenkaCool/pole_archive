@@ -9,6 +9,7 @@ const ExileStroke = ({row}) => {
 
   const [exileData, setExileData] = useState([]);
   const [incomesData, setIncomesData] = useState([]);
+  const id = null
 
   useEffect(() => {
     setExileData(row.exile);
@@ -16,7 +17,7 @@ const ExileStroke = ({row}) => {
   }, [row])
 
   return (
-    <tr key={exileData.exl_id} onClick={() => route(`/exiles/view/${exileData.exl_id}`)}>
+    <tr onClick={() => route(`/exiles/view/${exileData.exl_id}`)}>
       <td>{exileData.exl_id}</td>
       <td>{exileData.exl_full_name}</td>
       <td>{exileData.exl_gender}</td>
@@ -34,10 +35,8 @@ const ExileStroke = ({row}) => {
         <ul>
 
         {incomesData.map(inc => (
-            <li>
-              <p>{}</p>
+            <li key={inc.inc_id}>
               {Number(inc.inc_amount) > 0 ?  <p>{Number(inc.inc_amount)} {inc.inc_currency}</p> : <></>}
-
               <p>{inc.inc_period}</p>
               <p>{inc.inc_reason}</p>
               <p>{inc.inc_source}</p>

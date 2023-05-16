@@ -53,7 +53,7 @@ const TableExile = () => {
             <th>Режим доступа</th>
           </thead>
           <tbody>
-            {exileData.map(exl => ( <ExileStroke row={exl} />))}
+            {exileData.map(exl => ( <ExileStroke row={exl} key={exl.exl_id}/>))}
           </tbody>
         </table>
       </div>

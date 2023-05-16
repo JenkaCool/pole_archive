@@ -17,8 +17,22 @@ import Profile  from './Components/User/Profile';
 import LogIn from './Components/User/LogIn';
 import SignUp from './Components/User/SignUp';
 import PageNotFound from './Components/PageNotFound';
+import useToken from './Components/UseToken';
+
+
+function setToken(userToken) {
+  sessionStorage.setItem('token', JSON.stringify(userToken));
+}
+
+function getToken() {
+  const tokenString = sessionStorage.getItem('token');
+  const userToken = JSON.parse(tokenString);
+  return userToken?.token
+}
 
 function App() {
+  const { token, setToken } = useToken();
+
   return (
     <div className="App">
       <BrowserRouter>
