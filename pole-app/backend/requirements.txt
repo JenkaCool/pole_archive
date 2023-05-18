@@ -3,4 +3,4 @@ flask-sqlalchemy
 flask-bcrypt
 python-dotenv
 flask-session
-pyjwt
+Flask-JWT-Extended

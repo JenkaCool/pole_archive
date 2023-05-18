@@ -33,7 +33,7 @@ const Profile = () => {
           </div>
         </div>
         :
-        <p>First login</p>
+        <p>Сперва нужно авторизироваться</p>
       }
     </>
   );

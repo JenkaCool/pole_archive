@@ -4,42 +4,36 @@ import { useParams } from "react-router-dom";
 const ExileForm = ({info}) => {
   return (
     <>
-      <h3> {info ? "Изменение информации о ссыльном" : "Добавление ссыльного" }</h3>
+      <h3>Добавить ссыльного</h3>
       <section>
-	    <form onsubmit="alert('Поля удовлетворяют требованиям.'); return false" className='form'>
-          <fieldset className="commonForm">
+	    <form onsubmit="alert('Поля удовлетворяют требованиям.');return false" className='form'>
+          <fieldset class="commonForm">
 		    <p>
-		        <label for="creatorName">Имя создателя записи:<em style={{color: 'red'}}>*</em></label>
-			    <br/>
-			    <input type="text" id="creatorName" autofocus required />
+		      <label for="creatorName">Имя создателя записи:</label>
+			  <br/>
+			  <input type="text" id="creatorName" autofocus required />
             </p>
 		  </fieldset>
 
 		  <fieldset className="commonForm">
 		    <p>
-			    <label>Год документа:<em style={{color: 'red'}}>*</em></label>
-				<select id="docVars">
-				  <option>1873</option>
-				  <option>1874</option>
-				</select>
-				<br/><br/>
-				<label for="docIndo">Добавить новый документ</label>
-				<input type="checkbox" id="scales" name="docInfo" onchange="return pen()"/>
-                <fieldset id="formDocInfo">
-				  <legend><b>Новый документ</b></legend>
-				  <p> Фонд: </p>
-				  <input type="text" id="fund"/>
-				  <p> Опись: </p>
-				  <input type="text" id="inventory"/>
-				  <p> Единица хранения: </p>
-				  <input type="text" id="storageUnit"/>
-				  <p>Общее количество листов:<em style={{color: 'red'}}>*</em></p>
-				  <input type="text" id="totalListsNum" autofocus required />
-				  <p> Год: </p>
-				  <input type="text" id="orderYear"/>
-				  <p> Ссылка: </p>
-				  <input type="text" id="orderLink"/>
-				  </fieldset>
+			  <label>Год документа:<em style={{color: 'red'}}>*</em></label>
+			  <br/><br/>
+              <fieldset id="formDocInfo">
+			    <legend><b>Документ</b></legend>
+				<p> Фонд: </p>
+				<input type="text" id="fund"/>
+				<p> Опись: </p>
+				<input type="text" id="inventory"/>
+				<p> Единица хранения: </p>
+				<input type="text" id="storageUnit"/>
+			    <p>Общее количество листов:<em style={{color: 'red'}}>*</em></p>
+				<input type="text" id="totalListsNum" autofocus required />
+				<p> Год: </p>
+				<input type="text" id="orderYear"/>
+				<p> Ссылка: </p>
+				<input type="text" id="orderLink"/>
+		      </fieldset>
 		    </p>
 		  </fieldset>
 
@@ -95,12 +89,12 @@ const ExileForm = ({info}) => {
 		  <fieldset className="commonForm">
 			<legend><b>Дополнительная информация о ссыльном</b></legend>
 			<p>
-			    <label>Семейное положение:<em  style={{color: 'red'}}>*</em></label> <br/>
-				<input className="marStatus" type="radio" name="marStatusState" value="1" checked /> Неизвестно <br/>
-				<input className="marStatus" type="radio" name="marStatusState" value="2" /> Женат / замужем <br/>
-				<input className="marStatus" type="radio" name="marStatusState" value="3" /> Не женат / не замужем  <br/>
-				<input className="marStatus" type="radio" name="marStatusState" value="4" /> Разведён / разведена  <br/>
-				<input className="marStatus" type="radio" name="marStatusState" value="5" /> Состоит гражданском браке  <br/>
+			  <label>Семейное положение:<em  style={{color: 'red'}}>*</em></label> <br/>
+			  <input className="marStatus" type="radio" name="marStatusState" value="1" checked /> Неизвестно <br/>
+			  <input className="marStatus" type="radio" name="marStatusState" value="2" /> Женат / замужем <br/>
+			  <input className="marStatus" type="radio" name="marStatusState" value="3" /> Не женат / не замужем  <br/>
+			  <input className="marStatus" type="radio" name="marStatusState" value="4" /> Разведён / разведена  <br/>
+			  <input className="marStatus" type="radio" name="marStatusState" value="5" /> Состоит гражданском браке  <br/>
 			</p>
 
 			<p> Информация о семье: </p>

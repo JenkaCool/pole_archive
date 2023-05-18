@@ -1,19 +1,27 @@
 import { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useOutletContext } from "react-router-dom";
 import md5 from 'md5';
 import axios from 'axios';
 import PropTypes from 'prop-types';
+import { useCookies } from "react-cookie";
 
 import '../../css/User.css';
 import userImg from '../../imgs/person-circle-outline.svg';
 import passwordImg from '../../imgs/lock-closed-outline.svg';
 
-export default function Login({ setToken }) {
+
+const LogIn = () => {
+  const [_, setUser] = useOutletContext();
+
+  const [fail, setFail] = useState(null);
+  const [cookies, setCookie] = useCookies(["access_token", "username"]);
+  const navigate = useNavigate();
+
   const [inputs, setInputs] = useState(() => {
       return {
           username: "",
-          password: "",
+          password: ""
       }
   })
 
@@ -48,19 +56,33 @@ export default function Login({ setToken }) {
               method: 'post',
               url: "http://localhost:8888/api/login/",
               headers: {
-                'Content-type': 'application/json'
+                'Accept': 'application/json, text/plain',
+                'Content-Type': 'application/json;charset=UTF-8'
               },
-              data: {
+              data: JSON.stringify({
                 username: inputs.username,
                 password: inputs.password,
-              }
-          }).then(res => {
-              if (res.data === true) {
-                  window.location.href = "http://localhost:8888/documents/"
-                  alert('User founded!');
+              })
+          })
+          .then(response => {
+              if (response.status === 200) {
+                alert('User founded!');
               } else {
-                  console.log("Ok")
-                  alert("Username or password incorrect")
+                  alert("Username or password incorrect");
+              }
+              return response.data;
+          }).then(data => {
+              console.log("Ok");
+              console.log(data);
+              if ("access_token" in data) {
+                setFail(false);
+                setCookie("access_token", data.access_token);
+                setCookie("username", inputs.username);
+                console.log(data.access_token);
+                setUser(inputs.username);
+                navigate("/");
+              } else {
+                setFail(true);
               }
           }).catch((err) => {
               if (!err?.response) {
@@ -74,7 +96,15 @@ export default function Login({ setToken }) {
           })
       }
   }
-  return(
+
+  if (cookies.username)
+    return (
+      <div>
+        <h2 id="ErrorMessage">You should logout first!</h2>
+      </div>
+    );
+
+  return (
     <section>
       <div className="form-box">
         <div className="form-value">
@@ -98,16 +128,11 @@ export default function Login({ setToken }) {
                 <label for=""><input type="checkbox"></input></label>
                 <label for="">Запомнить меня</label>
               </div>
-              <div className="register">
-                <p>Нет аккаунта? <Link>Зарегистрироваться</Link></p>
-              </div>
           </form>
         </div>
       </div>
     </section>
-  )
+  );
 }
 
-Login.propTypes = {
-  setToken: PropTypes.func.isRequired
-};
+export default LogIn;

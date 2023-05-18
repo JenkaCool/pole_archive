@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useOutletContext } from "react-router-dom";
 import md5 from 'md5';
 import axios from 'axios';
 import validator from 'validator';
 import { genSaltSync, hashSync, compareSync } from 'bcryptjs';
 import { DOMEN_SERVER, DOMEN_SITE } from '../../config/const';
+import { useCookies } from "react-cookie";
 
 
 import '../../css/User.css';
@@ -14,13 +15,16 @@ import passwordImg from '../../imgs/lock-closed-outline.svg';
 import emailImg from '../../imgs/mail-outline.svg';
 
 const SignUp = () => {
+  const [_, setUser] = useOutletContext();
+  const [cookies, setCookie] = useCookies(["access_token", "username"]);
+
   const [register, setRegister] = useState(() => {
       return {
           username: "",
           role: "",
           email: "",
           password: "",
-          password2: "",
+          password_confirm: "",
       }
   })
 
@@ -38,7 +42,7 @@ const SignUp = () => {
       event.preventDefault();
       if(!validator.isEmail(register.email)) {
           alert("You did not enter email")
-      } else if(register.password !== register.password2) {
+      } else if(register.password !== register.password_confirm) {
           alert("Repeated password incorrectly")
       } else if(!validator.isStrongPassword(register.password, {minSymbols: 0})) {
           alert("Password must consist of one lowercase, uppercase letter and number, at least 8 characters")
@@ -58,12 +62,13 @@ const SignUp = () => {
               }
           }).then(res => {
 
-              if (res.data === true) {
+              if (res.status === 200) {
                   window.location.href = "http://localhost:8888/login/"
                   alert('User created!');
+                  return res.json();
               } else {
-                  console.log("Ok")
-                  alert("There is already a user with this email")
+
+                  alert("There has some error")
               }
           }).catch((err) => {
               if (!err?.response) {
@@ -116,7 +121,7 @@ const SignUp = () => {
                   onChange={changeInputRegister}
                   required>
                 </input>
-                <label for="">Role</label>
+                <label for="">Роль</label>
               </div>
               <div className="input-box">
                 <img className="user-icon" src={emailImg} />
@@ -145,18 +150,15 @@ const SignUp = () => {
               <div className="input-box">
                 <input
                   type="password"
-                  id="password2"
-                  name="password2"
-                  value={register.password2}
+                  id="password_confirm"
+                  name="password_confirm"
+                  value={register.password_confirm}
                   onChange={changeInputRegister}
                   required>
                 </input>
                 <label for="">Повторите пароль</label>
               </div>
               <button type="submit">Зарегистрироваться</button>
-              <div className="register">
-                <p>Есть аккаунт? <Link>Авторизироваться</Link></p>
-              </div>
           </form>
         </div>
       </div>

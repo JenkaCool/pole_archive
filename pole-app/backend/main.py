@@ -1,6 +1,5 @@
 from flask import Flask, request, abort, jsonify, session,make_response
 #from flask_mysqldb import MySQL
-from datetime import datetime
 import json
 from decimal import Decimal
 from flask_session import Session
@@ -16,9 +15,17 @@ import jwt
 import os
 from datetime import datetime, timedelta
 from functools import wraps
-
+from flask_jwt_extended import (
+    create_access_token,
+    create_refresh_token,
+    jwt_required,
+    get_jwt_identity,
+    unset_jwt_cookies
+)
+from flask_jwt_extended import JWTManager
 
 app = Flask(__name__)
+
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:''@localhost/PolE_archive'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -31,28 +38,54 @@ Session(app)
 db.init_app(app)
 ma.init_app(app)
 
+jwt = JWTManager(app)
 #with app.app_context():
 #  db.create_all()
 
-def morph_dec(obj):
+"""
+morphDec преобразует число в вид строки, который поддерживает сериализацию json.
+
+:param obj: прередаваемое число
+:return: преобразованое число в формате строки
+"""
+def morphDec(obj):
     if isinstance(obj, Decimal):
         return str(obj)
     raise TypeError("Object of type '%s' is not JSON serializable" % type(obj).__name__)
 
+
+"""
+getSalt генерирует соль для пароля.
+
+:return: случайно сгенерированно 29 битовых символа
+"""
 def getSalt():
   return bcrypt.gensalt()
   # will be 29 chars
 
+"""
+hashPassword хэширует пароль с помощью соли и md5.
+
+:param password: зашифрованный пароль с помощью md5
+:param salt: соль
+:return: зашифрованный пароль
+"""
 def hashPassword(password, salt):
   m = md5(salt)
   m.update(password.encode('utf8'))
   pwd = m.hexdigest()
   return pwd
 
+"""
+checkPassword шифрует пароль для проверки с помощью соли и md5.
+
+:param password: зашифрованный пароль с помощью md5
+:param salt: соль, недекодированная
+:return: зашифрованный пароль
+"""
 def checkPassword(password, salt):
-  m = md5(salt.encode('utf8'))
-  m.update(password.encode('utf8'))
-  pwd = m.hexdigest()
+  salt = salt.encode('utf8')
+  pwd = hashPassword (password, salt)
   return pwd
 
 def encode_token(user_id):
@@ -159,7 +192,7 @@ def exiles():
         json_data.append(temp)
 
     print(json_data)
-    return json.dumps(json_data, default=morph_dec)
+    return json.dumps(json_data, default=morphDec)
 
 @app.route('/api/documents/view/<id>', methods=['GET','POST'])
 def one_document(id):
@@ -215,7 +248,7 @@ def one_exile(id):
       temp['incomes'] = income_temp
       json_data = temp
 
-    return json.dumps(json_data, default=morph_dec)
+    return json.dumps(json_data, default=morphDec)
 
 @app.route('/api/documents/add/', methods=['POST'])
 def document_add():
@@ -250,28 +283,46 @@ def user_add():
       role = request.json["role"]
       email = request.json["email"]
       salt = getSalt()
-      hashed_password = hashPassword(request.json["password"], salt)
+      password = request.json["password"]
+      password_confirm = request.json["password_confirm"]
       cur_date = request.json["date"]
+
+      if username == None:
+        return {'msg': 'Missing username'}, 422
+
+      if password == None:
+        return {'msg': 'Missing password'}, 422
+
+      if password_confirm == None:
+        return {'msg': 'Missing password confirm'}, 422
+
+      if password != password_confirm:
+          return {'msg': 'Passwords doesn\'t match'}, 401
+
+      hashed_password = hashPassword(request.json["password"], salt)
+      user = User(usr_username=username, usr_email=email, usr_hashed_password=hashed_password, usr_salt=salt, usr_registration_date=cur_date)
+
       username_exists = User.query.filter_by(usr_username = username).first() is not None
       email_exists = User.query.filter_by(usr_email = email).first() is not None
 
-      user = User(usr_username=username, usr_email=email, usr_hashed_password=hashed_password, usr_salt=salt, usr_registration_date=cur_date)
+      access_token = create_access_token(identity=username)
+
       if not username_exists or email_exists:
         try:
           db.session.add(user)
           db.session.commit()
           resp = {
-            "status":"success",
+            "status":"Success",
             "message":"User successfully registered",
+            "access_token": access_token
           }
-          return make_response(jsonify(resp)),201
+          return make_response(jsonify(resp)), 200
 
         except Exception as e:
           db.session.rollback()
-          print(e)
           resp = {
               "status" :"Error",
-             "message" :" Error occured, user registration failed"
+              "message" :" Error occured, user registration failed"
           }
           return make_response(jsonify(resp)),401
       else:
@@ -279,12 +330,10 @@ def user_add():
               "status":"Error",
               "message":"User already exists"
           }
-          return make_response(jsonify(resp)),202
+          return make_response(jsonify(resp)),409
 
 @app.route('/api/login/', methods=['POST'])
 def user_login():
-    username = request.json["username"]
-    password = request.json["password"]
     #try:
     #    user = User.query.filter(User.usr_username == username).first()
 
@@ -325,17 +374,9 @@ def user_login():
       if not (user.usr_hashed_password == checkPassword(password, user.usr_salt)):
           return jsonify({"Error" : "User or password incorrect"}), 401
 
-      token = {}
-
-      token['user_id'] = user.usr_id
-      token['username'] = user.usr_username
-      token['role'] = user.usr_role
-      token['email'] = user.usr_email
-      token['reg_date'] = user.usr_registration_date
-
-      session['token'] = token
-
-      return jsonify({"token" : token})
+      access_token = create_access_token(identity=username)
+      response = {"access_token":access_token}
+      return response
 
 
 @app.route('/protected', methods=['GET'])
@@ -351,15 +392,16 @@ def user_profile():
     user_id = session.get("user_id")
     if not user_id:
       return jsonify({"error" : "Unauthorized"}), 401
-
-    token = session.get("token")
-
-    return jsonify({"token":token})
+    temp = {}
+    token = json.dump(session.get("token"))
+    temp['token'] = token
+    return json.dumps(temp), 200
 
 @app.route('/api/logout/', methods=['GET'])
 def user_logout():
-    session.pop('token', None)
-    return jsonify({"User logout"})
+    response = jsonify({"msg": "Logout ok"})
+    unset_jwt_cookies(response)
+    return response
 
 
 if __name__ == '__main__':

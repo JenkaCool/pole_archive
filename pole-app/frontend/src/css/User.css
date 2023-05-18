@@ -10,7 +10,6 @@ section {
   align-items: center;
   min-height: 80vh;
   width: 100%;
-  background: #f9f9f9;
 }
 /*#d8d8d8*/
 .form-box {
@@ -18,8 +17,8 @@ section {
   width: 400px;
   height: 450px;
   background: #d8d8;
-  background: rgba(255, 160, 107, 0.15);
-  border: 2px solid rgba(255, 160, 107, 0.5);
+  background: #EDF2F7;
+  border: 2px solid rgba(60, 60, 60, 0.1);
   border-radius: 5px;
   background-filter: blur(15px);
   display: flex;
@@ -42,7 +41,7 @@ h2 {
   position: relative;
   margin: 30px 0;
   width: 310px;
-  border-bottom: 2px solid #797979;
+  border-bottom: 2px solid #EDF2F7;
 
 }
 
@@ -112,7 +111,7 @@ input:valid ~ label {
 }
 
 .forget a:hover{
-  color: #F19460;
+  color: #315BA5;
   text-decoration: underline;
 }
 
@@ -125,12 +124,13 @@ input:valid ~ label {
   font-size: 1em;
   font-weight: 600;
   color: #ffffff;
-  background: rgba(255, 160, 107, 0.8);
+  background: #4A5568;
+  transition: 0.6s;
 }
 
 .form-box button:hover {
   color: #f5f5f5;
-  background: rgba(255, 160, 107, 0.7);
+  background: #315BA5;
 }
 
 .remember {
@@ -166,6 +166,6 @@ input:valid ~ label {
 }
 
 .register p a:hover{
-  color: #F19460;
+  color: #315BA5;
   text-decoration: underline;
 }

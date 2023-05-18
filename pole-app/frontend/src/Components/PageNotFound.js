@@ -6,15 +6,15 @@ import '../css/PageNotFound.css';
 function PageNotFound() {
   return (
     <div className="page-content not-found center-page-align inside-padding">
-      <h1> Oh, no! </h1>
-      <h2> #404 (Page not found) </h2>
+      <h1> Ох, нет! </h1>
+      <h2> #404 (Страница не найдена) </h2>
       <br></br>
-      <p> An error has occurred! Don't worry, we've already assigned this task to our best robot. </p>
+      <p> Произошла ошибка! Не волнуйтесь, мы уже поручили эту задачу нашему лучшему роботу. </p>
       <br></br>
-      <p> In the meantime, try these links: </p>
+      <p> Пока что попробуйте другие ссылки: </p>
       <ul>
         <li>
-          <Link to="/" className="page-link"> Main page  </Link>
+          <Link to="/" className="page-link"> Главная страница  </Link>
         </li>
       </ul>
     </div>
