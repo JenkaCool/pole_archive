@@ -19,6 +19,8 @@ class User(db.Model):
   def __repr__(self):
       return '<User %r>' % self.usr_id
 
+  def get_user_id(self):
+    return self.usr_id
 
 class Exile(db.Model):
   __tablename__ = 'tblexile'

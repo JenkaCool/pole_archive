@@ -20,6 +20,13 @@ const Topbar = () => {
     setUser(null);
     navigate("/");
   }
+
+  if (cookies.username && user == null) {
+    setUser(cookies.username);
+    setCookie("username", cookies.username);
+    console.log("Ok")
+  }
+
   return (
     <header className="App-header">
         <div id="contacts" className="in-one-role">
@@ -40,10 +47,18 @@ const Topbar = () => {
                 <Link to="/documents"> Документы </Link>
             </div>
             <div id='authorization'>
-                <Link to="/profile"> Профиль </Link>
-                <Link to="/login"><button className="auth-button"> Вход </button></Link>
-                <Link to="/signup"><button className="auth-button"> Регистрация </button></Link>
-                <button className="auth-button" onClick={handleClick}> Выход </button>
+              {user ?
+                <>
+                  <Link to="/users"> Пользователи </Link>
+                  <span id="userLogin">{user}</span>
+                  <Link to="/profile"> Профиль </Link>
+                  <button className="auth-button" onClick={handleClick}> Выход </button>
+                </>
+                :
+                <>
+                  <Link to="/login"><button className="auth-button"> Вход </button></Link>
+                </>
+              }
             </div>
         </div>
     </header>

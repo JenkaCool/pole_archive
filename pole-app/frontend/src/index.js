@@ -17,10 +17,12 @@ import ExileAdd from './Components/Exile/ExileAdd';
 import DocumentView from './Components/Document/DocumentView';
 import ExileTable from './Components/Tables/ExileTable';
 import DocumentTable from './Components/Tables/DocumentTable';
+import UserTable from './Components/Tables/UserTable';
 import Profile  from './Components/User/Profile';
 import LogIn from './Components/User/LogIn';
 import SignUp from './Components/User/SignUp';
 import PageNotFound from './Components/PageNotFound';
+
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -35,6 +37,7 @@ root.render(
           <Route exact path="profile" element={<Profile/>} />
           <Route exact path="documents" element={<DocumentTable/>} />
           <Route exact path="exiles" element={<ExileTable/>} />
+          <Route exact path="users" element={<UserTable/>} />
           <Route exact path="documents/add" element={<DocumentForm/>} />
           <Route exact path="exiles/add" element={<ExileAdd info={false}/>} />
           <Route exact path="documents/view/:id" element={<DocumentView/>} />

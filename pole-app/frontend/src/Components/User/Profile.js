@@ -1,39 +1,65 @@
 import { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 import '../../css/User.css';
 
 const Profile = () => {
-  const [profileData, setProfileData] = useState([]);
+  const [cookies, setCookie] = useCookies(["access_token", "username"]);
+
+  const [userLogin, setUserLogin] = useState(false);
+  const [userId, setUserId] = useState(0);
+  const [username, setUsername] = useState(null);
+  const [role, setRole] = useState(null);
+  const [email, setEmail] = useState(null);
+  const [date, setDate] = useState(null);
+
+  function setData(data) {
+    setUserLogin(true);
+    setUserId(data.id);
+    setUsername(data.username);
+    setRole(data.role);
+    setEmail(data.email);
+    setData(data.date);
+  }
+
   const makeAPICall = async () => {
     try {
       const response = await fetch('http://localhost:8888/api/profile/');
       const data = await response.json();
-      setProfileData(data.token)
+      setData(data)
     }
     catch (e) {
       console.log(e)
     }
   }
   useEffect(() => {
-    makeAPICall();
+    if (cookies.username && cookies.username!="" && cookies.username!=undefined){
+      makeAPICall();
+    }
   }, [])
 
+  if (!cookies.username || cookies.username=="" || cookies.username==undefined)
+    return (
+      <div>
+        <h4 id="ErrorMessage"> Просмотр данного материала доступен только авторизированному пользователю.</h4>
+      </div>
+    );
 
   return (
     <>
-      {profileData ?
+      {userLogin ?
         <div>
           <h3>Профиль</h3>
-          <div key={profileData.user_id}>
-            <div><p>Логин:</p><p>{profileData.username}</p></div>
-            <div><p>Роль:</p><p>{profileData.role}</p></div>
-            <div><p>Email:</p><p>{profileData.email}</p></div>
-            <div><p>Дата регистрации:</p><p></p></div>
+          <div key={userId}>
+            <div><p>Логин:</p><p>{username}</p></div>
+            <div><p>Роль:</p><p>{role}</p></div>
+            <div><p>Email:</p><p>{email}</p></div>
+            <div><p>Дата регистрации:</p><p>{date}</p></div>
           </div>
         </div>
         :
-        <p>Сперва нужно авторизироваться</p>
+        <p>Данные о пользователе не найдены</p>
       }
     </>
   );

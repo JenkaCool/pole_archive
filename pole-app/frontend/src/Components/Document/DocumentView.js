@@ -2,10 +2,13 @@ import { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
+
 
 const DocumentView = () => {
   const route = useNavigate();
   const {id} = useParams();
+  const [cookies, setCookie] = useCookies(["access_token", "username"]);
 
   const [documentData, setDocumentData] = useState([]);
   const [recordsData, setRecordsData] = useState([]);
@@ -22,8 +25,17 @@ const DocumentView = () => {
     }
   }
   useEffect(() => {
-    makeAPICall();
+    if (cookies.username && cookies.username!="" && cookies.username!=undefined){
+      makeAPICall();
+    }
   }, [])
+
+  if (!cookies.username || cookies.username=="" || cookies.username==undefined)
+    return (
+      <div>
+        <h4 id="ErrorMessage"> Просмотр данного материала доступен только авторизированному пользователю.</h4>
+      </div>
+    );
 
   return (
     <>

@@ -194,6 +194,24 @@ def exiles():
     print(json_data)
     return json.dumps(json_data, default=morphDec)
 
+@app.route('/api/users/', methods=['GET'])
+def users():
+    if request.method == 'GET':
+        json_data=[]
+
+        varlist = ['usr_id','usr_role','usr_username','usr_email','usr_registration_date']
+        users = User.query.all()
+        user_schema = UserSchema(only=varlist)
+        users
+        for user in users:
+            temp = {}
+            records = Record.query.filter(Record.rec_creator_id == user.get_user_id()).count()
+            user_temp = user_schema.dump(user)
+            temp['user'] = user_temp
+            temp['records_count'] = records
+            json_data.append(temp)
+    return json.dumps(json_data, default=morphDec)
+
 @app.route('/api/documents/view/<id>', methods=['GET','POST'])
 def one_document(id):
     if not session.get('user_id'):
@@ -334,34 +352,6 @@ def user_add():
 
 @app.route('/api/login/', methods=['POST'])
 def user_login():
-    #try:
-    #    user = User.query.filter(User.usr_username == username).first()
-
-    #    if user and checkPassword(password, user.usr_salt)==user.usr_hashed_password:
-    #        auth_token = encode_token(user.usr_id)
-    #        print(auth_token)
-    #        resp = {
-    #            "status":"Succes",
-    #            "message" :"Successfully logged in",
-    #            'auth_token':auth_token
-    #        }
-    #        return make_response(jsonify(resp)),200
-    #    else:
-    #        resp ={
-    #            "status":"Error",
-    #            "message":"User does not exist"
-    #        }
-    #        return make_response(jsonify(resp)), 404
-
-    #except Exception as e:
-    #    print(e)
-    #    resp = {
-    #        "Status":"Error",
-    #        "Message":"User login failed"
-    #    }
-    #    return make_response(jsonify(resp)), 404
-
-
     if request.method == 'POST':
       username = request.json["username"]
       password = request.json["password"]
