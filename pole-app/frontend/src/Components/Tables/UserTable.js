@@ -36,6 +36,7 @@ const TableUser = () => {
   return (
     <>
       <h3>Список пользователей</h3>
+      <Link to="/signup"><button className="auth-button"> Добавить пользователя </button></Link>
       {userData &&
       <div className="big-table table">
         <table>

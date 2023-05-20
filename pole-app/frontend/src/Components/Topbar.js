@@ -19,6 +19,7 @@ const Topbar = () => {
     removeCookie("username");
     setUser(null);
     navigate("/");
+    window.location.reload();
   }
 
   if (cookies.username && user == null) {

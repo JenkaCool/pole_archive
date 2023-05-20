@@ -7,16 +7,45 @@ import validator from 'validator';
 import { genSaltSync, hashSync, compareSync } from 'bcryptjs';
 import { DOMEN_SERVER, DOMEN_SITE } from '../../config/const';
 import { useCookies } from "react-cookie";
-
+import { HandySvg } from 'handy-svg'
 
 import '../../css/User.css';
 import userImg from '../../imgs/person-circle-outline.svg';
 import passwordImg from '../../imgs/lock-closed-outline.svg';
 import emailImg from '../../imgs/mail-outline.svg';
+import eyeImg from '../../imgs/eye.svg';
+import eyeOffImg from '../../imgs/eye-off.svg';
 
 const SignUp = () => {
   const [_, setUser] = useOutletContext();
   const [cookies, setCookie] = useCookies(["access_token", "username"]);
+
+  const [ type, setType] = useState('password');
+  const [ confirmType, setConfirmType] = useState('password');
+  const [ passwordOpen, setPasswordOpen] = useState(false);
+  const [ passwordConfirmOpen, setPasswordConfirmOpen] = useState(false);
+
+  const changeType = event => {
+    if (type==="password")
+    {
+      setType('text');
+      setPasswordOpen(true);
+    } else {
+      setType('password');
+      setPasswordOpen(false);
+    }
+  }
+
+  const changeConfirmType = event => {
+    if (confirmType==="password")
+    {
+      setConfirmType('text');
+      setPasswordConfirmOpen(true);
+    } else {
+      setConfirmType('password');
+      setPasswordConfirmOpen(false);
+    }
+  }
 
   const [register, setRegister] = useState(() => {
       return {
@@ -99,7 +128,7 @@ const SignUp = () => {
       <div className="form-box reg">
         <div className="form-value">
           <form className="login-box" onSubmit={submitChackin}>
-            <h2>Регистрация</h2>
+            <h2>Новая учётная запись</h2>
               <div className="input-box">
                 <img className="user-icon" src={userImg} />
                 <input
@@ -113,6 +142,7 @@ const SignUp = () => {
                 <label for="">Логин</label>
               </div>
               <div className="input-box">
+                <img className="user-icon" src={userImg} />
                 <input
                   type="text"
                   id="role"
@@ -136,9 +166,13 @@ const SignUp = () => {
                 <label for="">Email</label>
               </div>
               <div className="input-box">
-                <img className="user-icon" src={passwordImg} />
+                {passwordOpen ?
+                <HandySvg className="user-icon-touchable" src={eyeOffImg} onClick={() => changeType()}/>
+                :
+                <HandySvg className="user-icon-touchable" src={eyeImg} onClick={() => changeType()}/>
+                }
                 <input
-                  type="password"
+                  type={type}
                   id="password"
                   name="password"
                   value={register.password}
@@ -148,8 +182,13 @@ const SignUp = () => {
                 <label for="">Пароль</label>
               </div>
               <div className="input-box">
+                { passwordConfirmOpen ?
+                <HandySvg className="user-icon-touchable" src={eyeOffImg} onClick={() => changeConfirmType()}/>
+                :
+                <HandySvg className="user-icon-touchable" src={eyeImg} onClick={() => changeConfirmType()}/>
+                }
                 <input
-                  type="password"
+                  type={confirmType}
                   id="password_confirm"
                   name="password_confirm"
                   value={register.password_confirm}
@@ -158,7 +197,7 @@ const SignUp = () => {
                 </input>
                 <label for="">Повторите пароль</label>
               </div>
-              <button type="submit">Зарегистрироваться</button>
+              <button type="submit">Зарегистрировать</button>
           </form>
         </div>
       </div>

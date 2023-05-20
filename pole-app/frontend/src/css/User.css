@@ -83,7 +83,14 @@ input:valid ~ label {
   width: 20px;
 }
 
-.input-box .user-icon{
+.user-icon-touchable {
+  height: 20px;
+  width: 20px;
+  cursor: pointer;
+}
+
+.input-box .user-icon,
+.input-box .user-icon-touchable{
   position: absolute;
   right: 8px;
   color: #ffffff;

@@ -5,11 +5,14 @@ import md5 from 'md5';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import { useCookies } from "react-cookie";
+import { HandySvg } from 'handy-svg'
+
 
 import '../../css/User.css';
 import userImg from '../../imgs/person-circle-outline.svg';
 import passwordImg from '../../imgs/lock-closed-outline.svg';
-
+import eyeImg from '../../imgs/eye.svg';
+import eyeOffImg from '../../imgs/eye-off.svg';
 
 const LogIn = () => {
   const [_, setUser] = useOutletContext();
@@ -17,6 +20,9 @@ const LogIn = () => {
   const [fail, setFail] = useState(null);
   const [cookies, setCookie] = useCookies(["access_token", "username"]);
   const navigate = useNavigate();
+
+  const [ type, setType] = useState('password');
+  const [ passwordOpen, setPasswordOpen] = useState(false);
 
   const [inputs, setInputs] = useState(() => {
       return {
@@ -34,6 +40,18 @@ const LogIn = () => {
           }
       })
   }
+
+  const changeType = event => {
+    if (type==="password")
+    {
+      setType('text');
+      setPasswordOpen(true);
+    } else {
+      setType('password');
+      setPasswordOpen(false);
+    }
+  }
+
   const handleChangePassword = event => {
       event.persist()
       setInputs(prev => {
@@ -81,6 +99,7 @@ const LogIn = () => {
                 console.log(data.access_token);
                 setUser(inputs.username);
                 navigate("/");
+                window.location.reload();
               } else {
                 setFail(true);
               }
@@ -116,8 +135,12 @@ const LogIn = () => {
                 <label for="">Логин</label>
               </div>
               <div className="input-box">
-                <img className="user-icon" src={passwordImg} />
-                <input type="password" name="password" onChange={handleChangePassword} required></input>
+                {passwordOpen ?
+                <HandySvg className="user-icon-touchable" src={eyeOffImg} onClick={() => changeType()}/>
+                :
+                <HandySvg className="user-icon-touchable" src={eyeImg} onClick={() => changeType()}/>
+                }
+                <input type={type} name="password" onChange={handleChangePassword} required></input>
                 <label for="">Пароль</label>
               </div>
               <div className="forget">
