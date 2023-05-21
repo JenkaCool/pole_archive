@@ -1,9 +1,58 @@
+.big-table {
+	overflow: auto;
+	position: relative;
+}
+.big-table table {
+	display: inline-block;
+	vertical-align: top;
+	max-width: 100%;
+	overflow-x: auto;
+	white-space: nowrap;
+	-webkit-overflow-scrolling: touch;
+	transition: .6s;
+}
+.scroll-right:after {
+	content: '';
+	display: block;
+	width: 15px;
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 500;
+	background: linear-gradient(to left, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0) 75%) 100% center;
+	background-repeat: no-repeat;
+	background-attachment: scroll;
+	background-size: 15px 100%;
+	background-position: 100% 0%;
+	transition: .6s;
+}
+
+.scroll-left:before {
+	content: '';
+	display: block;
+	width: 15px;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	z-index: 500;
+	background: linear-gradient(to right, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0) 75%) 100% center;
+	background-repeat: no-repeat;
+	background-attachment: scroll;
+	background-size: 15px 100%;
+	transition: .6s;
+}
+
 .table {
 	width: 100%;
 	border: none;
 	margin-bottom: 20px;
 	border-collapse: separate;
 }
+
+
+
 .table thead th {
 	font-weight: bold;
 	text-align: left;
@@ -35,6 +84,11 @@
 .table tbody tr:nth-child(even) {
 	background: #F8F8F8;
 }
+
+.table tbody tr:nth-child(odd) {
+	background: #FFFFFF;
+}
+
 .table tbody tr:last-child td{
 	border-bottom: 1px solid #ddd;
 }

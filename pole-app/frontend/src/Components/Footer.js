@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const Footer = () => {
   return (
     <footer>
-        <div id="footer-information" className="in-one-role">
+        <div id="footer-information" className="in-one-row">
           ©ПетрГУ 2023
         </div>
     </footer>

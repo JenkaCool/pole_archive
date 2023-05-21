@@ -24,7 +24,6 @@ import SignUp from './Components/User/SignUp';
 import PageNotFound from './Components/PageNotFound';
 
 
-
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>

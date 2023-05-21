@@ -151,8 +151,9 @@ def home():
 
 @app.route('/api/documents/', methods=['GET'])
 def documents():
-    if not session.get('user_id'):
-      abort(404)
+    if not request.cookies.get('access_token'):
+        abort(401)
+
     if request.method == 'GET':
       json_data=[]
       document_schema = DocumentSchema()
@@ -196,6 +197,9 @@ def exiles():
 
 @app.route('/api/users/', methods=['GET'])
 def users():
+    if not request.cookies.get('access_token'):
+        abort(401)
+
     if request.method == 'GET':
         json_data=[]
 
@@ -214,8 +218,9 @@ def users():
 
 @app.route('/api/documents/view/<id>', methods=['GET','POST'])
 def one_document(id):
-    if not session.get('user_id'):
-      abort(404)
+    if not request.cookies.get('access_token'):
+        abort(401)
+
     if request.method == 'GET':
       temp = {}
       json_data=[]
@@ -270,8 +275,8 @@ def one_exile(id):
 
 @app.route('/api/documents/add/', methods=['POST'])
 def document_add():
-    if not session.get('user_id'):
-      abort(404)
+    if not request.cookies.get('access_token'):
+        abort(401)
 
     if request.method == 'POST':
       year = request.json["year"]
@@ -296,6 +301,9 @@ def document_add():
 
 @app.route('/api/signup/', methods=['POST'])
 def user_add():
+    if not request.cookies.get('access_token'):
+        abort(401)
+
     if request.method == 'POST':
       username = request.json["username"]
       role = request.json["role"]
@@ -308,6 +316,15 @@ def user_add():
       if username == None:
         return {'msg': 'Missing username'}, 422
 
+      if role == None:
+          return {'msg': 'Missing role'}, 422
+
+      if email == None:
+          return {'msg': 'Missing email'}, 422
+
+      if salt == None:
+          return {'msg': 'Missing salt'}, 422
+
       if password == None:
         return {'msg': 'Missing password'}, 422
 
@@ -318,7 +335,7 @@ def user_add():
           return {'msg': 'Passwords doesn\'t match'}, 401
 
       hashed_password = hashPassword(request.json["password"], salt)
-      user = User(usr_username=username, usr_email=email, usr_hashed_password=hashed_password, usr_salt=salt, usr_registration_date=cur_date)
+      user = User(usr_username=username, usr_role=role, usr_email=email, usr_salt=salt, usr_hashed_password=hashed_password, usr_registration_date=cur_date)
 
       username_exists = User.query.filter_by(usr_username = username).first() is not None
       email_exists = User.query.filter_by(usr_email = email).first() is not None
@@ -379,9 +396,8 @@ def protected():
 
 @app.route('/api/profile/', methods=['GET'])
 def user_profile():
-    user_id = session.get("user_id")
-    if not user_id:
-      return jsonify({"error" : "Unauthorized"}), 401
+    if not request.cookies.get('access_token'):
+        abort(401)
     temp = {}
     token = json.dump(session.get("token"))
     temp['token'] = token
@@ -389,6 +405,9 @@ def user_profile():
 
 @app.route('/api/logout/', methods=['GET'])
 def user_logout():
+    if not request.cookies.get('access_token'):
+        abort(401)
+
     response = jsonify({"msg": "Logout ok"})
     unset_jwt_cookies(response)
     return response

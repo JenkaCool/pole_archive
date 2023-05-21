@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
-import UserStroke from './UserStroke';
 import { useCookies } from "react-cookie";
 
+import UserStroke from './UserStroke';
+import AccessDenied from '../AccessDenied';
 
 const TableUser = () => {
   const [cookies, setCookie] = useCookies(["access_token", "username"]);
@@ -28,9 +29,7 @@ const TableUser = () => {
 
   if (!cookies.username || cookies.username=="" || cookies.username==undefined)
     return (
-      <div>
-        <h4 id="ErrorMessage"> Просмотр данного материала доступен только авторизированному пользователю.</h4>
-      </div>
+      <AccessDenied />
     );
 
   return (

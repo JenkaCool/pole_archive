@@ -15,6 +15,8 @@ import passwordImg from '../../imgs/lock-closed-outline.svg';
 import emailImg from '../../imgs/mail-outline.svg';
 import eyeImg from '../../imgs/eye.svg';
 import eyeOffImg from '../../imgs/eye-off.svg';
+import AccessDenied from '../AccessDenied';
+
 
 const SignUp = () => {
   const [_, setUser] = useOutletContext();
@@ -122,6 +124,11 @@ const SignUp = () => {
     let result = year + '-' + month + '-' + date + ' ' + time;
     return result
   }
+
+  if (!cookies.username || cookies.username=="" || cookies.username==undefined)
+    return (
+      <AccessDenied />
+    );
 
   return (
     <section>

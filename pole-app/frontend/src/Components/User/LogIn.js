@@ -27,7 +27,8 @@ const LogIn = () => {
   const [inputs, setInputs] = useState(() => {
       return {
           username: "",
-          password: ""
+          password: "",
+          remember: false
       }
   })
 
@@ -83,18 +84,30 @@ const LogIn = () => {
               })
           })
           .then(response => {
-              if (response.status === 200) {
+              /*if (response.status === 200) {
                 alert('User founded!');
               } else {
                   alert("Username or password incorrect");
               }
+              */
               return response.data;
           }).then(data => {
               console.log("Ok");
               console.log(data);
               if ("access_token" in data) {
                 setFail(false);
-                setCookie("access_token", data.access_token);
+                if (inputs.remember) {
+                  let expDate = new Date();
+                  const days = 31;
+                  expDate.setTime(expDate.getTime() + (days*24*60*60*1000));
+                  setCookie('access_token', data.access_token, { path: '/',  expires:expDate});
+                } else {
+                  let expDate = new Date();
+                  const seconds = 10;
+                  expDate.setTime(expDate.getTime() + (seconds*1000));
+                  setCookie('access_token', data.access_token, { path: '/',  expires:expDate});
+
+                }
                 setCookie("username", inputs.username);
                 console.log(data.access_token);
                 setUser(inputs.username);
@@ -148,7 +161,7 @@ const LogIn = () => {
               </div>
               <button type="submit">Войти</button>
               <div className="remember">
-                <label for=""><input type="checkbox"></input></label>
+                <label for=""><input name="remember" type="checkbox" onChange={handleChange}></input></label>
                 <label for="">Запомнить меня</label>
               </div>
           </form>

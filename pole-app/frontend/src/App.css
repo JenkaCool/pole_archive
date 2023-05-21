@@ -62,7 +62,7 @@ body {
   margin: 10px;
 }
 
-.in-one-role {
+.in-one-row {
   display: flex;
   flex-wrap: nowrap;
   flex-direction: row;
@@ -93,58 +93,3 @@ footer {
 }
 
 
-/* Modal */
-.modal {
-    height: 100vh;
-    width: 100wh;
-    background-color: rgba(0, 0, 0, 0.4);
-    position: fixed;
-    top: 0;
-    left: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.modal-content {
-  padding: 15px;
-  border-radius: 6px;
-  background-color: black;
-  min-height: 200px;
-  min-weight: 400px;
-}
-
-.info-form {
-  margin: 30px auto;
-  min-width: 800px;
-  width: 80vw;
-}
-
-.info-form .info-block{
-  margin: 30px auto;
-}
-
-.info-form .info-block h4{
-  margin-bottom: 30px;
-}
-
-
-.info-form .info-block{
-  margin-top: 20px;
-  text-align: left;
-  word-wrap: wrap;
-}
-
-.info-form .info-block div{
-  display: flex;
-  direction: row;
-}
-
-.info-form .info-block p:first-child {
-  min-width: 200px;
-  width: 100px;
-}
-.info-form .info-block p:last-child {
-  min-width: 200px;
-  width: 70%;
-}

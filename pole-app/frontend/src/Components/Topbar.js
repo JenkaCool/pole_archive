@@ -6,6 +6,7 @@ import { useCookies, CookiesProvider } from "react-cookie";
 
 import '../css/Topbar.css';
 
+
 const Topbar = () => {
   const navigate = useNavigate();
   let [user, setUser] = useState(null);
@@ -15,8 +16,8 @@ const Topbar = () => {
   ]);
 
   const handleClick = event => {
-    removeCookie("access_token");
     removeCookie("username");
+    removeCookie("access_token");
     setUser(null);
     navigate("/");
     window.location.reload();
@@ -28,9 +29,10 @@ const Topbar = () => {
     console.log("Ok")
   }
 
+
   return (
-    <header className="App-header">
-        <div id="contacts" className="in-one-role">
+    <header className="App-header sticky">
+        <div id="contacts" className="in-one-row">
             <ul class="language-button">RU(русский)
               <li></li>
               <li></li>
@@ -40,20 +42,19 @@ const Topbar = () => {
             <Link to="/" className="topbar-link"><div className="link-area"><span className="un"> Форум </span></div></Link>
             <Link to="/" className="topbar-link"><div className="link-area"><span className="un"> Поиск </span></div></Link>
         </div>
-        <div id="links" className="in-one-role">
+        <div id="links" className="in-one-row">
             <h4 className="topbar-title">Электронный архив</h4>
             <div id='navigation'>
-                <Link to="/"> Главная </Link>
-                <Link to="/exiles"> Архив </Link>
-                <Link to="/documents"> Документы </Link>
+                <Link to="/">Главная</Link>
+                <Link to="/exiles">Архив</Link>
+                <Link to="/documents">Документы</Link>
             </div>
             <div id='authorization'>
               {user ?
                 <>
-                  <Link to="/users"> Пользователи </Link>
-                  <span id="userLogin">{user}</span>
-                  <Link to="/profile"> Профиль </Link>
-                  <button className="auth-button" onClick={handleClick}> Выход </button>
+                  <Link to="/users"> Пользователи</Link>
+                  <Link to="/profile"> {user} </Link>
+                  <button className="auth-button" onClick={handleClick}>Выход</button>
                 </>
                 :
                 <>

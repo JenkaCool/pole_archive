@@ -3,12 +3,14 @@ import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useCookies } from "react-cookie";
 
-
 import DocumentStroke from './DocumentStroke';
+import AccessDenied from '../AccessDenied';
+
 
 const DocumentTable = () => {
   const [cookies, setCookie] = useCookies(["access_token", "username"]);
-
+  const [scrollL, setScrollL] = useState(false);
+  const [scrollR, setScrollR] = useState(true);
   const [documentData, setDocumentData] = useState([]);
   const makeAPICall = async () => {
     try {
@@ -28,10 +30,24 @@ const DocumentTable = () => {
 
   if (!cookies.username || cookies.username=="" || cookies.username==undefined)
     return (
-      <div>
-        <h4 id="ErrorMessage"> Просмотр данного материала доступен только авторизированному пользователю.</h4>
-      </div>
+      <AccessDenied />
     );
+
+  const handleScroll = event => {
+    if (event.target.scrollLeft === 0) {
+      setScrollR(true);
+      setScrollL(false);
+    } else
+      if (event.target.scrollWidth - event.target.scrollLeft === event.target.clientWidth) {
+        setScrollR(false);
+        setScrollL(true);
+      } else {
+        setScrollR(true);
+        setScrollL(true);
+      }
+
+    //setScroll(event.target.scrollLeft > (event.target.scrollWidth / 2));
+  };
 
   return (
     <>
@@ -40,7 +56,7 @@ const DocumentTable = () => {
         <Link to="/documents/add"><button className="manage-button">Добавить новый документ</button></Link>
       </div>
 
-      <div className="big-table table">
+      <div className={"big-table table" + (scrollL ? " scroll-left"  : '' ) + (scrollR ? " scroll-right"  : '' )}>
         <table>
           <thead>
             <th>№</th>
