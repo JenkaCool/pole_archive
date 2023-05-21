@@ -29,10 +29,21 @@
   color: white;
 }
 
-.links div a {
+#navigation a,
+#authorization a{
   color: #4F4F4F;
   text-decoration: none;
 }
+
+#navigation a:hover,
+#navigation a:focus,
+#navigation a:active,
+#authorization a:hover,
+#authorization a:focus,
+#authorization a:active {
+  color:#FFA06B;
+}
+
 
 .topbar-link {
   margin: 6px 20px;
@@ -56,8 +67,6 @@
 
 .topbar-link:active {
   color: #FFA06B;
-  border-bottom: #FFA06B;
-  background-color: #333333;
   transition: 0s;
 }
 

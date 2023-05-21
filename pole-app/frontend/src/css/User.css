@@ -16,14 +16,22 @@ section {
   position: relative;
   width: 400px;
   height: 450px;
-  background: #d8d8;
-  background: #EDF2F7;
+  background-color: #fff;
   border: 2px solid rgba(60, 60, 60, 0.1);
   border-radius: 5px;
   background-filter: blur(15px);
   display: flex;
   justify-content: center;
   align-items: center;
+  opacity: 1;
+  padding: 30px 30px;
+  border-radius: 4px;
+  z-index: 999;
+  pointer-events: auto;
+  cursor: auto;
+  visibility: visible;
+  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.6);
+
 }
 
 .reg {
