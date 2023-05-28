@@ -148,6 +148,7 @@ input:valid ~ label {
   background: #315BA5;
 }
 
+/*
 .remember {
   display: flex;
   direction: row;
@@ -166,6 +167,7 @@ input:valid ~ label {
 .remember label {
   margin: 0 2px;
 }
+*/
 
 .register {
   font-size: .9em;

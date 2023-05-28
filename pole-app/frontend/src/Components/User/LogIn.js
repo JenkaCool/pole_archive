@@ -102,11 +102,7 @@ const LogIn = () => {
                   expDate.setTime(expDate.getTime() + (days*24*60*60*1000));
                   setCookie('access_token', data.access_token, { path: '/',  expires:expDate});
                 } else {
-                  let expDate = new Date();
-                  const seconds = 10;
-                  expDate.setTime(expDate.getTime() + (seconds*1000));
-                  setCookie('access_token', data.access_token, { path: '/',  expires:expDate});
-
+                  setCookie('access_token', data.access_token);
                 }
                 setCookie("username", inputs.username);
                 console.log(data.access_token);
@@ -160,10 +156,6 @@ const LogIn = () => {
                 <Link>Забыли пароль?</Link>
               </div>
               <button type="submit">Войти</button>
-              <div className="remember">
-                <label for=""><input name="remember" type="checkbox" onChange={handleChange}></input></label>
-                <label for="">Запомнить меня</label>
-              </div>
           </form>
         </div>
       </div>

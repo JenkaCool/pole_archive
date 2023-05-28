@@ -9,7 +9,7 @@ import { createRoot } from 'react-dom/client'
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import App from './App';
-import MainPage from './Components/MainPage';
+import AboutProject from './Components/Project/AboutProject';
 import ExileForm from './Components/Exile/ExileForm';
 import DocumentForm from './Components/Document/DocumentForm';
 import ExileView from './Components/Exile/ExileView';
@@ -30,7 +30,8 @@ root.render(
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />}>
-          <Route index element={<div>No page is selected.</div> } />
+
+          <Route index element={<AboutProject/> } />
           <Route exact path="login" element={<LogIn/>} />
           <Route exact path="signup" element={<SignUp/>} />
           <Route exact path="profile" element={<Profile/>} />

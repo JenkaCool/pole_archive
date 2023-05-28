@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
-import ExileAddOne from '../Exile/ExileAddOne';
 
 
 const ExileAdd = ({active, setActive}) => {

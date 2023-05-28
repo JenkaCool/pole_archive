@@ -35,9 +35,9 @@ const TableUser = () => {
   return (
     <>
       <h3>Список пользователей</h3>
-      <Link to="/signup"><button className="auth-button"> Добавить пользователя </button></Link>
+      <Link to="/signup"><button className="manage-button"> Добавить пользователя </button></Link>
       {userData &&
-      <div className="big-table table">
+      <div className="table">
         <table>
           <thead>
             <th>ID</th>

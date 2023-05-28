@@ -22,5 +22,3 @@ const AccessDenied = () => {
 }
 
 export default AccessDenied;
-
-

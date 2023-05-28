@@ -159,5 +159,3 @@ class Record(db.Model):
 
   def get_document_id(self):
       return self.exl_id
-
-

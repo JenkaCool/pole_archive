@@ -24,7 +24,7 @@ const UserStroke = ({row}) => {
       <td>{userData.usr_email}</td>
       <td>{userData.usr_registration_date}</td>
       <td>{count}</td>
-      <td><button>Изменить</button><button>Удалить</button></td>
+      <td><button className="manage-button">Изменить</button><button className="manage-button">Удалить</button></td>
     </tr>
   );
 }

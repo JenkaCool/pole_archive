@@ -37,9 +37,9 @@ const Topbar = () => {
               <li></li>
               <li></li>
             </ul>
-            <Link to="/" className="topbar-link"><div className="link-area"><span className="un"> О проекте </span></div></Link>
-            <Link to="/" className="topbar-link"><div className="link-area"><span className="un"> Контактная информация </span></div></Link>
             <Link to="/" className="topbar-link"><div className="link-area"><span className="un"> Форум </span></div></Link>
+            <Link to="/" className="topbar-link"><div className="link-area"><span className="un"> Статистика </span></div></Link>
+            <Link to="/" className="topbar-link"><div className="link-area"><span className="un"> Помощь </span></div></Link>
             <Link to="/" className="topbar-link"><div className="link-area"><span className="un"> Поиск </span></div></Link>
         </div>
         <div id="links" className="in-one-row">
@@ -52,6 +52,7 @@ const Topbar = () => {
             <div id='authorization'>
               {user ?
                 <>
+                  <Link to="/history"> История</Link>
                   <Link to="/users"> Пользователи</Link>
                   <Link to="/profile"> {user} </Link>
                   <button className="auth-button" onClick={handleClick}>Выход</button>
