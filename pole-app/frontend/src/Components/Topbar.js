@@ -37,10 +37,9 @@ const Topbar = () => {
               <li></li>
               <li></li>
             </ul>
-            <Link to="/" className="topbar-link"><div className="link-area"><span className="un"> Форум </span></div></Link>
-            <Link to="/" className="topbar-link"><div className="link-area"><span className="un"> Статистика </span></div></Link>
-            <Link to="/" className="topbar-link"><div className="link-area"><span className="un"> Помощь </span></div></Link>
-            <Link to="/" className="topbar-link"><div className="link-area"><span className="un"> Поиск </span></div></Link>
+            <Link to="/forum" className="topbar-link"><div className="link-area"><span className="un"> Форум </span></div></Link>
+            <Link to="/help" className="topbar-link"><div className="link-area"><span className="un"> Помощь </span></div></Link>
+            <Link to="/search" className="topbar-link"><div className="link-area"><span className="un"> Поиск </span></div></Link>
         </div>
         <div id="links" className="in-one-row">
             <h4 className="topbar-title">Электронный архив</h4>

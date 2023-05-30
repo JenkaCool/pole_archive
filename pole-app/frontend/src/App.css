@@ -92,6 +92,36 @@ footer {
   font-size: 12px;
 }
 
+.cover-div {
+  width: 100%;
+  min-height: 200px;
+  min-width: 800px;
+  height: 40vh;
+  overflow: hidden;
+  position: relative;
+}
+
+.cover-img {
+  min-height: 400px;
+  min-width: 800px;
+  width: 100%;
+  margin: -100px 0 0 -100px;
+}
+
+.cover-text {
+  position: absolute;
+  top: 50%;
+  left: 65px;
+  color: white;
+  font-width: 700;
+  width: 350px;
+  background: rgba(0, 0, 0, 0.62);
+  padding: 10px;
+  text-align: center;
+  font: bold 24px/34px Helvetica, Sans-Serif;
+  border-bottom: 4px solid #F19460;
+}
+
 .main-page-img {
   width: 27%;
 }
