@@ -6,7 +6,7 @@ import { useCookies } from "react-cookie";
 import UserStroke from './UserStroke';
 import AccessDenied from '../AccessDenied';
 
-import { SITE_DOMAIN } from '../../paths.js';
+import SITE_DOMAIN from '../../paths.js';
 
 const TableUser = () => {
   const [cookies, setCookie] = useCookies(["access_token", "username"]);
