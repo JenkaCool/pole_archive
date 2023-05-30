@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import { useCookies } from "react-cookie";
 import { HandySvg } from 'handy-svg'
 
+import SITE_DOMAIN from '../../paths.js';
 
 import '../../css/User.css';
 import userImg from '../../imgs/person-circle-outline.svg';
@@ -73,7 +74,7 @@ const LogIn = () => {
       } else {
           axios( {
               method: 'post',
-              url: "http://localhost:8888/api/login/",
+              url: SITE_DOMAIN + "/api/login/",
               headers: {
                 'Accept': 'application/json, text/plain',
                 'Content-Type': 'application/json;charset=UTF-8'

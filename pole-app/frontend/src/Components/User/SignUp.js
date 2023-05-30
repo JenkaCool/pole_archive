@@ -17,6 +17,7 @@ import eyeImg from '../../imgs/eye.svg';
 import eyeOffImg from '../../imgs/eye-off.svg';
 import AccessDenied from '../AccessDenied';
 
+import SITE_DOMAIN from '../../paths.js';
 
 const SignUp = () => {
   const [_, setUser] = useOutletContext();
@@ -80,7 +81,7 @@ const SignUp = () => {
       } else {
           axios( {
               method: 'post',
-              url: "http://localhost:8888/api/signup/",
+              url: SITE_DOMAIN + "/api/signup/",
               headers: {
                 'Content-type': 'application/json'
               },
@@ -94,7 +95,7 @@ const SignUp = () => {
           }).then(res => {
 
               if (res.status === 200) {
-                  window.location.href = "http://localhost:8888/login/"
+                  window.location.href = SITE_DOMAIN + "/login/"
                   alert('User created!');
                   return res.json();
               } else {

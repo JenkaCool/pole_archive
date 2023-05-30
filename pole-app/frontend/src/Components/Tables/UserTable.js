@@ -6,13 +6,15 @@ import { useCookies } from "react-cookie";
 import UserStroke from './UserStroke';
 import AccessDenied from '../AccessDenied';
 
+import { SITE_DOMAIN } from '../../paths.js';
+
 const TableUser = () => {
   const [cookies, setCookie] = useCookies(["access_token", "username"]);
 
   const [userData, setUserData] = useState([]);
   const makeAPICall = async () => {
     try {
-      const response = await fetch('http://localhost:8888/api/users/');
+      const response = await fetch(SITE_DOMAIN + "/api/users/");
       const data = await response.json();
       const objectData = data;
       setUserData(objectData)

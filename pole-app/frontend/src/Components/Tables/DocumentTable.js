@@ -6,6 +6,7 @@ import { useCookies } from "react-cookie";
 import DocumentStroke from './DocumentStroke';
 import AccessDenied from '../AccessDenied';
 
+import { SITE_DOMAIN } from '../../paths.js';
 
 const DocumentTable = () => {
   const [cookies, setCookie] = useCookies(["access_token", "username"]);
@@ -14,7 +15,7 @@ const DocumentTable = () => {
   const [documentData, setDocumentData] = useState([]);
   const makeAPICall = async () => {
     try {
-      const response = await fetch('http://localhost:8888/api/documents/');
+      const response = await fetch(SITE_DOMAIN + "/api/documents/");
       const data = await response.json();
       setDocumentData(data)
     }

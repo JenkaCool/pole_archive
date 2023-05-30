@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 
+import SITE_DOMAIN from '../../paths.js';
 
 const DocumentView = () => {
   const route = useNavigate();
@@ -15,7 +16,7 @@ const DocumentView = () => {
 
   const makeAPICall = async () => {
     try {
-      const response = await fetch(`http://localhost:8888/api/documents/view/${id}`);
+      const response = await fetch(SITE_DOMAIN + `api/documents/view/${id}`);
       const data = await response.json();
       setDocumentData(data.document);
       setRecordsData(data.records);

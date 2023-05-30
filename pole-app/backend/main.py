@@ -149,7 +149,7 @@ def token_required(f):
 def home():
     return "Hello"
 
-@app.route('/api/documents/', methods=['GET'])
+@app.route('/exiles/api/documents/', methods=['GET'])
 def documents():
     if not request.cookies.get('access_token'):
         abort(401)
@@ -164,7 +164,7 @@ def documents():
 
     return json.dumps(json_data)
 
-@app.route('/api/exiles/', methods=['GET'])
+@app.route('/exiles/api/exiles/', methods=['GET'])
 def exiles():
     if request.method == 'GET':
       json_data=[]
@@ -195,7 +195,7 @@ def exiles():
     print(json_data)
     return json.dumps(json_data, default=morphDec)
 
-@app.route('/api/users/', methods=['GET'])
+@app.route('/exiles/api/users/', methods=['GET'])
 def users():
     if not request.cookies.get('access_token'):
         abort(401)
@@ -216,7 +216,7 @@ def users():
             json_data.append(temp)
     return json.dumps(json_data, default=morphDec)
 
-@app.route('/api/documents/view/<id>', methods=['GET','POST'])
+@app.route('/exiles/api/documents/view/<id>', methods=['GET','POST'])
 def one_document(id):
     if not request.cookies.get('access_token'):
         abort(401)
@@ -245,7 +245,7 @@ def one_document(id):
       temp['document'] = document_schema.dump(document)
     return json.dumps(json_data)
 
-@app.route('/api/exiles/view/<id>', methods=['GET','POST'])
+@app.route('/exiles/api/exiles/view/<id>', methods=['GET','POST'])
 def one_exile(id):
     if request.method == 'GET':
       json_data=[]
@@ -273,7 +273,7 @@ def one_exile(id):
 
     return json.dumps(json_data, default=morphDec)
 
-@app.route('/api/documents/add/', methods=['POST'])
+@app.route('/exiles/api/documents/add/', methods=['POST'])
 def document_add():
     if not request.cookies.get('access_token'):
         abort(401)
@@ -299,7 +299,7 @@ def document_add():
         db.session.rollback()
         return "An error occurred while adding"
 
-@app.route('/api/signup/', methods=['POST'])
+@app.route('/exiles/api/signup/', methods=['POST'])
 def user_add():
     if not request.cookies.get('access_token'):
         abort(401)
@@ -367,7 +367,7 @@ def user_add():
           }
           return make_response(jsonify(resp)),409
 
-@app.route('/api/login/', methods=['POST'])
+@app.route('/exiles/api/login/', methods=['POST'])
 def user_login():
     if request.method == 'POST':
       username = request.json["username"]
@@ -386,7 +386,7 @@ def user_login():
       return response
 
 
-@app.route('/protected', methods=['GET'])
+@app.route('/exiles/protected', methods=['GET'])
 @token_required
 def protected():
 
@@ -394,7 +394,7 @@ def protected():
    return make_response(jsonify(resp)), 404
 
 
-@app.route('/api/profile/', methods=['GET'])
+@app.route('/exiles/api/profile/', methods=['GET'])
 def user_profile():
     if not request.cookies.get('access_token'):
         abort(401)
@@ -403,7 +403,7 @@ def user_profile():
     temp['token'] = token
     return json.dumps(temp), 200
 
-@app.route('/api/logout/', methods=['GET'])
+@app.route('/exiles/api/logout/', methods=['GET'])
 def user_logout():
     if not request.cookies.get('access_token'):
         abort(401)
