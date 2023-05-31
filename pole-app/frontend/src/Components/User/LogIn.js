@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import { useCookies } from "react-cookie";
 import { HandySvg } from 'handy-svg'
 
-import SITE_DOMAIN from '../../paths.js';
+import { DOMEN_SITE, DOMEN_SERVER } from '../../config/const.js';
 
 import '../../css/User.css';
 import userImg from '../../imgs/person-circle-outline.svg';
@@ -74,7 +74,7 @@ const LogIn = () => {
       } else {
           axios( {
               method: 'post',
-              url: SITE_DOMAIN + "/api/login/",
+              url: DOMEN_SERVER + "/login/",
               headers: {
                 'Accept': 'application/json, text/plain',
                 'Content-Type': 'application/json;charset=UTF-8'
@@ -101,14 +101,14 @@ const LogIn = () => {
                   let expDate = new Date();
                   const days = 31;
                   expDate.setTime(expDate.getTime() + (days*24*60*60*1000));
-                  setCookie('access_token', data.access_token, { path: '/',  expires:expDate});
+                  setCookie('access_token', data.access_token, { path: '/exiles',  expires:expDate});
                 } else {
                   setCookie('access_token', data.access_token);
                 }
                 setCookie("username", inputs.username);
                 console.log(data.access_token);
                 setUser(inputs.username);
-                navigate("/");
+                navigate("/exiles/");
                 window.location.reload();
               } else {
                 setFail(true);
