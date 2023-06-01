@@ -80,10 +80,10 @@ const DocumentView = () => {
           <p>Тип доступа: {documentData.doc_visible_mode}</p>
         </div>
       </div>
-      <Link to="/documents/edit"><button className="manage-button">Изменить документ</button></Link>
+      <Link to="/exiles/documents/edit"><button className="manage-button">Изменить документ</button></Link>
       <div>
         <h4> Список записей </h4>
-        <Link to="/exiles/add"><button className="manage-button">Добавить запись</button></Link>
+        <Link to="/exiles/archive/add"><button className="manage-button">Добавить запись</button></Link>
           {
             recordsData ?
             <div className="table">

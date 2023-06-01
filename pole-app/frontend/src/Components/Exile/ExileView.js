@@ -11,7 +11,7 @@ const ExileView = () => {
 
   const makeAPICall = async () => {
     try {
-      const response = await fetch(DOMEN_SERVER + `/exiles/view/${id}`);
+      const response = await fetch(DOMEN_SERVER + `/archive/view/${id}`);
       const data = await response.json();
       setExileData(data.exile)
       setIncomesData(data.incomes)

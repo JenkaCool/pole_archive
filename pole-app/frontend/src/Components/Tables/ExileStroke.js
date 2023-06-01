@@ -17,7 +17,7 @@ const ExileStroke = ({row}) => {
   }, [row])
 
   return (
-    <tr onClick={() => route(`/exiles/view/${exileData.exl_id}`)}>
+    <tr onClick={() => route(`/exiles/archive/view/${exileData.exl_id}`)}>
       <td>{exileData.exl_id}</td>
       <td>{exileData.exl_full_name}</td>
       <td>{exileData.exl_gender}</td>

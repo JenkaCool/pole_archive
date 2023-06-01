@@ -15,6 +15,7 @@ const DocumentTable = () => {
   const [documentData, setDocumentData] = useState([]);
   const makeAPICall = async () => {
     try {
+      console.log(DOMEN_SERVER + "/documents/")
       const response = await fetch(DOMEN_SERVER + "/documents/");
       const data = await response.json();
       setDocumentData(data)
@@ -54,7 +55,7 @@ const DocumentTable = () => {
     <>
       <h3>Список документов</h3>
       <div id='tools'>
-        <Link to="/documents/add"><button className="manage-button">Добавить новый документ</button></Link>
+        <Link to="/exiles/documents/add"><button className="manage-button">Добавить новый документ</button></Link>
       </div>
 
       <div className={"big-table table" + (scrollL ? " scroll-left"  : '' ) + (scrollR ? " scroll-right"  : '' )}>

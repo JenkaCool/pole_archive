@@ -15,7 +15,7 @@ const DocumentStroke = ({row}) => {
 
 
   return (
-    <tr onClick={() => route(`/documents/view/${documentData.doc_id}`)}>
+    <tr onClick={() => route(`/exiles/documents/view/${documentData.doc_id}`)}>
       <td>{documentData.doc_id}</td>
       <td>{documentData.doc_fund}</td>
       <td>{documentData.doc_inventory}</td>
