@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 import ExileStroke from './ExileStroke';
-import Search from '../Search/Search';
 
 import { DOMEN_SITE, DOMEN_SERVER } from '../../config/const.js';
 
@@ -11,10 +10,9 @@ const TableExile = () => {
   const [exileData, setExileData] = useState([]);
   const [scrollL, setScrollL] = useState(false);
   const [scrollR, setScrollR] = useState(true);
-  const [filteredData, setFilteredData] = useState([]);
   const makeAPICall = async () => {
     try {
-      const response = await fetch(DOMEN_SERVER + "/archive/");
+      const response = await fetch(DOMEN_SERVER + "/exiles/");
       const data = await response.json();
       const objectData = data;
       setExileData(objectData)
@@ -44,15 +42,10 @@ const TableExile = () => {
     //setScroll(event.target.scrollLeft > (event.target.scrollWidth / 2));
   };
 
-  const handleChange = (value) => {
-    setFilteredData(value)
-  }
-
   return (
     <>
       <h3>Список записей о польских ссыльных в Олонецкой губернии</h3>
-      <Search rows={exileData} onChange={handleChange}/>
-      {filteredData &&
+      {exileData &&
 
       <div className={"big-table table" + (scrollL ? " scroll-left"  : '' ) + (scrollR ? " scroll-right"  : '' )}>
         <table onScroll={handleScroll}>
@@ -81,7 +74,7 @@ const TableExile = () => {
             <th>Режим доступа</th>
           </thead>
           <tbody>
-            {filteredData.map(exl => ( <ExileStroke row={exl} key={exl.exl_id}/>))}
+            {exileData.map(exl => ( <ExileStroke row={exl} key={exl.exl_id}/>))}
           </tbody>
         </table>
       </div>

@@ -18,10 +18,21 @@ function App() {
     "username"
   ]);
 
-  if (user == null && cookies.username) {
-    setUser(cookies.username);
-    setCookie("username", cookies.username);
-  }
+  useEffect(() => {
+    if (user == null && cookies.username && cookies.access_token) {
+      setUser(cookies.username);
+      setCookie("username", cookies.username);
+    }
+
+    if (user !== null && cookies.username && !cookies.access_token) {
+      removeCookie("username");
+      removeCookie("access_token");
+      setUser(null);
+      navigate("/exiles/");
+      window.location.reload();
+    }
+
+  });
 
   return (
     <div className="App">
