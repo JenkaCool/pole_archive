@@ -9,7 +9,7 @@ const ExileView = () => {
 
   const makeAPICall = async () => {
     try {
-      const response = await fetch(`http://localhost:8888/api/exiles/view/${id}`);
+      const response = await fetch(`http://localhost:8888/api/archive/view/${id}`);
       const data = await response.json();
       setExileData(data.exile)
       setIncomesData(data.incomes)
@@ -156,7 +156,7 @@ const ExileView = () => {
           </div>
         </div>
       </div>
-      <Link to="/exiles/edit"><button className="manage-button">Изменить запись</button></Link>
+      <Link to="/archive/edit"><button className="manage-button">Изменить запись</button></Link>
     </>
   );
 }

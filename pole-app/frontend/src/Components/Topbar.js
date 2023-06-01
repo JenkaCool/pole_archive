@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
 import { Link, useNavigate, Outlet } from "react-router-dom";
-import axios from 'axios';
 import { useCookies, CookiesProvider } from "react-cookie";
+import axios from 'axios';
 
 import '../css/Topbar.css';
 
@@ -45,7 +45,7 @@ const Topbar = () => {
             <h4 className="topbar-title">Электронный архив</h4>
             <div id='navigation'>
                 <Link to="/">Главная</Link>
-                <Link to="/exiles">Архив</Link>
+                <Link to="/archive">Архив</Link>
                 <Link to="/documents">Документы</Link>
             </div>
             <div id='authorization'>

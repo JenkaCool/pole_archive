@@ -164,8 +164,8 @@ def documents():
 
     return json.dumps(json_data)
 
-@app.route('/api/exiles/', methods=['GET'])
-def exiles():
+@app.route('/api/archive/', methods=['GET'])
+def archive():
     if request.method == 'GET':
       json_data=[]
 
@@ -245,7 +245,7 @@ def one_document(id):
       temp['document'] = document_schema.dump(document)
     return json.dumps(json_data)
 
-@app.route('/api/exiles/view/<id>', methods=['GET','POST'])
+@app.route('/api/archive/view/<id>', methods=['GET','POST'])
 def one_exile(id):
     if request.method == 'GET':
       json_data=[]

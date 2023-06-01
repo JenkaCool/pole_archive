@@ -28,7 +28,7 @@ const LogIn = () => {
       return {
           username: "",
           password: "",
-          remember: false
+          //remember: false
       }
   })
 
@@ -94,16 +94,16 @@ const LogIn = () => {
           }).then(data => {
               console.log("Ok");
               console.log(data);
+
               if ("access_token" in data) {
                 setFail(false);
-                if (inputs.remember) {
+                /*if (inputs.remember) {
                   let expDate = new Date();
                   const days = 31;
                   expDate.setTime(expDate.getTime() + (days*24*60*60*1000));
                   setCookie('access_token', data.access_token, { path: '/',  expires:expDate});
-                } else {
-                  setCookie('access_token', data.access_token);
-                }
+                } else */
+                setCookie('access_token', data.access_token);
                 setCookie("username", inputs.username);
                 console.log(data.access_token);
                 setUser(inputs.username);
@@ -128,7 +128,7 @@ const LogIn = () => {
   if (cookies.username)
     return (
       <div>
-        <h2 id="ErrorMessage">You should logout first!</h2>
+        <h2 id="ErrorMessage">Чтобы авторизоваться, сперва нужно выйти из текущей учётной записи.</h2>
       </div>
     );
 

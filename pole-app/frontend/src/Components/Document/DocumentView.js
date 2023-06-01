@@ -82,7 +82,7 @@ const DocumentView = () => {
       <Link to="/documents/edit"><button className="manage-button">Изменить документ</button></Link>
       <div>
         <h4> Список записей </h4>
-        <Link to="/exiles/add"><button className="manage-button">Добавить запись</button></Link>
+        <Link to="/archive/add"><button className="manage-button">Добавить запись</button></Link>
           {
             recordsData ?
             <div className="table">
@@ -98,7 +98,7 @@ const DocumentView = () => {
                 </thead>
                 <tbody>
                   {recordsData.map(rec => (
-                    <tr key={rec.rec_id} onClick={() => route(`/exiles/view/${rec.exl_id}`)}>
+                    <tr key={rec.rec_id} onClick={() => route(`/archive/view/${rec.exl_id}`)}>
                       <td>{rec.exl_id}</td>
                       <td>{rec.rec_list_num}</td>
                       <td>{rec.rec_creator_id}</td>

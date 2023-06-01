@@ -36,14 +36,14 @@ root.render(
           <Route exact path="signup" element={<SignUp/>} />
           <Route exact path="profile" element={<Profile/>} />
           <Route exact path="documents" element={<DocumentTable/>} />
-          <Route exact path="exiles" element={<ExileTable/>} />
+          <Route exact path="archive" element={<ExileTable/>} />
           <Route exact path="users" element={<UserTable/>} />
           <Route exact path="documents/add" element={<DocumentForm/>} />
-          <Route exact path="exiles/add" element={<ExileAdd info={false}/>} />
+          <Route exact path="archive/add" element={<ExileAdd info={false}/>} />
           <Route exact path="documents/view/:id" element={<DocumentView/>} />
-          <Route exact path="exiles/view/:id" element={<ExileView/>} />
+          <Route exact path="archive/view/:id" element={<ExileView/>} />
           <Route exact path="documents/edit" element={<DocumentForm info={true}/>} />
-          <Route exact path="exiles/edit" element={<ExileForm info={true}/>} />
+          <Route exact path="archive/edit" element={<ExileForm info={true}/>} />
           <Route path="*" element={<PageNotFound/>} />
         </Route>
       </Routes>

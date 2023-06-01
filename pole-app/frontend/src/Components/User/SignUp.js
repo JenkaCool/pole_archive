@@ -27,6 +27,16 @@ const SignUp = () => {
   const [ passwordOpen, setPasswordOpen] = useState(false);
   const [ passwordConfirmOpen, setPasswordConfirmOpen] = useState(false);
 
+  const [register, setRegister] = useState(() => {
+      return {
+          username: "",
+          role: "",
+          email: "",
+          password: "",
+          password_confirm: "",
+      }
+  })
+  
   const changeType = event => {
     if (type==="password")
     {
@@ -49,16 +59,6 @@ const SignUp = () => {
     }
   }
 
-  const [register, setRegister] = useState(() => {
-      return {
-          username: "",
-          role: "",
-          email: "",
-          password: "",
-          password_confirm: "",
-      }
-  })
-
   const changeInputRegister = event => {
       event.persist()
       setRegister(prev => {
@@ -69,7 +69,7 @@ const SignUp = () => {
       })
   }
 
-  const submitChackin = event => {
+  const submitCheck = event => {
       event.preventDefault();
       if(!validator.isEmail(register.email)) {
           alert("You did not enter email")
@@ -134,7 +134,7 @@ const SignUp = () => {
     <section>
       <div className="form-box reg">
         <div className="form-value">
-          <form className="login-box" onSubmit={submitChackin}>
+          <form className="login-box" onSubmit={submitCheck}>
             <h2>Новая учётная запись</h2>
               <div className="input-box">
                 <img className="user-icon" src={userImg} />
