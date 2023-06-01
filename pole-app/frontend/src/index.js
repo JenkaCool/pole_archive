@@ -44,7 +44,6 @@ root.render(
           <Route exact path="archive/view/:id" element={<ExileView/>} />
           <Route exact path="documents/edit" element={<DocumentForm info={true}/>} />
           <Route exact path="archive/edit" element={<ExileForm info={true}/>} />
-          <Route path="/api/*" render={ document.location.replace(history.location.pathname)} />
           <Route path="*" element={<PageNotFound/>} />
         </Route>
       </Routes>
