@@ -6,7 +6,7 @@ import { useCookies } from "react-cookie";
 import DocumentStroke from './DocumentStroke';
 import AccessDenied from '../AccessDenied';
 
-import SITE_DOMAIN from '../../paths.js';
+import { SITE_DOMAIN } from '../../paths.js';
 
 const DocumentTable = () => {
   const [cookies, setCookie] = useCookies(["access_token", "username"]);

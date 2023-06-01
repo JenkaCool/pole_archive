@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 import ExileStroke from './ExileStroke';
 
-import SITE_DOMAIN from '../../paths.js';
+import { SITE_DOMAIN } from '../../paths.js';
 
 const TableExile = () => {
   const [exileData, setExileData] = useState([]);
