@@ -27,7 +27,7 @@ import PageNotFound from './Components/PageNotFound';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename="/exiles">
       <Routes>
         <Route path="/" element={<App />}>
 
@@ -44,6 +44,7 @@ root.render(
           <Route exact path="archive/view/:id" element={<ExileView/>} />
           <Route exact path="documents/edit" element={<DocumentForm info={true}/>} />
           <Route exact path="archive/edit" element={<ExileForm info={true}/>} />
+          <Route path="/api/*" render={ document.location.replace(history.location.pathname)} />
           <Route path="*" element={<PageNotFound/>} />
         </Route>
       </Routes>
