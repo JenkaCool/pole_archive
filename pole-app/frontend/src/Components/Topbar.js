@@ -6,6 +6,7 @@ import { useCookies, CookiesProvider } from "react-cookie";
 
 import '../css/Topbar.css';
 
+
 const Topbar = () => {
   const navigate = useNavigate();
   let [user, setUser] = useState(null);
@@ -18,7 +19,7 @@ const Topbar = () => {
     removeCookie("username");
     removeCookie("access_token");
     setUser(null);
-    navigate("/exiles/");
+    navigate("/");
     window.location.reload();
   }
 
@@ -36,28 +37,28 @@ const Topbar = () => {
               <li></li>
               <li></li>
             </ul>
-            <Link to="/exiles/forum/" className="topbar-link"><div className="link-area"><span className="un"> Форум </span></div></Link>
-            <Link to="/exiles/help/" className="topbar-link"><div className="link-area"><span className="un"> Помощь </span></div></Link>
-            <Link to="/exiles/search/" className="topbar-link"><div className="link-area"><span className="un"> Поиск </span></div></Link>
+            <Link to="/forum" className="topbar-link"><div className="link-area"><span className="un"> Форум </span></div></Link>
+            <Link to="/help" className="topbar-link"><div className="link-area"><span className="un"> Помощь </span></div></Link>
+            <Link to="/search" className="topbar-link"><div className="link-area"><span className="un"> Поиск </span></div></Link>
         </div>
         <div id="links" className="in-one-row">
             <h4 className="topbar-title">Электронный архив</h4>
             <div id='navigation'>
-                <Link to="/exiles/">Главная</Link>
-                <Link to="/exiles/archive/">Архив</Link>
-                <Link to="/exiles/documents/">Документы</Link>
+                <Link to="/">Главная</Link>
+                <Link to="/exiles">Архив</Link>
+                <Link to="/documents">Документы</Link>
             </div>
             <div id='authorization'>
               {user ?
                 <>
-                  <Link to="/exiles/history/"> История</Link>
-                  <Link to="/exiles/users/"> Пользователи</Link>
-                  <Link to="/exiles/profile/"> {user} </Link>
+                  <Link to="/history"> История</Link>
+                  <Link to="/users"> Пользователи</Link>
+                  <Link to="/profile"> {user} </Link>
                   <button className="auth-button" onClick={handleClick}>Выход</button>
                 </>
                 :
                 <>
-                  <Link to="/exiles/login/"><button className="auth-button"> Вход </button></Link>
+                  <Link to="/login"><button className="auth-button"> Вход </button></Link>
                 </>
               }
             </div>

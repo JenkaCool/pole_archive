@@ -64,7 +64,7 @@ const DocumentAdd = () => {
 		  </fieldset>
 		  <button name="submit" type="submit" className="manage-button">Добавить запись</button>
 		</form>
-		<button className="manage-button">Очистить</button>
+		<button className="manage-button">DocumentAdd.jsОчистить</button>
 	  </section>
     </>
   );

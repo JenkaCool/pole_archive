@@ -2,8 +2,6 @@ import { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 
-import SITE_DOMAIN from '../../paths.js';
-
 const ExileView = () => {
   const {id} = useParams();
   const [exileData, setExileData] = useState([]);
@@ -11,7 +9,7 @@ const ExileView = () => {
 
   const makeAPICall = async () => {
     try {
-      const response = await fetch(SITE_DOMAIN + `/api/exiles/view/${id}`);
+      const response = await fetch(`http://localhost:8888/api/exiles/view/${id}`);
       const data = await response.json();
       setExileData(data.exile)
       setIncomesData(data.incomes)

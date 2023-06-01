@@ -28,7 +28,7 @@ function App() {
       removeCookie("username");
       removeCookie("access_token");
       setUser(null);
-      navigate("/exiles/");
+      navigate("/");
       window.location.reload();
     }
 
