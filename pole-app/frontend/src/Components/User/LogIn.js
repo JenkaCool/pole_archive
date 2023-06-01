@@ -28,7 +28,6 @@ const LogIn = () => {
       return {
           username: "",
           password: "",
-          //remember: false
       }
   })
 

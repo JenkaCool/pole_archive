@@ -16,6 +16,7 @@ const Topbar = () => {
   ]);
 
   const handleClick = event => {
+    console.log('log out');
     removeCookie("username");
     removeCookie("access_token");
     setUser(null);
