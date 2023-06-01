@@ -4,7 +4,7 @@ import { useCookies } from "react-cookie";
 
 import '../../css/User.css';
 
-import { DOMEN_SITE, DOMEN_SERVER } from '../../config/const.js';
+import SITE_DOMAIN from '../../paths.js';
 
 const Profile = () => {
   const [cookies, setCookie] = useCookies(["access_token", "username"]);
@@ -27,7 +27,7 @@ const Profile = () => {
 
   const makeAPICall = async () => {
     try {
-      const response = await fetch(DOMEN_SERVER + "/profile/");
+      const response = await fetch(SITE_DOMAIN + "/api/profile/");
       const data = await response.json();
       setData(data)
     }

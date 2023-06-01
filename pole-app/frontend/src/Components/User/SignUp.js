@@ -5,6 +5,7 @@ import md5 from 'md5';
 import axios from 'axios';
 import validator from 'validator';
 import { genSaltSync, hashSync, compareSync } from 'bcryptjs';
+import { DOMEN_SERVER, DOMEN_SITE } from '../../config/const';
 import { useCookies } from "react-cookie";
 import { HandySvg } from 'handy-svg'
 
@@ -16,7 +17,7 @@ import eyeImg from '../../imgs/eye.svg';
 import eyeOffImg from '../../imgs/eye-off.svg';
 import AccessDenied from '../AccessDenied';
 
-import { DOMEN_SITE, DOMEN_SERVER } from '../../config/const.js';
+import SITE_DOMAIN from '../../paths.js';
 
 const SignUp = () => {
   const [_, setUser] = useOutletContext();
@@ -26,15 +27,6 @@ const SignUp = () => {
   const [ confirmType, setConfirmType] = useState('password');
   const [ passwordOpen, setPasswordOpen] = useState(false);
   const [ passwordConfirmOpen, setPasswordConfirmOpen] = useState(false);
-  const [register, setRegister] = useState(() => {
-      return {
-          username: "",
-          role: "",
-          email: "",
-          password: "",
-          password_confirm: "",
-      }
-  })
 
   const changeType = event => {
     if (type==="password")
@@ -58,6 +50,16 @@ const SignUp = () => {
     }
   }
 
+  const [register, setRegister] = useState(() => {
+      return {
+          username: "",
+          role: "",
+          email: "",
+          password: "",
+          password_confirm: "",
+      }
+  })
+
   const changeInputRegister = event => {
       event.persist()
       setRegister(prev => {
@@ -68,18 +70,18 @@ const SignUp = () => {
       })
   }
 
-  const submitCheck = event => {
+  const submitChackin = event => {
       event.preventDefault();
       if(!validator.isEmail(register.email)) {
-          alert("Эмейл не введён")
+          alert("You did not enter email")
       } else if(register.password !== register.password_confirm) {
-          alert("Введённые пароли не совпадают")
+          alert("Repeated password incorrectly")
       } else if(!validator.isStrongPassword(register.password, {minSymbols: 0})) {
-          alert("Пароль должен состоять не менее чем из 8 символов и содержать одну строчную, заглавную букву и цифру")
+          alert("Password must consist of one lowercase, uppercase letter and number, at least 8 characters")
       } else {
           axios( {
               method: 'post',
-              url: DOMEN_SERVER + "/signup/",
+              url: SITE_DOMAIN + "/api/signup/",
               headers: {
                 'Content-type': 'application/json'
               },
@@ -93,21 +95,22 @@ const SignUp = () => {
           }).then(res => {
 
               if (res.status === 200) {
-                  window.location.href = DOMEN_SITE + "/login/"
-                  alert('Пользователь создан!');
+                  window.location.href = SITE_DOMAIN + "/login/"
+                  alert('User created!');
                   return res.json();
               } else {
-                  alert("Произошла ошибка при создании")
+
+                  alert("There has some error")
               }
           }).catch((err) => {
               if (!err?.response) {
-                 alert("Нет ответа от сервера");
+                 alert("No Server Response");
               } else if (err.response?.status === 409) {
-                 alert("Логин занят");
+                 alert("Username Taken");
               } else {
-                 alert("Возникла ошибка при регистрации");
+                 alert("Registration Failed");
               }
-              alert("Возникла ошибка на сервере")
+              alert("An error occurred on the server")
           })
       }
   }
@@ -132,7 +135,7 @@ const SignUp = () => {
     <section>
       <div className="form-box reg">
         <div className="form-value">
-          <form className="login-box" onSubmit={submitCheck}>
+          <form className="login-box" onSubmit={submitChackin}>
             <h2>Новая учётная запись</h2>
               <div className="input-box">
                 <img className="user-icon" src={userImg} />

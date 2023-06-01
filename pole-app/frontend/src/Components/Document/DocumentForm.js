@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import axios from 'axios';
 import validator from 'validator';
 
-import { DOMEN_SITE, DOMEN_SERVER } from '../../config/const.js';
+import SITE_DOMAIN from '../../paths.js';
 
 const DocumentForm = ({info}) => {
   const [document, setDocument] = useState(() => {
@@ -48,7 +48,7 @@ const DocumentForm = ({info}) => {
       } else {
           axios( {
               method: 'post',
-              url: DOMEN_SERVER + "/documents/add/",
+              url: SITE_DOMAIN + "api/documents/add/",
               headers: {
                 'Content-type': 'application/json'
               },
@@ -67,7 +67,7 @@ const DocumentForm = ({info}) => {
           }).then(res => {
 
               if (res.data === true) {
-                  window.location.href = DOMEN_SITE + "documents/"
+                  window.location.href = SITE_DOMAIN + "documents/"
                   alert('Document added!');
               } else {
                   console.log("Ok")

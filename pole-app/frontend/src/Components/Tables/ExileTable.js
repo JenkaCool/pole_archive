@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 import ExileStroke from './ExileStroke';
 
-import { DOMEN_SITE, DOMEN_SERVER } from '../../config/const.js';
+import SITE_DOMAIN from '../../paths.js';
 
 const TableExile = () => {
   const [exileData, setExileData] = useState([]);
@@ -12,7 +12,7 @@ const TableExile = () => {
   const [scrollR, setScrollR] = useState(true);
   const makeAPICall = async () => {
     try {
-      const response = await fetch(DOMEN_SERVER + "/exiles/");
+      const response = await fetch(SITE_DOMAIN + "/api/exiles/");
       const data = await response.json();
       const objectData = data;
       setExileData(objectData)

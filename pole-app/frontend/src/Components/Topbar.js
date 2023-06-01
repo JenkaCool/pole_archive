@@ -1,14 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
 import { Link, useNavigate, Outlet } from "react-router-dom";
-import { useCookies, CookiesProvider } from "react-cookie";
 import axios from 'axios';
+import { useCookies, CookiesProvider } from "react-cookie";
 
 import '../css/Topbar.css';
 
 const Topbar = () => {
   const navigate = useNavigate();
-
   let [user, setUser] = useState(null);
   const [cookies, setCookie, removeCookie] = useCookies([
     "access_token",
@@ -28,6 +27,7 @@ const Topbar = () => {
     setCookie("username", cookies.username);
     console.log("Ok")
   }
+
 
   return (
     <header className="App-header sticky">
