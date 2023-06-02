@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
 import { useCookies } from "react-cookie";
+import { useOutletContext } from "react-router-dom";
 
 import '../../css/User.css';
 
 const Profile = () => {
+  const [_, setUser] = useOutletContext();
   const [cookies, setCookie] = useCookies(["access_token", "username"]);
 
   const [userLogin, setUserLogin] = useState(false);
@@ -15,19 +17,19 @@ const Profile = () => {
   const [date, setDate] = useState(null);
 
   function setData(data) {
-    setUserLogin(true);
-    setUserId(data.id);
-    setUsername(data.username);
-    setRole(data.role);
-    setEmail(data.email);
-    setData(data.date);
+    setUserId(data.usr_id);
+    setUsername(data.usr_username);
+    setRole(data.usr_role);
+    setEmail(data.usr_email);
+    setDate(data.usr_registration_date);
   }
 
   const makeAPICall = async () => {
     try {
-      const response = await fetch('http://localhost:8888/api/profile/');
+      const response = await fetch('/api/profile/');
       const data = await response.json();
       setData(data)
+          setUserLogin(true);
     }
     catch (e) {
       console.log(e)
@@ -49,15 +51,19 @@ const Profile = () => {
   return (
     <>
       {userLogin ?
-        <div>
+        <>
           <h3>Профиль</h3>
-          <div key={userId}>
-            <div><p>Логин:</p><p>{username}</p></div>
-            <div><p>Роль:</p><p>{role}</p></div>
-            <div><p>Email:</p><p>{email}</p></div>
-            <div><p>Дата регистрации:</p><p>{date}</p></div>
+          <div className="profile-card">
+
+            <div key={userId} className="profile-fields">
+              <h2>Информация о профиле</h2>
+              <div><p>Логин:</p><p>{username}</p></div>
+              <div><p>Роль:</p><p>{role}</p></div>
+              <div><p>Email:</p><p>{email}</p></div>
+              <div><p>Дата регистрации:</p><p>{date}</p></div>
+            </div>
           </div>
-        </div>
+        </>
         :
         <p>Данные о пользователе не найдены</p>
       }

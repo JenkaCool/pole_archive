@@ -12,7 +12,7 @@ const TableUser = () => {
   const [userData, setUserData] = useState([]);
   const makeAPICall = async () => {
     try {
-      const response = await fetch('http://localhost:8888/api/users/');
+      const response = await fetch('/api/users/');
       const data = await response.json();
       const objectData = data;
       setUserData(objectData)
@@ -37,7 +37,7 @@ const TableUser = () => {
       <h3>Список пользователей</h3>
       <Link to="/signup"><button className="manage-button"> Добавить пользователя </button></Link>
       {userData &&
-      <div className="table">
+      <div className="table center-align">
         <table>
           <thead>
             <th>ID</th>

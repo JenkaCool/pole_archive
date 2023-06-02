@@ -14,7 +14,7 @@ const DocumentTable = () => {
   const [documentData, setDocumentData] = useState([]);
   const makeAPICall = async () => {
     try {
-      const response = await fetch('http://localhost:8888/api/documents/');
+      const response = await fetch('/api/documents/');
       const data = await response.json();
       setDocumentData(data)
     }

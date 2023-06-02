@@ -9,7 +9,7 @@ const ExileView = () => {
 
   const makeAPICall = async () => {
     try {
-      const response = await fetch(`http://localhost:8888/api/archive/view/${id}`);
+      const response = await fetch(`/api/archive/view/${id}`);
       const data = await response.json();
       setExileData(data.exile)
       setIncomesData(data.incomes)

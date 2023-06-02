@@ -80,7 +80,7 @@ const SignUp = () => {
       } else {
           axios( {
               method: 'post',
-              url: "http://localhost:8888/api/signup/",
+              url: "/api/signup/",
               headers: {
                 'Content-type': 'application/json'
               },
@@ -92,13 +92,11 @@ const SignUp = () => {
                 date: getCurrentDate(),
               }
           }).then(res => {
-
               if (res.status === 200) {
-                  window.location.href = "http://localhost:8888/login/"
+                  window.location.href = "/login/"
                   alert('User created!');
                   return res.json();
               } else {
-
                   alert("There has some error")
               }
           }).catch((err) => {

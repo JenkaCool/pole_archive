@@ -12,7 +12,7 @@ const TableExile = () => {
   const [filteredData, setFilteredData] = useState([]);
   const makeAPICall = async () => {
     try {
-      const response = await fetch('http://localhost:8888/api/archive/');
+      const response = await fetch('/api/archive/');
       const data = await response.json();
       const objectData = data;
       setExileData(objectData)

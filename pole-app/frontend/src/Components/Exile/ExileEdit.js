@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
 
-const ExileForm = ({info}) => {
+const ExileEdit = ({info}) => {
   return (
     <>
       <h3>Добавить ссыльного</h3>
@@ -111,4 +111,4 @@ const ExileForm = ({info}) => {
   );
 }
 
-export default ExileForm;
+export default ExileEdit;

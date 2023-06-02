@@ -15,7 +15,7 @@ const DocumentView = () => {
 
   const makeAPICall = async () => {
     try {
-      const response = await fetch(`http://localhost:8888/api/documents/view/${id}`);
+      const response = await fetch(`api/documents/view/${id}`);
       const data = await response.json();
       setDocumentData(data.document);
       setRecordsData(data.records);

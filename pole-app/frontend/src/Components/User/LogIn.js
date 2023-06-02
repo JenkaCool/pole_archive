@@ -72,7 +72,7 @@ const LogIn = () => {
       } else {
           axios( {
               method: 'post',
-              url: "http://localhost:8888/api/login/",
+              url: "/api/login/",
               headers: {
                 'Accept': 'application/json, text/plain',
                 'Content-Type': 'application/json;charset=UTF-8'

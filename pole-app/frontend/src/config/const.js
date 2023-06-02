@@ -1,3 +1,3 @@
-export const DOMEN_SITE = "http://localhost:8888/"
-export const DOMEN_SERVER = "http://localhost:8888/api"
+export const DOMEN_SITE = "http://localhost/"
+export const DOMEN_SERVER = "http://localhost/api"
 

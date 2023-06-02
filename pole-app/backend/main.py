@@ -88,6 +88,10 @@ def checkPassword(password, salt):
   pwd = hashPassword (password, salt)
   return pwd
 
+def setOnlyUserMainInfo():
+  varlist = ['usr_id','usr_role','usr_username','usr_email','usr_registration_date']
+  return UserSchema(only=varlist)
+
 def encode_token(user_id):
     try:
         payload = {
@@ -203,10 +207,8 @@ def users():
     if request.method == 'GET':
         json_data=[]
 
-        varlist = ['usr_id','usr_role','usr_username','usr_email','usr_registration_date']
         users = User.query.all()
-        user_schema = UserSchema(only=varlist)
-        users
+        user_schema = setOnlyUserMainInfo()
         for user in users:
             temp = {}
             records = Record.query.filter(Record.rec_creator_id == user.get_user_id()).count()
@@ -398,10 +400,13 @@ def protected():
 def user_profile():
     if not request.cookies.get('access_token'):
         abort(401)
-    temp = {}
-    token = json.dump(session.get("token"))
-    temp['token'] = token
-    return json.dumps(temp), 200
+    username = request.cookies.get('username')
+
+    user_schema = setOnlyUserMainInfo()
+
+    user = User.query.filter(User.usr_username == username).first()
+
+    return json.dumps(user_schema.dump(user), default=morphDec), 200
 
 @app.route('/api/logout/', methods=['GET'])
 def user_logout():
