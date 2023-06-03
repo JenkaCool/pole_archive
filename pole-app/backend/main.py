@@ -161,7 +161,7 @@ def documents():
     if request.method == 'GET':
       json_data=[]
       document_schema = DocumentSchema()
-      documents = Document.query.all()
+      documents = Document.query.filter(Document.doc_is_removed == 0).all()
       #row_headers = ["id", "fund", "inventory", "storage_unit", "total_lists_num", "year", "additional_info", "url", "creator_id", "creating_date", "is_removed", "visible_mode"]
       for doc in documents:
         json_data.append(document_schema.dump(doc))
@@ -176,7 +176,7 @@ def archive():
       exile_schema = ExileSchema()
       income_schema = IncomeSchema()
 
-      exiles = Exile.query.all()
+      exiles = Exile.query.filter(Exile.exl_is_removed == 0).all()
 
       for exile in exiles:
         temp = {}
@@ -196,7 +196,6 @@ def archive():
         temp['incomes'] = income_temp
         json_data.append(temp)
 
-    print(json_data)
     return json.dumps(json_data, default=morphDec)
 
 @app.route('/api/users/', methods=['GET'])
@@ -207,12 +206,13 @@ def users():
     if request.method == 'GET':
         json_data=[]
 
-        users = User.query.all()
+        users = User.query.filter(User.usr_is_removed == 0).all()
         user_schema = setOnlyUserMainInfo()
         for user in users:
             temp = {}
-            records = Record.query.filter(Record.rec_creator_id == user.get_user_id()).count()
+            records = Record.query.filter(Record.rec_creator_id == user.get_user_id(), Record.rec_is_removed == 0).count()
             user_temp = user_schema.dump(user)
+
             temp['user'] = user_temp
             temp['records_count'] = records
             json_data.append(temp)
@@ -230,10 +230,8 @@ def one_document(id):
       document_schema = DocumentSchema()
       record_schema = RecordSchema()
 
-      document = Document.query.filter(Document.doc_id == id).one()
-
-
-      records = Record.query.filter(Record.doc_id == id).all()
+      document = Document.query.filter(Document.doc_id == id, Document.doc_is_removed == 0).one()
+      records = Record.query.filter(Record.doc_id == id, Record.rec_is_removed == 0).all()
 
       for record in records:
         temp = {}
@@ -383,8 +381,10 @@ def user_login():
       if not (user.usr_hashed_password == checkPassword(password, user.usr_salt)):
           return jsonify({"Error" : "User or password incorrect"}), 401
 
+      user_id = user.usr_id
+
       access_token = create_access_token(identity=username)
-      response = {"access_token":access_token}
+      response = {"access_token":access_token, "user_id":user_id}
       return response
 
 
@@ -404,7 +404,7 @@ def user_profile():
 
     user_schema = setOnlyUserMainInfo()
 
-    user = User.query.filter(User.usr_username == username).first()
+    user = User.query.filter(User.usr_username == username, User.usr_is_removed == 0).first()
 
     return json.dumps(user_schema.dump(user), default=morphDec), 200
 

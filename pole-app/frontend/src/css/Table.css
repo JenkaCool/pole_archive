@@ -120,6 +120,12 @@
     cursor: pointer;
 }
 
+.no-touch tbody tr:hover {
+    background: #e0e0e0;
+    cursor: default;
+}
+
+
 ::-webkit-scrollbar {
 	width: 6px;
 }

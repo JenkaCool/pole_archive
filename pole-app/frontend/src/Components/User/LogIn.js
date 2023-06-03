@@ -18,7 +18,7 @@ const LogIn = () => {
   const [_, setUser] = useOutletContext();
 
   const [fail, setFail] = useState(null);
-  const [cookies, setCookie] = useCookies(["access_token", "username"]);
+  const [cookies, setCookie] = useCookies(["access_token", "username", "user_id"]);
   const navigate = useNavigate();
 
   const [ type, setType] = useState('password');
@@ -96,15 +96,11 @@ const LogIn = () => {
 
               if ("access_token" in data) {
                 setFail(false);
-                /*if (inputs.remember) {
-                  let expDate = new Date();
-                  const days = 31;
-                  expDate.setTime(expDate.getTime() + (days*24*60*60*1000));
-                  setCookie('access_token', data.access_token, { path: '/',  expires:expDate});
-                } else */
                 setCookie('access_token', data.access_token);
                 setCookie("username", inputs.username);
+                setCookie("user_id", data.user_id);
                 console.log(data.access_token);
+                console.log(data.user_id);
                 setUser(inputs.username);
                 navigate("/");
                 window.location.reload();
@@ -152,7 +148,7 @@ const LogIn = () => {
                 <label for="">Пароль</label>
               </div>
               <div className="forget">
-                <Link>Забыли пароль?</Link>
+                <Link to="/recover">Забыли пароль?</Link>
               </div>
               <button type="submit">Войти</button>
           </form>

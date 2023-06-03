@@ -48,10 +48,6 @@ const ExileStroke = ({row}) => {
       <td>{exileData.exl_family_info}</td>
       <td>{exileData.exl_cur_state}</td>
       <td>{exileData.exl_add_info}</td>
-      <td>{exileData.exl_creator_id}</td>
-      <td>{exileData.exl_creating_date}</td>
-      <td>{exileData.exl_is_removed}</td>
-      <td>{exileData.exl_visible_mode}</td>
     </tr>
   );
 }

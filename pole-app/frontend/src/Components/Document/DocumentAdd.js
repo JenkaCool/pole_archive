@@ -1,9 +1,16 @@
 import { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
-import axios from 'axios';
+import { useCookies } from "react-cookie";
 import validator from 'validator';
 
+import AccessDenied from '../AccessDenied';
+import addOneDocument from '../../functions/ApiFunctions';
+
 const DocumentAdd = () => {
+  const [cookies, setCookie] = useCookies(["access_token", "username", "user_id"]);
+
+  const [userId, setUserId] = useState(null);
+
   const [document, setDocument] = useState(() => {
     return {
       year: 0,
@@ -18,17 +25,6 @@ const DocumentAdd = () => {
     }
   })
 
-  function getCurrentDate(separator='-'){
-    let newDate = new Date()
-    let date = newDate.getDate();
-    let month = newDate.getMonth() + 1;
-    let year = newDate.getFullYear();
-    let time = newDate.getHours() + ':' + newDate.getMinutes() + ':' + newDate.getSeconds();
-    month = month < 10 ? '0' + month : month;
-    let result = year + '-' + month + '-' + date + ' ' + time;
-    return result
-  }
-
   const handleChange = event => {
       event.persist()
       setDocument(prev => {
@@ -41,48 +37,22 @@ const DocumentAdd = () => {
 
   const handleSubmit = event => {
       event.preventDefault();
-      if(!document.year) {
-          alert("You did not enter year")
+      if (document && document!="", document!=undefined){
+        if (cookies.user_id && cookies.user_id!="", cookies.user_id!=undefined) {
+            addOneDocument(document, cookies.user_id);
+          } else {
+            alert("Для отправки данных сперва нужно войти в учётную запись");
+          }
       } else {
-          axios( {
-              method: 'post',
-              url: "/api/documents/add/",
-              headers: {
-                'Content-type': 'application/json'
-              },
-              data: {
-                year: document.year,
-                fund: document.fund,
-                inventory: document.inventory,
-                storage_unit: document.storage_unit,
-                total_lists_num: isNaN(document.total_lists_num) ? document.total_lists_num : 0,
-                additional_info: document.additional_info,
-                url: document.url,
-                creator_id: 0,
-                date: getCurrentDate(),
-                visible_mode: 0,
-              }
-          }).then(res => {
-
-              if (res.data === true) {
-                  window.location.href = "/documents/"
-                  alert('Document added!');
-              } else {
-                  console.log("Ok")
-                  alert("There is already a document with this year")
-              }
-          }).catch((err) => {
-              if (!err?.response) {
-                 alert("No Server Response");
-              } else if (err.response?.status === 409) {
-                 alert("Username Taken");
-              } else {
-                 alert("Registration Failed");
-              }
-              alert("An error occurred on the server")
-          })
+        alert("Данные для отправки отсутствуют");
       }
   }
+
+  if (!cookies.username || cookies.username=="" || cookies.username==undefined)
+    return (
+      <AccessDenied />
+    );
+
   return (
     <>
       <h3> Добавление документа </h3>

@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 
+import changeDateFormat from '../../functions/dateFunctions';
+import dayjs from 'dayjs';
 
 const DocumentView = () => {
   const route = useNavigate();
@@ -15,7 +17,7 @@ const DocumentView = () => {
 
   const makeAPICall = async () => {
     try {
-      const response = await fetch(`api/documents/view/${id}`);
+      const response = await fetch(`/api/documents/view/${id}`);
       const data = await response.json();
       setDocumentData(data.document);
       setRecordsData(data.records);
@@ -74,12 +76,11 @@ const DocumentView = () => {
         </div>
         <div className="info-block">
           <p>Создатель: {documentData.doc_creator_id}</p>
-          <p>Дата: {documentData.doc_creating_date}</p>
-          <p>Тип удаления:{documentData.doc_is_removed}</p>
-          <p>Тип доступа: {documentData.doc_visible_mode}</p>
+          <p>Дата: {dayjs(documentData.doc_creating_date).format("DD/MM/YYYY")}</p>
         </div>
       </div>
       <Link to="/documents/edit"><button className="manage-button">Изменить документ</button></Link>
+      <button className="manage-button">Удалить документ</button>
       <div>
         <h4> Список записей </h4>
         <Link to="/archive/add"><button className="manage-button">Добавить запись</button></Link>
@@ -87,14 +88,12 @@ const DocumentView = () => {
             recordsData ?
             <div className="table">
               <p>Найдено записей: {recordsData.length}</p>
-              <table>
+              <table className="table">
                 <thead>
                   <th>№ ссыльного</th>
                   <th>Номер листа в документе</th>
                   <th>Создатель</th>
                   <th>Дата</th>
-                  <th>Тип удаления</th>
-                  <th>Тип доступа</th>
                 </thead>
                 <tbody>
                   {recordsData.map(rec => (
@@ -102,9 +101,7 @@ const DocumentView = () => {
                       <td>{rec.exl_id}</td>
                       <td>{rec.rec_list_num}</td>
                       <td>{rec.rec_creator_id}</td>
-                      <td>{rec.rec_creating_date}</td>
-                      <td>{rec.rec_is_removed}</td>
-                      <td>{rec.rec_visible_mode}</td>
+                      <td>{dayjs(rec.rec_creating_date).format("DD/MM/YYYY")}</td>
                     </tr>
                   ))}
                 </tbody>

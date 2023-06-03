@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
 import { useCookies } from "react-cookie";
-import { useOutletContext } from "react-router-dom";
+import dayjs from 'dayjs';
 
 import '../../css/User.css';
 
 const Profile = () => {
-  const [_, setUser] = useOutletContext();
   const [cookies, setCookie] = useCookies(["access_token", "username"]);
 
   const [userLogin, setUserLogin] = useState(false);
@@ -21,7 +20,7 @@ const Profile = () => {
     setUsername(data.usr_username);
     setRole(data.usr_role);
     setEmail(data.usr_email);
-    setDate(data.usr_registration_date);
+    setDate(dayjs(data.usr_registration_date).format("DD/MM/YYYY"));
   }
 
   const makeAPICall = async () => {
@@ -53,9 +52,9 @@ const Profile = () => {
       {userLogin ?
         <>
           <h3>Профиль</h3>
-          <div className="profile-card">
+          <div className="card">
 
-            <div key={userId} className="profile-fields">
+            <div key={userId} className="card-fields">
               <h2>Информация о профиле</h2>
               <div><p>Логин:</p><p>{username}</p></div>
               <div><p>Роль:</p><p>{role}</p></div>

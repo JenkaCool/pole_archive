@@ -37,7 +37,7 @@ const TableUser = () => {
       <h3>Список пользователей</h3>
       <Link to="/signup"><button className="manage-button"> Добавить пользователя </button></Link>
       {userData &&
-      <div className="table center-align">
+      <div className="table no-touch center-align">
         <table>
           <thead>
             <th>ID</th>

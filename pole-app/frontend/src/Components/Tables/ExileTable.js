@@ -7,8 +7,6 @@ import Search from '../Search/Search';
 
 const TableExile = () => {
   const [exileData, setExileData] = useState([]);
-  const [scrollL, setScrollL] = useState(false);
-  const [scrollR, setScrollR] = useState(true);
   const [filteredData, setFilteredData] = useState([]);
   const makeAPICall = async () => {
     try {
@@ -25,23 +23,6 @@ const TableExile = () => {
     makeAPICall();
   }, [])
 
-
-  const handleScroll = event => {
-    if (event.target.scrollLeft === 0) {
-      setScrollR(true);
-      setScrollL(false);
-    } else
-      if (event.target.scrollWidth - event.target.scrollLeft === event.target.clientWidth) {
-        setScrollR(false);
-        setScrollL(true);
-      } else {
-        setScrollR(true);
-        setScrollL(true);
-      }
-
-    //setScroll(event.target.scrollLeft > (event.target.scrollWidth / 2));
-  };
-
   const handleChange = (value) => {
     setFilteredData(value)
   }
@@ -50,8 +31,8 @@ const TableExile = () => {
       <h3>Список записей о польских ссыльных в Олонецкой губернии</h3>
       <Search/>
       {exileData &&
-      <div className={"big-table table" + (scrollL ? " scroll-left"  : '' ) + (scrollR ? " scroll-right"  : '' )}>
-        <table onScroll={handleScroll}>
+      <div className={"big-table table"}>
+        <table>
           <thead className="stiсky-header">
             <th>№</th>
             <th>Ф.И.О.</th>
@@ -71,10 +52,6 @@ const TableExile = () => {
             <th>Информация о семье</th>
             <th>Текущее состояние ссыльного</th>
             <th>Дополнительная информация о ссыльном</th>
-            <th>ID создателя</th>
-            <th>Дата создания</th>
-            <th>Флаг удаления</th>
-            <th>Режим доступа</th>
           </thead>
           <tbody>
             {exileData.map(exl => ( <ExileStroke row={exl} key={exl.exl_id}/>))}

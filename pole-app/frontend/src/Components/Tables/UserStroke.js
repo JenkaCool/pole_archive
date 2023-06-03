@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import dayjs from 'dayjs';
 
 import '../../css/Table.css';
 
@@ -22,9 +24,12 @@ const UserStroke = ({row}) => {
       <td>{userData.usr_username}</td>
       <td>{userData.usr_role}</td>
       <td>{userData.usr_email}</td>
-      <td>{userData.usr_registration_date}</td>
+      <td>{dayjs(userData.usr_registration_date).format("DD/MM/YYYY")}</td>
       <td>{count}</td>
-      <td><button className="manage-button">Изменить</button><button className="manage-button">Удалить</button></td>
+      <td>
+        <Link><button className="manage-button">Изменить</button></Link>
+        <button className="manage-button" onClick="">Удалить</button>
+      </td>
     </tr>
   );
 }

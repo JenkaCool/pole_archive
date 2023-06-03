@@ -5,7 +5,6 @@ import md5 from 'md5';
 import axios from 'axios';
 import validator from 'validator';
 import { genSaltSync, hashSync, compareSync } from 'bcryptjs';
-import { DOMEN_SERVER, DOMEN_SITE } from '../../config/const';
 import { useCookies } from "react-cookie";
 import { HandySvg } from 'handy-svg'
 
@@ -17,6 +16,7 @@ import eyeImg from '../../imgs/eye.svg';
 import eyeOffImg from '../../imgs/eye-off.svg';
 import AccessDenied from '../AccessDenied';
 
+import getCurrentDate from '../../functions/dateFunctions'
 
 const SignUp = () => {
   const [_, setUser] = useOutletContext();
@@ -89,11 +89,12 @@ const SignUp = () => {
                 role: register.role,
                 email: register.email,
                 password: md5(register.password),
+                password_confirm: md5(register.password_confirm),
                 date: getCurrentDate(),
               }
           }).then(res => {
               if (res.status === 200) {
-                  window.location.href = "/login/"
+                  window.location.href = "/"
                   alert('User created!');
                   return res.json();
               } else {
@@ -110,17 +111,6 @@ const SignUp = () => {
               alert("An error occurred on the server")
           })
       }
-  }
-
-  function getCurrentDate(separator='-'){
-    let newDate = new Date()
-    let date = newDate.getDate();
-    let month = newDate.getMonth() + 1;
-    let year = newDate.getFullYear();
-    let time = newDate.getHours() + ':' + newDate.getMinutes() + ':' + newDate.getSeconds();
-    month = month < 10 ? '0' + month : month;
-    let result = year + '-' + month + '-' + date + ' ' + time;
-    return result
   }
 
   if (!cookies.username || cookies.username=="" || cookies.username==undefined)

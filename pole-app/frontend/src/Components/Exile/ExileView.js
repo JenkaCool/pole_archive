@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 
+import dayjs from 'dayjs';
+
 const ExileView = () => {
   const {id} = useParams();
   const [exileData, setExileData] = useState([]);
@@ -144,19 +146,12 @@ const ExileView = () => {
           </div>
           <div>
             <p>Дата: </p>
-            <p>{exileData.exl_creating_date}</p>
-          </div>
-          <div>
-            <p>Удаление: </p>
-            <p>{exileData.exl_is_removed}</p>
-          </div>
-          <div>
-            <p>Тип доступа: </p>
-            <p>{exileData.exl_visible_mode}</p>
+            <p>{dayjs(exileData.exl_creating_date).format("DD/MM/YYYY")}</p>
           </div>
         </div>
       </div>
       <Link to="/archive/edit"><button className="manage-button">Изменить запись</button></Link>
+      <button className="manage-button">Удалить запись</button>
     </>
   );
 }
