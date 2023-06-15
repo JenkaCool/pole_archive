@@ -4,7 +4,7 @@ import { useCookies } from "react-cookie";
 import validator from 'validator';
 
 import AccessDenied from '../AccessDenied';
-import addOneDocument from '../../functions/ApiFunctions';
+import { addOneDocument } from '../../functions/ApiFunctions';
 
 const DocumentAdd = () => {
   const [cookies, setCookie] = useCookies(["access_token", "username", "user_id"]);
@@ -80,7 +80,6 @@ const DocumentAdd = () => {
 		  </fieldset>
 		  <button name="submit" type="submit" className="manage-button">Добавить запись</button>
 		</form>
-		<button className="manage-button">Очистить</button>
 	  </section>
     </>
   );

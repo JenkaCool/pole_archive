@@ -5,7 +5,7 @@ import '../css/PageNotFound.css';
 
 function PageNotFound() {
   return (
-    <div className="page-content not-found center-page-align inside-padding">
+    <div className="not-found center-page-align inside-padding">
       <h1> Ох, нет! </h1>
       <h2> #404 (Страница не найдена) </h2>
       <br></br>

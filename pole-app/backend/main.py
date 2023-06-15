@@ -23,6 +23,7 @@ from flask_jwt_extended import (
     unset_jwt_cookies
 )
 from flask_jwt_extended import JWTManager
+from sqlalchemy import update
 
 app = Flask(__name__)
 
@@ -151,7 +152,7 @@ def token_required(f):
 
 @app.route('/api/')
 def home():
-    return "Hello"
+    return {"message": "Welcome to API with SQLAlchemy"}
 
 @app.route('/api/documents/', methods=['GET'])
 def documents():
@@ -218,7 +219,7 @@ def users():
             json_data.append(temp)
     return json.dumps(json_data, default=morphDec)
 
-@app.route('/api/documents/view/<id>', methods=['GET','POST'])
+@app.route('/api/documents/view/<id>', methods=['GET','POST','DELETE'])
 def one_document(id):
     if not request.cookies.get('access_token'):
         abort(401)
@@ -245,7 +246,7 @@ def one_document(id):
       temp['document'] = document_schema.dump(document)
     return json.dumps(json_data)
 
-@app.route('/api/archive/view/<id>', methods=['GET','POST'])
+@app.route('/api/archive/view/<id>', methods=['GET','POST','DELETE'])
 def one_exile(id):
     if request.method == 'GET':
       json_data=[]
@@ -386,6 +387,33 @@ def user_login():
       access_token = create_access_token(identity=username)
       response = {"access_token":access_token, "user_id":user_id}
       return response
+
+@app.route('/api/users/<id>/', methods=['DELETE'])
+def user_delete(id):
+    if not request.cookies.get('access_token'):
+        abort(401)
+
+    if request.method == 'DELETE':
+        try:
+            user = User.query.filter(User.usr_id == id, User.usr_id != 1).first()
+            #.update({User.usr_is_removed: 1}, synchronize_session = False)
+            db.session.delete(user)
+            db.session.commit()
+            resp = {
+                "status":"Success",
+                "message":"User successfully removed"
+            }
+            return make_response(jsonify(resp)), 200
+
+        except Exception as e:
+            db.session.rollback()
+            resp = {
+                "status" :"Error",
+                "message" :" Error occured, user removing failed"
+            }
+            return make_response(jsonify(resp)),401
+
+
 
 
 @app.route('/protected', methods=['GET'])

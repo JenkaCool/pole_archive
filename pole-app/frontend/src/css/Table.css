@@ -10,7 +10,6 @@
 	display: inline-block;
 	vertical-align: top;
 	max-width: 100%;
-
 	-webkit-overflow-scrolling: touch;
 	transition: .6s;
 	border-collapse: collapse;
@@ -19,7 +18,7 @@
 .big-table table tr td,
 .big-table table tr th {
   box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.05) inset;
-  padding: 20px 50px;
+  padding: 20px 20px;
 }
 
 .scroll-right:after {
@@ -63,11 +62,11 @@
 
 .table thead th {
     position: sticky;
-    top: 0;
+    top: -1px;
 	font-weight: bold;
 	text-align: left;
 	border: none;
-	padding: 10px 15px;
+	padding: 12px 15px;
 	background: #EDEDED;
 	font-size: 14px;
 	border-top: 1px solid #ddd;
@@ -125,7 +124,6 @@
     cursor: default;
 }
 
-
 ::-webkit-scrollbar {
 	width: 6px;
 }
@@ -136,3 +134,15 @@
 	box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
 }
 
+.income-list li p {
+  margin-bottom: 6px;
+  text-transform: lowercase;
+}
+
+.income-list li p:first-child {
+  text-transform: none;
+}
+
+.income-list li {
+  margin-bottom: 20px;
+}

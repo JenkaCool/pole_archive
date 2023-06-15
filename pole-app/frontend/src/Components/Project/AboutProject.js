@@ -1,10 +1,10 @@
 import React from 'react'
 import { Link } from "react-router-dom";
 
-import bookImg from '../../imgs/open-book.png'
-import booksImg from '../../imgs/two-books.png'
-import coverImg from '../../imgs/cover.png'
+import bookImg from '../../imgs/open-book.png';
+import coverImg from '../../imgs/cover.png';
 
+import '../../css/Content.css';
 
 function AboutProject() {
   return (
@@ -13,8 +13,35 @@ function AboutProject() {
         <img className="cover-img" src={coverImg}/>
         <h1 className="cover-text">О проекте</h1>
       </div>
+      <div className="quote">
+        <blockquote>
+          <p>
+            Каждый человек рано или поздно начинает интересоваться прошлым
+            своих родственников и предков. Как правило, такая информация
+            передается из поколения в поколение.
+            Однако из-за того, что
+            человек может потерять связь с родственниками и его дальнейшая
+            судьба остается неизвестной, например, в случае когда человек
+            был отправлен в ссылку, бывает крайне проблематично восстановить
+            полную информацию о конкретном человеке.
+          </p>
+        </blockquote>
+      </div>
       <img className="main-page-img" src={bookImg}/>
-      <img className="main-page-img" src={booksImg}/>
+      <div className="quote">
+        <blockquote>
+          <p>
+            Каждый человек рано или поздно начинает интересоваться прошлым
+            своих родственников и предков. Как правило, такая информация
+            передается из поколения в поколение.
+            Однако из-за того, что
+            человек может потерять связь с родственниками и его дальнейшая
+            судьба остается неизвестной, например, в случае когда человек
+            был отправлен в ссылку, бывает крайне проблематично восстановить
+            полную информацию о конкретном человеке.
+          </p>
+        </blockquote>
+      </div>
     </div>
   );
 }

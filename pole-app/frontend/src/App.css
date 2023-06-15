@@ -30,6 +30,20 @@ body {
   text-align:left;
 }
 
+.page-content > * {
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.page-content > *:first-child {
+  margin-top: 0;
+}
+
+.page-content > *:last-child {
+  margin-bottom: 0;
+}
+
+
 .Footer {
   position: absolute;
   left: 0;
@@ -104,7 +118,7 @@ footer {
 
 .cover-img {
   min-height: 400px;
-  min-width: 800px;
+  min-width: 1200px;
   width: 100%;
   margin: -100px 0 0 -100px;
 }
@@ -162,6 +176,7 @@ footer {
 .card {
   margin: 30px auto;
   width: 600px;
+  z-index: 10;
 }
 
 .card h2 {

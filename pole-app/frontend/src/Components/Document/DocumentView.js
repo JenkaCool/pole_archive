@@ -3,8 +3,6 @@ import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
-
-import changeDateFormat from '../../functions/dateFunctions';
 import dayjs from 'dayjs';
 
 const DocumentView = () => {
@@ -12,6 +10,8 @@ const DocumentView = () => {
   const {id} = useParams();
   const [cookies, setCookie] = useCookies(["access_token", "username"]);
 
+  const [data, setData] = useState([]);
+  console.log(data);
   const [documentData, setDocumentData] = useState([]);
   const [recordsData, setRecordsData] = useState([]);
 
@@ -26,9 +26,12 @@ const DocumentView = () => {
       console.log(e)
     }
   }
+
   useEffect(() => {
     if (cookies.username && cookies.username!="" && cookies.username!=undefined){
       makeAPICall();
+      setDocumentData(data.document);
+      setRecordsData(data.records);
     }
   }, [])
 
@@ -42,6 +45,8 @@ const DocumentView = () => {
   return (
     <>
       <h3>Информация о документе</h3>
+      {documentData
+      ?
       <div className="info-form">
         <div className="info-block">
           <h4> Документ </h4>
@@ -74,11 +79,13 @@ const DocumentView = () => {
             <p>{documentData.doc_url}</p>
           </div>
         </div>
+
         <div className="info-block">
           <p>Создатель: {documentData.doc_creator_id}</p>
           <p>Дата: {dayjs(documentData.doc_creating_date).format("DD/MM/YYYY")}</p>
         </div>
       </div>
+      : <p> Информации нет </p>}
       <Link to="/documents/edit"><button className="manage-button">Изменить документ</button></Link>
       <button className="manage-button">Удалить документ</button>
       <div>

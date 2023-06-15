@@ -5,8 +5,8 @@ import { Link } from "react-router-dom";
 import '../../css/Search.css';
 import searchImg from '../../imgs/search.svg'
 
-const Search = () => {
-  const [searchValue, setSearchValue] = useState('')
+const Search = ( { handleFiltering } ) => {
+  const [value, setValue] = useState('')
 /*
   const filteredData = rows.filter(row => {
     return row.name.toLowerCase().includes(searchValue.toLowerCase())
@@ -25,6 +25,10 @@ const Search = () => {
     }
   }
 */
+  useEffect(() => {
+    handleFiltering(value);
+  }, [value])
+
   return (
     <div className="search">
       <form className=" ib-cont">
@@ -32,7 +36,7 @@ const Search = () => {
           type="search"
           placeholder="Поиск..."
           className="search-input ib-m ib-el"
-          onChange={(event) => console.log(event.target.value)}
+          onChange={(event) => setValue(event.target.value)}
           autofocus required />
         <button type="submit" className="search-button ib-m ib-el"><img src={searchImg} alt="Go" className="search-img"/></button>
       </form>

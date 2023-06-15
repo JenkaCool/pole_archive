@@ -99,6 +99,7 @@ const LogIn = () => {
                 setCookie('access_token', data.access_token);
                 setCookie("username", inputs.username);
                 setCookie("user_id", data.user_id);
+                setInputs({username: "", password: ""});
                 console.log(data.access_token);
                 console.log(data.user_id);
                 setUser(inputs.username);

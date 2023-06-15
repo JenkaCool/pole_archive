@@ -8,28 +8,37 @@ import Search from '../Search/Search';
 const TableExile = () => {
   const [exileData, setExileData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
+
   const makeAPICall = async () => {
     try {
       const response = await fetch('/api/archive/');
       const data = await response.json();
       const objectData = data;
-      setExileData(objectData)
+      setExileData(objectData);
+      setFilteredData(objectData)
     }
     catch (e) {
       console.log(e)
     }
   }
-  useEffect(() => {
-    makeAPICall();
-  }, [])
 
   const handleChange = (value) => {
     setFilteredData(value)
   }
+
+  const filterExiles = (value) => {
+    setFilteredData(exileData.filter(exile => { return exile.exile.exl_full_name.toLowerCase().includes(value.toLowerCase()) }))
+  }
+
+  useEffect(() => {
+    makeAPICall();
+  }, [])
+
+
   return (
     <>
       <h3>Список записей о польских ссыльных в Олонецкой губернии</h3>
-      <Search/>
+      <Search handleFiltering={filterExiles}/>
       {exileData &&
       <div className={"big-table table"}>
         <table>
@@ -54,7 +63,7 @@ const TableExile = () => {
             <th>Дополнительная информация о ссыльном</th>
           </thead>
           <tbody>
-            {exileData.map(exl => ( <ExileStroke row={exl} key={exl.exl_id}/>))}
+            {filteredData ? filteredData.map(exl => ( <ExileStroke row={exl} key={exl.exl_id}/>)) : <tr>Записи не найдены</tr>}
           </tbody>
         </table>
       </div>

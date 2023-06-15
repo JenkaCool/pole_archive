@@ -18,6 +18,7 @@ const Topbar = () => {
   const handleClick = event => {
     console.log('log out');
     removeCookie("username");
+    removeCookie("user_id");
     removeCookie("access_token");
     setUser(null);
     navigate("/");

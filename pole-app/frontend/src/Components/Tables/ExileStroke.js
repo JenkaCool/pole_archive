@@ -32,13 +32,12 @@ const ExileStroke = ({row}) => {
       <td>{exileData.exl_supervision_place}</td>
       <td>{exileData.exl_departure_place}</td>
       <td>{exileData.exl_income_flag == 0 ? <p>-</p>:
-        <ul>
-
+        <ul className="income-list">
         {incomesData.map(inc => (
             <li key={inc.inc_id}>
-              {Number(inc.inc_amount) > 0 ?  <p>{Number(inc.inc_amount)} {inc.inc_currency}</p> : <></>}
-              <p>{inc.inc_period}</p>
               <p>{inc.inc_reason}</p>
+              {Number(inc.inc_amount) > 0 ? <p>{Number(inc.inc_amount)} {inc.inc_currency}</p> : <></>}
+              <p>{inc.inc_period}</p>
               <p>{inc.inc_source}</p>
             </li>
           ))}
